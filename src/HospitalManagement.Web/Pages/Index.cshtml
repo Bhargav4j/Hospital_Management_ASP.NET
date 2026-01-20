@@ -1,0 +1,14 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to Hospital Management System</h1>
+    <p>Modern healthcare management powered by .NET 8</p>
+    <div class="mt-4">
+        <a asp-page="/Auth/Login" class="btn btn-primary btn-lg">Login</a>
+        <a asp-page="/Auth/Register" class="btn btn-secondary btn-lg">Register</a>
+    </div>
+</div>
