@@ -1,0 +1,40 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to Hospital Management System</h1>
+    <p>Modern .NET 8 application for managing hospital operations</p>
+
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Patient Portal</h5>
+                    <p class="card-text">Access patient information and services</p>
+                    <a href="/Patient/Index" class="btn btn-primary">Go to Patients</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Doctor Portal</h5>
+                    <p class="card-text">Manage appointments and patient care</p>
+                    <a href="/Doctor/Index" class="btn btn-primary">Go to Doctors</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Admin Portal</h5>
+                    <p class="card-text">System administration and reports</p>
+                    <a href="/Admin/Index" class="btn btn-primary">Go to Admin</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
