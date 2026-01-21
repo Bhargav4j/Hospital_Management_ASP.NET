@@ -1,0 +1,82 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Login & Register";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Login</h2>
+        <form method="post" asp-page-handler="Login">
+            <div class="mb-3">
+                <label asp-for="LoginModel.Email" class="form-label">Email</label>
+                <input asp-for="LoginModel.Email" class="form-control" />
+                <span asp-validation-for="LoginModel.Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="LoginModel.Password" class="form-label">Password</label>
+                <input asp-for="LoginModel.Password" type="password" class="form-control" />
+                <span asp-validation-for="LoginModel.Password" class="text-danger"></span>
+            </div>
+            @if (!string.IsNullOrEmpty(Model.LoginErrorMessage))
+            {
+                <div class="alert alert-danger">@Model.LoginErrorMessage</div>
+            }
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+
+    <div class="col-md-6">
+        <h2>Register</h2>
+        <form method="post" asp-page-handler="Register">
+            <div class="mb-3">
+                <label asp-for="RegisterModel.Name" class="form-label">Name</label>
+                <input asp-for="RegisterModel.Name" class="form-control" />
+                <span asp-validation-for="RegisterModel.Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="RegisterModel.Email" class="form-label">Email</label>
+                <input asp-for="RegisterModel.Email" class="form-control" />
+                <span asp-validation-for="RegisterModel.Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="RegisterModel.Password" class="form-label">Password</label>
+                <input asp-for="RegisterModel.Password" type="password" class="form-control" />
+                <span asp-validation-for="RegisterModel.Password" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="RegisterModel.PhoneNo" class="form-label">Phone Number</label>
+                <input asp-for="RegisterModel.PhoneNo" class="form-control" />
+                <span asp-validation-for="RegisterModel.PhoneNo" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="RegisterModel.Gender" class="form-label">Gender</label>
+                <select asp-for="RegisterModel.Gender" class="form-control">
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+                <span asp-validation-for="RegisterModel.Gender" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="RegisterModel.Address" class="form-label">Address</label>
+                <textarea asp-for="RegisterModel.Address" class="form-control"></textarea>
+                <span asp-validation-for="RegisterModel.Address" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="RegisterModel.BirthDate" class="form-label">Birth Date</label>
+                <input asp-for="RegisterModel.BirthDate" type="date" class="form-control" />
+                <span asp-validation-for="RegisterModel.BirthDate" class="text-danger"></span>
+            </div>
+            @if (!string.IsNullOrEmpty(Model.RegisterErrorMessage))
+            {
+                <div class="alert alert-danger">@Model.RegisterErrorMessage</div>
+            }
+            <button type="submit" class="btn btn-success">Register</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

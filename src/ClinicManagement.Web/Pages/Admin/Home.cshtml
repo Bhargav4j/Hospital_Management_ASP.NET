@@ -1,0 +1,31 @@
+@page
+@model HomeModel
+@{
+    ViewData["Title"] = "Admin Home";
+}
+
+<div class="container">
+    <h1>Welcome, Administrator</h1>
+    <p>This is the admin dashboard.</p>
+
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Clinic</h5>
+                    <p class="card-text">Manage clinic settings and configuration</p>
+                    <a href="#" class="btn btn-primary">Manage</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Add Staff</h5>
+                    <p class="card-text">Register new doctors and staff</p>
+                    <a href="#" class="btn btn-primary">Add Staff</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
