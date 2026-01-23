@@ -18,3 +18,8 @@
 /modernize-data/studio-data/TNT1001/APP1170/transformed-code/354/studio-workspace/Hospital2301cmp/src/ClinicManagement.Infrastructure/obj/Debug/net8.0/ClinicManagement.Infrastructure.pdb
 /modernize-data/studio-data/TNT1001/APP1170/transformed-code/354/studio-workspace/Hospital2301cmp/src/ClinicManagement.Infrastructure/obj/Debug/net8.0/ClinicManagement.Infrastructure.genruntimeconfig.cache
 /modernize-data/studio-data/TNT1001/APP1170/transformed-code/354/studio-workspace/Hospital2301cmp/src/ClinicManagement.Infrastructure/obj/Debug/net8.0/ref/ClinicManagement.Infrastructure.dll
+/modernize-data/studio-data/TNT1001/APP1170/transformed-code/354/studio-workspace/Hospital2301cmp/src/ClinicManagement.Infrastructure/bin/Debug/net8.0/ClinicManagement.Domain.deps.json
+/modernize-data/studio-data/TNT1001/APP1170/transformed-code/354/studio-workspace/Hospital2301cmp/src/ClinicManagement.Infrastructure/bin/Debug/net8.0/ClinicManagement.Domain.runtimeconfig.json
+/modernize-data/studio-data/TNT1001/APP1170/transformed-code/354/studio-workspace/Hospital2301cmp/src/ClinicManagement.Infrastructure/bin/Debug/net8.0/xunit.runner.visualstudio.dotnetcore.testadapter.dll
+/modernize-data/studio-data/TNT1001/APP1170/transformed-code/354/studio-workspace/Hospital2301cmp/src/ClinicManagement.Infrastructure/bin/Debug/net8.0/xunit.runner.reporters.netcoreapp10.dll
+/modernize-data/studio-data/TNT1001/APP1170/transformed-code/354/studio-workspace/Hospital2301cmp/src/ClinicManagement.Infrastructure/bin/Debug/net8.0/xunit.runner.utility.netcoreapp10.dll
