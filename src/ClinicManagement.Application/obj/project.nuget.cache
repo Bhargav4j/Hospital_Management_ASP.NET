@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "lnC0n2pBMqg=",
+  "success": true,
+  "projectFilePath": "/modernize-data/studio-data/TNT1001/APP1165/transformed-code/346/studio-workspace/Comp-HM/src/ClinicManagement.Application/ClinicManagement.Application.csproj",
+  "expectedPackageFiles": [
+    "/home/studioai/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
+    "/home/studioai/.nuget/packages/fluentvalidation/11.9.0/fluentvalidation.11.9.0.nupkg.sha512",
+    "/home/studioai/.nuget/packages/microsoft.csharp/4.7.0/microsoft.csharp.4.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}

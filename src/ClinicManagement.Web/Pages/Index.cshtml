@@ -1,0 +1,70 @@
+@page
+@model ClinicManagement.Web.Pages.IndexModel
+@{
+    ViewData["Title"] = "Home - Clinic Management System";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to Clinic Management System</h1>
+    <p class="lead">Manage your clinic efficiently with our comprehensive system</p>
+
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Patients</h5>
+                    <p class="card-text">Manage patient records and appointments</p>
+                    <a href="/Patients/Index" class="btn btn-primary">View Patients</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Doctors</h5>
+                    <p class="card-text">Manage doctor profiles and schedules</p>
+                    <a href="/Doctors/Index" class="btn btn-primary">View Doctors</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Appointments</h5>
+                    <p class="card-text">Schedule and manage appointments</p>
+                    <a href="/Appointments/Index" class="btn btn-primary">View Appointments</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Bills</h5>
+                    <p class="card-text">Manage billing and payments</p>
+                    <a href="/Bills/Index" class="btn btn-primary">View Bills</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Treatment History</h5>
+                    <p class="card-text">View patient treatment records</p>
+                    <a href="/TreatmentHistories/Index" class="btn btn-primary">View Histories</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Staff</h5>
+                    <p class="card-text">Manage clinic staff members</p>
+                    <a href="/Staff/Index" class="btn btn-primary">View Staff</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
