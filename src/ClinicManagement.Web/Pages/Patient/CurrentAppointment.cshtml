@@ -1,0 +1,58 @@
+@page
+@model CurrentAppointmentModel
+@{
+    ViewData["Title"] = "My Appointments";
+}
+
+<h2>My Appointments</h2>
+
+@if (Model.Appointments != null && Model.Appointments.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Doctor</th>
+                <th>Status</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var appointment in Model.Appointments)
+            {
+                <tr>
+                    <td>@appointment.AppointmentDate.ToShortDateString()</td>
+                    <td>@appointment.AppointmentTime.ToString(@"hh\:mm")</td>
+                    <td>@appointment.DoctorName</td>
+                    <td>
+                        @switch (appointment.Status)
+                        {
+                            case Domain.Enums.AppointmentStatus.Pending:
+                                <span class="badge bg-warning">Pending</span>
+                                break;
+                            case Domain.Enums.AppointmentStatus.Confirmed:
+                                <span class="badge bg-success">Confirmed</span>
+                                break;
+                            case Domain.Enums.AppointmentStatus.Completed:
+                                <span class="badge bg-info">Completed</span>
+                                break;
+                            case Domain.Enums.AppointmentStatus.Cancelled:
+                                <span class="badge bg-danger">Cancelled</span>
+                                break;
+                        }
+                    </td>
+                    <td>@appointment.Notes</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No appointments found.</p>
+}
+
+<div class="mt-3">
+    <a asp-page="/Patient/PatientHome" class="btn btn-secondary">Back to Home</a>
+</div>

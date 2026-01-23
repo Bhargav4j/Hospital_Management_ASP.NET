@@ -1,0 +1,79 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = ClinicManagement.Web
+build_property.RootNamespace = ClinicManagement.Web
+build_property.ProjectDir = /modernize-data/studio-data/TNT1001/APP1167/transformed-code/349/studio-workspace/Comp-HM2/src/ClinicManagement.Web/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = /modernize-data/studio-data/TNT1001/APP1167/transformed-code/349/studio-workspace/Comp-HM2/src/ClinicManagement.Web
+build_property._RazorSourceGeneratorDebug = 
+
+[/modernize-data/studio-data/TNT1001/APP1167/transformed-code/349/studio-workspace/Comp-HM2/src/ClinicManagement.Web/Pages/Admin/AdminHome.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWRtaW4vQWRtaW5Ib21lLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1167/transformed-code/349/studio-workspace/Comp-HM2/src/ClinicManagement.Web/Pages/Doctor/DoctorHome.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRG9jdG9yL0RvY3RvckhvbWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1167/transformed-code/349/studio-workspace/Comp-HM2/src/ClinicManagement.Web/Pages/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1167/transformed-code/349/studio-workspace/Comp-HM2/src/ClinicManagement.Web/Pages/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1167/transformed-code/349/studio-workspace/Comp-HM2/src/ClinicManagement.Web/Pages/Patient/BillsHistory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUGF0aWVudC9CaWxsc0hpc3RvcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1167/transformed-code/349/studio-workspace/Comp-HM2/src/ClinicManagement.Web/Pages/Patient/CurrentAppointment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUGF0aWVudC9DdXJyZW50QXBwb2ludG1lbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1167/transformed-code/349/studio-workspace/Comp-HM2/src/ClinicManagement.Web/Pages/Patient/PatientFeedback.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUGF0aWVudC9QYXRpZW50RmVlZGJhY2suY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1167/transformed-code/349/studio-workspace/Comp-HM2/src/ClinicManagement.Web/Pages/Patient/PatientHome.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUGF0aWVudC9QYXRpZW50SG9tZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1167/transformed-code/349/studio-workspace/Comp-HM2/src/ClinicManagement.Web/Pages/Patient/TreatmentHistory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUGF0aWVudC9UcmVhdG1lbnRIaXN0b3J5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1167/transformed-code/349/studio-workspace/Comp-HM2/src/ClinicManagement.Web/Pages/Patient/ViewDoctors.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUGF0aWVudC9WaWV3RG9jdG9ycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1167/transformed-code/349/studio-workspace/Comp-HM2/src/ClinicManagement.Web/Pages/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2hhcmVkL19MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1167/transformed-code/349/studio-workspace/Comp-HM2/src/ClinicManagement.Web/Pages/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1167/transformed-code/349/studio-workspace/Comp-HM2/src/ClinicManagement.Web/Pages/SignUp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2lnblVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1167/transformed-code/349/studio-workspace/Comp-HM2/src/ClinicManagement.Web/Pages/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1167/transformed-code/349/studio-workspace/Comp-HM2/src/ClinicManagement.Web/Pages/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 

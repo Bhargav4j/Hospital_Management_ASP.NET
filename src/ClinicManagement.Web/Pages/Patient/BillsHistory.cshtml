@@ -1,0 +1,51 @@
+@page
+@model BillsHistoryModel
+@{
+    ViewData["Title"] = "Bills History";
+}
+
+<h2>My Bills History</h2>
+
+@if (Model.Bills != null && Model.Bills.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Bill ID</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var bill in Model.Bills)
+            {
+                <tr>
+                    <td>@bill.Id</td>
+                    <td>@bill.BillDate.ToShortDateString()</td>
+                    <td>$@bill.Amount</td>
+                    <td>
+                        @if (bill.IsPaid)
+                        {
+                            <span class="badge bg-success">Paid</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Unpaid</span>
+                        }
+                    </td>
+                    <td>@bill.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No bills found.</p>
+}
+
+<div class="mt-3">
+    <a asp-page="/Patient/PatientHome" class="btn btn-secondary">Back to Home</a>
+</div>

@@ -1,0 +1,15 @@
+@page
+@model AdminHomeModel
+@{
+    ViewData["Title"] = "Admin Home";
+}
+
+<h2>Welcome, Administrator!</h2>
+
+<p>Admin portal features coming soon.</p>
+
+<div class="mt-3">
+    <form method="post" asp-page-handler="Logout">
+        <button type="submit" class="btn btn-danger">Logout</button>
+    </form>
+</div>

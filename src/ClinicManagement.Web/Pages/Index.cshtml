@@ -1,0 +1,31 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to Clinic Management System</h1>
+    <p class="lead">Please log in or sign up to continue</p>
+
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Patient Login</h5>
+                    <p class="card-text">Already have an account? Sign in to manage your appointments.</p>
+                    <a asp-page="/Login" class="btn btn-primary">Login</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">New Patient</h5>
+                    <p class="card-text">Don't have an account? Register now.</p>
+                    <a asp-page="/SignUp" class="btn btn-success">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

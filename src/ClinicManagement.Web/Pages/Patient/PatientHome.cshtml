@@ -1,0 +1,75 @@
+@page
+@model PatientHomeModel
+@{
+    ViewData["Title"] = "Patient Home";
+}
+
+<div class="container">
+    <h2>Welcome, Patient!</h2>
+
+    <div class="row mt-4">
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">View Doctors</h5>
+                    <p class="card-text">Browse available doctors and their specializations.</p>
+                    <a asp-page="/Patient/ViewDoctors" class="btn btn-primary">View Doctors</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">My Appointments</h5>
+                    <p class="card-text">View and manage your appointments.</p>
+                    <a asp-page="/Patient/CurrentAppointment" class="btn btn-primary">My Appointments</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Bills History</h5>
+                    <p class="card-text">View your billing history and payments.</p>
+                    <a asp-page="/Patient/BillsHistory" class="btn btn-primary">View Bills</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Treatment History</h5>
+                    <p class="card-text">View your past treatments and prescriptions.</p>
+                    <a asp-page="/Patient/TreatmentHistory" class="btn btn-primary">View Treatments</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Feedback</h5>
+                    <p class="card-text">Provide feedback about your experience.</p>
+                    <a asp-page="/Patient/PatientFeedback" class="btn btn-primary">Give Feedback</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Logout</h5>
+                    <p class="card-text">Sign out of your account.</p>
+                    <form method="post" asp-page-handler="Logout">
+                        <button type="submit" class="btn btn-danger">Logout</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
