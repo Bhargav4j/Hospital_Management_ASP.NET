@@ -1,0 +1,84 @@
+@page
+@model ClinicManagement.Web.Pages.IndexModel
+@{
+    ViewData["Title"] = "Clinic Management System - Login";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="text-center">Clinic Management System</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab">Login</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="signup-tab" data-bs-toggle="tab" data-bs-target="#signup" type="button" role="tab">Sign Up</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="login" role="tabpanel">
+                            <form method="post" asp-page-handler="Login" class="mt-3">
+                                <div class="mb-3">
+                                    <label for="loginEmail" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="loginEmail" name="loginEmail" required />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="loginPassword" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="loginPassword" name="loginPassword" required />
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Login</button>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="signup" role="tabpanel">
+                            <form method="post" asp-page-handler="SignUp" class="mt-3">
+                                <div class="mb-3">
+                                    <label for="sName" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="sName" name="sName" required />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="sBirthDate" class="form-label">Birth Date</label>
+                                    <input type="date" class="form-control" id="sBirthDate" name="sBirthDate" required />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="sEmail" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="sEmail" name="sEmail" required />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="sPassword" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="sPassword" name="sPassword" required />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="Phone" class="form-label">Phone Number</label>
+                                    <input type="text" class="form-control" id="Phone" name="Phone" required />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Gender</label>
+                                    <div>
+                                        <input type="radio" name="Gender" value="Male" id="genderMale" required /> <label for="genderMale">Male</label>
+                                        <input type="radio" name="Gender" value="Female" id="genderFemale" required /> <label for="genderFemale">Female</label>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="Address" class="form-label">Address</label>
+                                    <textarea class="form-control" id="Address" name="Address" rows="3" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-success w-100">Sign Up</button>
+                            </form>
+                        </div>
+                    </div>
+                    @if (!string.IsNullOrEmpty(Model.Message))
+                    {
+                        <div class="alert @(Model.IsSuccess ? "alert-success" : "alert-danger") mt-3" role="alert">
+                            @Model.Message
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
