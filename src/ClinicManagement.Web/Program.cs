@@ -14,7 +14,12 @@ builder.Host.UseSerilog();
 builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<ClinicDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        npgsqlOptions => npgsqlOptions
+            .MigrationsHistoryTable("__efmigrations_history", "public")
+            .EnableRetryOnFailure(maxRetryCount: 3, maxRetryDelay: TimeSpan.FromSeconds(30), errorCodesToAdd: null))
+    .UseSnakeCaseNamingConvention());
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession(options =>

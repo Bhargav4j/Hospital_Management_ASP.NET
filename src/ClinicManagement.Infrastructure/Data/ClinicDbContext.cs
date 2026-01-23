@@ -1,10 +1,17 @@
 using ClinicManagement.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace ClinicManagement.Infrastructure.Data;
 
 public class ClinicDbContext : DbContext
 {
+    static ClinicDbContext()
+    {
+        // Enable legacy timestamp behavior for PostgreSQL
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+    }
+
     public ClinicDbContext(DbContextOptions<ClinicDbContext> options) : base(options)
     {
     }
@@ -20,6 +27,12 @@ public class ClinicDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        // Set default schema for PostgreSQL
+        modelBuilder.HasDefaultSchema("public");
+
+        // Configure PostgreSQL extensions if needed
+        modelBuilder.HasPostgresExtension("uuid-ossp");
 
         modelBuilder.Entity<Patient>(entity =>
         {
@@ -43,7 +56,7 @@ public class ClinicDbContext : DbContext
             entity.Property(e => e.Phone).IsRequired().HasMaxLength(20);
             entity.Property(e => e.Specialization).HasMaxLength(100);
             entity.Property(e => e.Qualification).HasMaxLength(200);
-            entity.Property(e => e.ConsultationFee).HasColumnType("decimal(18,2)");
+            entity.Property(e => e.ConsultationFee).HasPrecision(18, 2);
             entity.Property(e => e.CreatedBy).HasMaxLength(100);
             entity.Property(e => e.ModifiedBy).HasMaxLength(100);
         });
@@ -73,7 +86,7 @@ public class ClinicDbContext : DbContext
         {
             entity.ToTable("Bills");
             entity.HasKey(e => e.Id);
-            entity.Property(e => e.Amount).HasColumnType("decimal(18,2)");
+            entity.Property(e => e.Amount).HasPrecision(18, 2);
             entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.Description).HasMaxLength(500);
             entity.Property(e => e.CreatedBy).HasMaxLength(100);
