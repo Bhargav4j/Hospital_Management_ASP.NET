@@ -1,0 +1,37 @@
+@page
+@model HospitalManagement.Web.Pages.Doctor.PendingAppointmentsModel
+@{
+    ViewData["Title"] = "Pending Appointments";
+}
+
+<div class="container mt-4">
+    <h2><i class="bi bi-clock-history"></i> Pending Appointments</h2>
+
+    @if (Model.Appointments != null && Model.Appointments.Any())
+    {
+        <div class="row">
+            @foreach (var appointment in Model.Appointments)
+            {
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-header bg-warning">
+                            <h5>Appointment #@appointment.AppointmentID</h5>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Patient:</strong> @appointment.PatientName</p>
+                            <p><strong>Date:</strong> @appointment.AppointmentDate.ToString("MMMM dd, yyyy")</p>
+                            <p><strong>Reason:</strong> @appointment.Disease</p>
+                            <a asp-page="/Doctor/UpdatePrescription" asp-route-id="@appointment.AppointmentID" class="btn btn-primary">
+                                <i class="bi bi-pencil"></i> Update Prescription
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">No pending appointments.</div>
+    }
+</div>

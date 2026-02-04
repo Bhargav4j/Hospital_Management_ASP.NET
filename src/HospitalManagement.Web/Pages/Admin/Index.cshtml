@@ -1,0 +1,72 @@
+@page
+@model HospitalManagement.Web.Pages.Admin.IndexModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container mt-4">
+    <h2><i class="bi bi-speedometer2"></i> Admin Dashboard</h2>
+
+    <div class="row mt-4">
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h6>Total Patients</h6>
+                    <h2>@Model.TotalPatients</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <h6>Total Doctors</h6>
+                    <h2>@Model.TotalDoctors</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-info">
+                <div class="card-body">
+                    <h6>Appointments</h6>
+                    <h2>@Model.TotalAppointments</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-warning">
+                <div class="card-body">
+                    <h6>Departments</h6>
+                    <h2>@Model.TotalDepartments</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h4>Quick Actions</h4>
+            <div class="row">
+                <div class="col-md-3">
+                    <a asp-page="/Patient/Index" class="btn btn-outline-primary w-100 mb-2">
+                        <i class="bi bi-people"></i> Manage Patients
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a asp-page="/Doctor/Index" class="btn btn-outline-success w-100 mb-2">
+                        <i class="bi bi-person-badge"></i> Manage Doctors
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a asp-page="/Department/Index" class="btn btn-outline-info w-100 mb-2">
+                        <i class="bi bi-building"></i> Manage Departments
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a asp-page="/Staff/Index" class="btn btn-outline-warning w-100 mb-2">
+                        <i class="bi bi-person-lines-fill"></i> Manage Staff
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

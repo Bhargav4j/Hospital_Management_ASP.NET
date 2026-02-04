@@ -1,0 +1,156 @@
+@page
+@model HospitalManagement.Web.Pages.Patient.DoctorProfileModel
+@{
+    ViewData["Title"] = "Doctor Profile";
+}
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-page="/Patient/Home">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a asp-page="/Patient/ViewDoctors">Find Doctors</a></li>
+                    <li class="breadcrumb-item active">Doctor Profile</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    @if (Model.Doctor != null)
+    {
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card shadow">
+                    <div class="card-body text-center">
+                        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                             style="width: 120px; height: 120px; font-size: 60px;">
+                            <i class="bi bi-person-badge"></i>
+                        </div>
+                        <h3>Dr. @Model.Doctor.Name</h3>
+                        <p class="text-muted">@Model.Doctor.Specialization</p>
+                        <div class="mb-3">
+                            <span class="badge bg-info fs-6">
+                                <i class="bi bi-star-fill"></i> @Model.Doctor.ReputationIndex.ToString("F1")
+                            </span>
+                        </div>
+                        @if (Model.Doctor.Status)
+                        {
+                            <span class="badge bg-success mb-3">Available</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger mb-3">Unavailable</span>
+                        }
+                        <hr />
+                        <div class="d-grid gap-2">
+                            @if (Model.Doctor.Status)
+                            {
+                                <a asp-page="/Patient/TakeAppointment" asp-route-doctorId="@Model.Doctor.DoctorID" class="btn btn-primary">
+                                    <i class="bi bi-calendar-plus"></i> Book Appointment
+                                </a>
+                            }
+                            <a asp-page="/Patient/ViewDoctors" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left"></i> Back to List
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card shadow mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="bi bi-info-circle"></i> Professional Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <strong><i class="bi bi-building"></i> Department:</strong>
+                                <p>@Model.Doctor.DepartmentName</p>
+                            </div>
+                            <div class="col-md-6">
+                                <strong><i class="bi bi-award"></i> Qualification:</strong>
+                                <p>@Model.Doctor.Qualification</p>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <strong><i class="bi bi-briefcase"></i> Experience:</strong>
+                                <p>@Model.Doctor.Experience years</p>
+                            </div>
+                            <div class="col-md-6">
+                                <strong><i class="bi bi-people"></i> Patients Treated:</strong>
+                                <p>@Model.Doctor.PatientsTreated</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <strong><i class="bi bi-currency-dollar"></i> Consultation Fee:</strong>
+                                <p class="text-primary fs-5">$@Model.Doctor.ChargesPerVisit</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0"><i class="bi bi-telephone"></i> Contact Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <strong><i class="bi bi-envelope"></i> Email:</strong>
+                                <p>@Model.Doctor.Email</p>
+                            </div>
+                            <div class="col-md-6">
+                                <strong><i class="bi bi-phone"></i> Phone:</strong>
+                                <p>@Model.Doctor.Phone</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <strong><i class="bi bi-geo-alt"></i> Address:</strong>
+                                <p>@Model.Doctor.Address</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0"><i class="bi bi-graph-up"></i> Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-md-4 mb-3">
+                                <div class="p-3 bg-light rounded">
+                                    <h3 class="text-primary">@Model.Doctor.Experience</h3>
+                                    <p class="mb-0">Years Experience</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="p-3 bg-light rounded">
+                                    <h3 class="text-success">@Model.Doctor.PatientsTreated</h3>
+                                    <p class="mb-0">Patients Treated</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="p-3 bg-light rounded">
+                                    <h3 class="text-info">@Model.Doctor.ReputationIndex.ToString("F1")</h3>
+                                    <p class="mb-0">Reputation Score</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            <i class="bi bi-exclamation-triangle"></i> Doctor not found.
+        </div>
+    }
+</div>

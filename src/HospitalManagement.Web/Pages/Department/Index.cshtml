@@ -1,0 +1,31 @@
+@page
+@model HospitalManagement.Web.Pages.Department.IndexModel
+@{
+    ViewData["Title"] = "Departments";
+}
+
+<div class="container mt-4">
+    <h2><i class="bi bi-building"></i> Departments</h2>
+
+    @if (Model.Departments != null && Model.Departments.Any())
+    {
+        <div class="row">
+            @foreach (var dept in Model.Departments)
+            {
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@dept.DeptName</h5>
+                            <p class="card-text">@dept.Description</p>
+                            <span class="badge bg-primary">ID: @dept.DeptNo</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">No departments found.</div>
+    }
+</div>

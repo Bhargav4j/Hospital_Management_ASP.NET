@@ -1,0 +1,135 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = HospitalManagement.Web
+build_property.RootNamespace = HospitalManagement.Web
+build_property.ProjectDir = /modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = /modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web
+build_property._RazorSourceGeneratorDebug = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Admin/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWRtaW4vSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Admin/ManageClinic.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWRtaW4vTWFuYWdlQ2xpbmljLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Appointment/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQXBwb2ludG1lbnQvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Department/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRGVwYXJ0bWVudC9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Doctor/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRG9jdG9yL0NyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Doctor/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRG9jdG9yL0RlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Doctor/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRG9jdG9yL0VkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Doctor/Home.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRG9jdG9yL0hvbWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Doctor/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRG9jdG9yL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Doctor/PendingAppointments.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRG9jdG9yL1BlbmRpbmdBcHBvaW50bWVudHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Doctor/TodayAppointments.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRG9jdG9yL1RvZGF5QXBwb2ludG1lbnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Doctor/UpdatePrescription.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRG9jdG9yL1VwZGF0ZVByZXNjcmlwdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Logout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvTG9nb3V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Patient/Appointments.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUGF0aWVudC9BcHBvaW50bWVudHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Patient/BillHistory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUGF0aWVudC9CaWxsSGlzdG9yeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Patient/DoctorProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUGF0aWVudC9Eb2N0b3JQcm9maWxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Patient/Home.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUGF0aWVudC9Ib21lLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Patient/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUGF0aWVudC9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Patient/TakeAppointment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUGF0aWVudC9UYWtlQXBwb2ludG1lbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Patient/TreatmentHistory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUGF0aWVudC9UcmVhdG1lbnRIaXN0b3J5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Patient/ViewDoctors.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUGF0aWVudC9WaWV3RG9jdG9ycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2hhcmVkL19MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Signup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2lnbnVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Staff/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU3RhZmYvQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/Staff/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU3RhZmYvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/Pages/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 

@@ -1,0 +1,118 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1 class="display-4">
+                <i class="bi bi-hospital text-primary"></i>
+                Welcome to Hospital Management System
+            </h1>
+            <p class="lead mt-3">Comprehensive healthcare management solution</p>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="bi bi-people-fill text-primary" style="font-size: 3rem;"></i>
+                    <h3 class="card-title mt-3">Patient Management</h3>
+                    <p class="card-text">Comprehensive patient records, appointments, and treatment history tracking.</p>
+                    <a asp-page="/Patient/Home" class="btn btn-primary">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="bi bi-person-badge-fill text-success" style="font-size: 3rem;"></i>
+                    <h3 class="card-title mt-3">Doctor Management</h3>
+                    <p class="card-text">Manage doctor profiles, specializations, schedules, and appointments.</p>
+                    <a asp-page="/Doctor/Home" class="btn btn-success">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="bi bi-calendar-check-fill text-info" style="font-size: 3rem;"></i>
+                    <h3 class="card-title mt-3">Appointment System</h3>
+                    <p class="card-text">Efficient appointment scheduling and management system.</p>
+                    <a asp-page="/Appointment/Index" class="btn btn-info">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <i class="bi bi-building text-warning"></i> Department Management
+                    </h3>
+                    <p class="card-text">Organize and manage various hospital departments efficiently.</p>
+                    <a asp-page="/Department/Index" class="btn btn-warning">View Departments</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <i class="bi bi-person-lines-fill text-danger"></i> Staff Management
+                    </h3>
+                    <p class="card-text">Manage hospital staff, roles, and assignments.</p>
+                    <a asp-page="/Staff/Index" class="btn btn-danger">View Staff</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserId")))
+    {
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <div class="alert alert-info text-center">
+                    <h4>
+                        <i class="bi bi-info-circle"></i> Get Started
+                    </h4>
+                    <p>Please <a asp-page="/Login" class="alert-link">login</a> to access the system or
+                    <a asp-page="/Signup" class="alert-link">sign up</a> if you're a new user.</p>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h4 class="card-title">System Features</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li><i class="bi bi-check-circle text-success"></i> Patient Registration & Management</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Doctor Profiles & Specializations</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Appointment Scheduling</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Treatment History Tracking</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li><i class="bi bi-check-circle text-success"></i> Billing & Payment Management</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Department Organization</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Staff Management</li>
+                                <li><i class="bi bi-check-circle text-success"></i> Comprehensive Reporting</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

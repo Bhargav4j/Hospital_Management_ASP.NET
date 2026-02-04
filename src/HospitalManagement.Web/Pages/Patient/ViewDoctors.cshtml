@@ -1,0 +1,144 @@
+@page
+@model HospitalManagement.Web.Pages.Patient.ViewDoctorsModel
+@{
+    ViewData["Title"] = "Find Doctors";
+}
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h2>
+                <i class="bi bi-search"></i> Find Doctors
+            </h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-page="/Patient/Home">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Find Doctors</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <form method="get">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input type="text" name="searchTerm" class="form-control" placeholder="Search by name or specialization..." value="@Model.SearchTerm" />
+                            </div>
+                            <div class="col-md-3">
+                                <select name="departmentId" class="form-select" asp-items="Model.DepartmentList">
+                                    <option value="">All Departments</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-search"></i> Search
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <select name="sortBy" class="form-select" onchange="this.form.submit()">
+                                    <option value="name" selected="@(Model.SortBy == "name")">Sort by Name</option>
+                                    <option value="experience" selected="@(Model.SortBy == "experience")">Sort by Experience</option>
+                                    <option value="reputation" selected="@(Model.SortBy == "reputation")">Sort by Reputation</option>
+                                    <option value="charges" selected="@(Model.SortBy == "charges")">Sort by Charges</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.Doctors != null && Model.Doctors.Any())
+    {
+        <div class="row">
+            @foreach (var doctor in Model.Doctors)
+            {
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center"
+                                     style="width: 60px; height: 60px; font-size: 24px;">
+                                    <i class="bi bi-person-badge"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h5 class="card-title mb-0">Dr. @doctor.Name</h5>
+                                    <small class="text-muted">@doctor.Specialization</small>
+                                </div>
+                            </div>
+
+                            <div class="mb-2">
+                                <small class="text-muted">
+                                    <i class="bi bi-building"></i> @doctor.DepartmentName
+                                </small>
+                            </div>
+
+                            <div class="mb-2">
+                                <span class="badge bg-info">
+                                    <i class="bi bi-star-fill"></i> @doctor.ReputationIndex.ToString("F1")
+                                </span>
+                                <span class="badge bg-secondary">
+                                    <i class="bi bi-award"></i> @doctor.Experience years exp.
+                                </span>
+                            </div>
+
+                            <p class="mb-2">
+                                <small><strong>Qualification:</strong> @doctor.Qualification</small>
+                            </p>
+
+                            <p class="mb-2">
+                                <small><strong>Patients Treated:</strong> @doctor.PatientsTreated</small>
+                            </p>
+
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <div>
+                                    <strong class="text-primary">$@doctor.ChargesPerVisit</strong>
+                                    <small class="text-muted">per visit</small>
+                                </div>
+                                <div>
+                                    @if (doctor.Status)
+                                    {
+                                        <span class="badge bg-success">Available</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">Unavailable</span>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2 mt-3">
+                                <a asp-page="/Patient/DoctorProfile" asp-route-id="@doctor.DoctorID" class="btn btn-outline-primary btn-sm">
+                                    <i class="bi bi-eye"></i> View Profile
+                                </a>
+                                @if (doctor.Status)
+                                {
+                                    <a asp-page="/Patient/TakeAppointment" asp-route-doctorId="@doctor.DoctorID" class="btn btn-primary btn-sm">
+                                        <i class="bi bi-calendar-plus"></i> Book Appointment
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <p class="text-muted">Showing @Model.Doctors.Count() doctor(s)</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i> No doctors found matching your criteria.
+        </div>
+    }
+</div>

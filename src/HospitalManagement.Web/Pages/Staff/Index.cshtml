@@ -1,0 +1,59 @@
+@page
+@model HospitalManagement.Web.Pages.Staff.IndexModel
+@{
+    ViewData["Title"] = "Staff";
+}
+
+<div class="container mt-4">
+    <h2><i class="bi bi-person-lines-fill"></i> Staff Management</h2>
+
+    <div class="mb-3">
+        <a asp-page="/Staff/Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Add New Staff
+        </a>
+    </div>
+
+    @if (Model.StaffList != null && Model.StaffList.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="table-primary">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Designation</th>
+                        <th>Phone</th>
+                        <th>Qualification</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var staff in Model.StaffList)
+                    {
+                        <tr>
+                            <td>@staff.StaffID</td>
+                            <td>@staff.Name</td>
+                            <td>@staff.Designation</td>
+                            <td>@staff.Phone</td>
+                            <td>@staff.Qualification</td>
+                            <td>
+                                @if (staff.IsActive)
+                                {
+                                    <span class="badge bg-success">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">Inactive</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">No staff found.</div>
+    }
+</div>

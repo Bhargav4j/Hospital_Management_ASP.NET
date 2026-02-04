@@ -1,0 +1,58 @@
+{
+  "Version": 1,
+  "Hash": "xclkLEBvQWu97VYizw1LyhAYT1iooEOxe19+0nZ6QYQ=",
+  "Source": "HospitalManagement.Web",
+  "BasePath": "_content/HospitalManagement.Web",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "HospitalManagement.Web/wwwroot",
+      "Source": "HospitalManagement.Web",
+      "ContentRoot": "/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/wwwroot/",
+      "BasePath": "_content/HospitalManagement.Web",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/wwwroot/css/site.css",
+      "SourceId": "HospitalManagement.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/wwwroot/",
+      "BasePath": "_content/HospitalManagement.Web",
+      "RelativePath": "css/site.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/css/site.css"
+    },
+    {
+      "Identity": "/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/wwwroot/js/site.js",
+      "SourceId": "HospitalManagement.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "/modernize-data/studio-data/TNT1001/APP1011/transformed-code/13/studio-workspace/HospitalMgmt0402CMP/src/HospitalManagement.Web/wwwroot/",
+      "BasePath": "_content/HospitalManagement.Web",
+      "RelativePath": "js/site.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/js/site.js"
+    }
+  ]
+}

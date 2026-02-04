@@ -1,0 +1,51 @@
+@page
+@model HospitalManagement.Web.Pages.Staff.CreateModel
+@{
+    ViewData["Title"] = "Create Staff";
+}
+
+<div class="container mt-4">
+    <h2><i class="bi bi-person-plus"></i> Add New Staff Member</h2>
+
+    <div class="card">
+        <div class="card-body">
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Input.Name" class="form-label">Name</label>
+                        <input asp-for="Input.Name" class="form-control" />
+                        <span asp-validation-for="Input.Name" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Input.Phone" class="form-label">Phone</label>
+                        <input asp-for="Input.Phone" class="form-control" />
+                        <span asp-validation-for="Input.Phone" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Input.Designation" class="form-label">Designation</label>
+                        <input asp-for="Input.Designation" class="form-control" />
+                        <span asp-validation-for="Input.Designation" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Input.Qualification" class="form-label">Qualification</label>
+                        <input asp-for="Input.Qualification" class="form-control" />
+                        <span asp-validation-for="Input.Qualification" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Input.Address" class="form-label">Address</label>
+                    <textarea asp-for="Input.Address" class="form-control" rows="2"></textarea>
+                    <span asp-validation-for="Input.Address" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Create</button>
+                <a asp-page="/Staff/Index" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

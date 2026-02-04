@@ -1,0 +1,117 @@
+@page
+@model HospitalManagement.Web.Pages.Patient.BillHistoryModel
+@{
+    ViewData["Title"] = "Bill History";
+}
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h2>
+                <i class="bi bi-receipt"></i> Bill History
+            </h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-page="/Patient/Home">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Bill History</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h6>Total Bills</h6>
+                    <h3>@Model.TotalBills</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <h6>Paid Bills</h6>
+                    <h3>@Model.PaidBills</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-danger">
+                <div class="card-body">
+                    <h6>Unpaid Bills</h6>
+                    <h3>@Model.UnpaidBills</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.Bills != null && Model.Bills.Any())
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th>Bill #</th>
+                                        <th>Date</th>
+                                        <th>Doctor</th>
+                                        <th>Service</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var bill in Model.Bills)
+                                    {
+                                        <tr>
+                                            <td>#@bill.AppointmentID</td>
+                                            <td>@bill.AppointmentDate.ToString("MMM dd, yyyy")</td>
+                                            <td>Dr. @bill.DoctorName</td>
+                                            <td>Consultation</td>
+                                            <td class="fw-bold">$@bill.AppointmentID</td>
+                                            <td>
+                                                @if (bill.IsPaid)
+                                                {
+                                                    <span class="badge bg-success">Paid</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-danger">Unpaid</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (!bill.IsPaid)
+                                                {
+                                                    <button class="btn btn-sm btn-primary">
+                                                        <i class="bi bi-credit-card"></i> Pay Now
+                                                    </button>
+                                                }
+                                                else
+                                                {
+                                                    <button class="btn btn-sm btn-outline-secondary">
+                                                        <i class="bi bi-file-pdf"></i> Receipt
+                                                    </button>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i> No bills found.
+        </div>
+    }
+</div>

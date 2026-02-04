@@ -1,0 +1,46 @@
+@page
+@model HospitalManagement.Web.Pages.Doctor.TodayAppointmentsModel
+@{
+    ViewData["Title"] = "Today's Appointments";
+}
+
+<div class="container mt-4">
+    <h2><i class="bi bi-calendar-day"></i> Today's Appointments</h2>
+
+    @if (Model.Appointments != null && Model.Appointments.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Patient</th>
+                        <th>Time</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var appointment in Model.Appointments)
+                    {
+                        <tr>
+                            <td>@appointment.AppointmentID</td>
+                            <td>@appointment.PatientName</td>
+                            <td>@appointment.AppointmentDate.ToString("hh:mm tt")</td>
+                            <td>@appointment.Disease</td>
+                            <td><span class="badge bg-info">@appointment.Status</span></td>
+                            <td>
+                                <a asp-page="/Doctor/UpdatePrescription" asp-route-id="@appointment.AppointmentID" class="btn btn-sm btn-primary">Update</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">No appointments today.</div>
+    }
+</div>

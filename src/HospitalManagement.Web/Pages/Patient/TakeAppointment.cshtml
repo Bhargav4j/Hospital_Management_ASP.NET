@@ -1,0 +1,130 @@
+@page
+@model HospitalManagement.Web.Pages.Patient.TakeAppointmentModel
+@{
+    ViewData["Title"] = "Book Appointment";
+}
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h2>
+                <i class="bi bi-calendar-plus"></i> Book Appointment
+            </h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-page="/Patient/Home">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a asp-page="/Patient/ViewDoctors">Find Doctors</a></li>
+                    <li class="breadcrumb-item active">Book Appointment</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    @if (Model.Doctor != null)
+    {
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="bi bi-person-badge"></i> Doctor Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-2"
+                                 style="width: 80px; height: 80px; font-size: 40px;">
+                                <i class="bi bi-person-badge"></i>
+                            </div>
+                            <h4>Dr. @Model.Doctor.Name</h4>
+                            <p class="text-muted mb-0">@Model.Doctor.Specialization</p>
+                            <p class="text-muted">@Model.Doctor.DepartmentName</p>
+                        </div>
+                        <hr />
+                        <p><strong>Experience:</strong> @Model.Doctor.Experience years</p>
+                        <p><strong>Consultation Fee:</strong> <span class="text-primary fs-5">$@Model.Doctor.ChargesPerVisit</span></p>
+                        <p><strong>Reputation:</strong>
+                            <span class="badge bg-info">
+                                <i class="bi bi-star-fill"></i> @Model.Doctor.ReputationIndex.ToString("F1")
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0"><i class="bi bi-calendar-event"></i> Appointment Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <input type="hidden" asp-for="Input.DoctorId" />
+
+                            <div class="mb-3">
+                                <label asp-for="Input.AppointmentDate" class="form-label">
+                                    <i class="bi bi-calendar"></i> Appointment Date
+                                </label>
+                                <input asp-for="Input.AppointmentDate" class="form-control" type="date" />
+                                <span asp-validation-for="Input.AppointmentDate" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="Input.FreeSlotId" class="form-label">
+                                    <i class="bi bi-clock"></i> Available Time Slot
+                                </label>
+                                <select asp-for="Input.FreeSlotId" class="form-select" asp-items="Model.AvailableSlots">
+                                    <option value="">Select a time slot</option>
+                                </select>
+                                <span asp-validation-for="Input.FreeSlotId" class="text-danger"></span>
+                                <small class="text-muted">Please select a date first to see available time slots</small>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="Input.Disease" class="form-label">
+                                    <i class="bi bi-clipboard-pulse"></i> Reason for Visit / Symptoms
+                                </label>
+                                <textarea asp-for="Input.Disease" class="form-control" rows="4" placeholder="Please describe your symptoms or reason for visit"></textarea>
+                                <span asp-validation-for="Input.Disease" class="text-danger"></span>
+                            </div>
+
+                            <div class="alert alert-info">
+                                <h6><i class="bi bi-info-circle"></i> Important Information</h6>
+                                <ul class="mb-0">
+                                    <li>Consultation fee: <strong>$@Model.Doctor.ChargesPerVisit</strong></li>
+                                    <li>Please arrive 15 minutes before your appointment time</li>
+                                    <li>Bring any relevant medical records or prescriptions</li>
+                                    <li>You can cancel or reschedule up to 24 hours before the appointment</li>
+                                </ul>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-success btn-lg">
+                                    <i class="bi bi-calendar-check"></i> Confirm Appointment
+                                </button>
+                                <a asp-page="/Patient/ViewDoctors" class="btn btn-outline-secondary">
+                                    <i class="bi bi-x-circle"></i> Cancel
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            <i class="bi bi-exclamation-triangle"></i> Doctor information not available.
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Auto-load slots when date changes
+        document.querySelector('input[type="date"]')?.addEventListener('change', function() {
+            // In a real implementation, this would make an AJAX call to load available slots
+            console.log('Date changed:', this.value);
+        });
+    </script>
+}

@@ -1,0 +1,119 @@
+@page
+@model HospitalManagement.Web.Pages.Doctor.IndexModel
+@{
+    ViewData["Title"] = "Doctors";
+}
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h2>
+                <i class="bi bi-person-badge"></i> Doctor Management
+            </h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-page="/Admin/Index">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Doctors</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form method="get" class="d-flex">
+                                <input type="text" name="searchTerm" class="form-control me-2" placeholder="Search doctors..." value="@Model.SearchTerm" />
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-search"></i> Search
+                                </button>
+                            </form>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <a asp-page="/Doctor/Create" class="btn btn-success">
+                                <i class="bi bi-plus-circle"></i> Add New Doctor
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.Doctors != null && Model.Doctors.Any())
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Specialization</th>
+                                        <th>Department</th>
+                                        <th>Experience</th>
+                                        <th>Reputation</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var doctor in Model.Doctors)
+                                    {
+                                        <tr>
+                                            <td>@doctor.DoctorID</td>
+                                            <td>Dr. @doctor.Name</td>
+                                            <td>@doctor.Specialization</td>
+                                            <td>@doctor.DepartmentName</td>
+                                            <td>@doctor.Experience years</td>
+                                            <td>
+                                                <span class="badge bg-info">
+                                                    <i class="bi bi-star-fill"></i> @doctor.ReputationIndex.ToString("F1")
+                                                </span>
+                                            </td>
+                                            <td>
+                                                @if (doctor.Status && doctor.IsActive)
+                                                {
+                                                    <span class="badge bg-success">Active</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-danger">Inactive</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <div class="btn-group btn-group-sm" role="group">
+                                                    <a asp-page="/Doctor/Edit" asp-route-id="@doctor.DoctorID" class="btn btn-warning" title="Edit">
+                                                        <i class="bi bi-pencil"></i>
+                                                    </a>
+                                                    <a asp-page="/Doctor/Delete" asp-route-id="@doctor.DoctorID" class="btn btn-danger" title="Delete">
+                                                        <i class="bi bi-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="mt-3">
+                            <p class="text-muted">Total Doctors: @Model.Doctors.Count()</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i> No doctors found.
+        </div>
+    }
+</div>

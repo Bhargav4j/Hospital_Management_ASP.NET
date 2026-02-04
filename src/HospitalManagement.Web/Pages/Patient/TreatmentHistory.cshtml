@@ -1,0 +1,121 @@
+@page
+@model HospitalManagement.Web.Pages.Patient.TreatmentHistoryModel
+@{
+    ViewData["Title"] = "Treatment History";
+}
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h2>
+                <i class="bi bi-file-medical"></i> Treatment History
+            </h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-page="/Patient/Home">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Treatment History</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    @if (Model.Treatments != null && Model.Treatments.Any())
+    {
+        <div class="row">
+            @foreach (var treatment in Model.Treatments)
+            {
+                <div class="col-md-12 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-calendar-event"></i>
+                                    @treatment.AppointmentDate.ToString("MMMM dd, yyyy")
+                                </h5>
+                                <span class="badge bg-light text-dark">
+                                    Treatment #@treatment.AppointmentID
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6 class="text-primary">
+                                        <i class="bi bi-person-badge"></i> Doctor Information
+                                    </h6>
+                                    <p class="mb-1"><strong>Name:</strong> Dr. @treatment.DoctorName</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="text-success">
+                                        <i class="bi bi-clipboard-pulse"></i> Diagnosis
+                                    </h6>
+                                    <p class="mb-1">@(treatment.Disease ?? "N/A")</p>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            @if (!string.IsNullOrEmpty(treatment.Prescription))
+                            {
+                                <div class="alert alert-info">
+                                    <h6><i class="bi bi-prescription2"></i> Prescription</h6>
+                                    <p class="mb-0">@treatment.Prescription</p>
+                                </div>
+                            }
+
+                            @if (!string.IsNullOrEmpty(treatment.Progress))
+                            {
+                                <div class="alert alert-success">
+                                    <h6><i class="bi bi-graph-up"></i> Progress Notes</h6>
+                                    <p class="mb-0">@treatment.Progress</p>
+                                </div>
+                            }
+
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <p class="mb-1">
+                                        <strong><i class="bi bi-clock"></i> Status:</strong>
+                                        <span class="badge bg-@(treatment.Status == "Completed" ? "success" : "info")">
+                                            @treatment.Status
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="mb-1">
+                                        <strong><i class="bi bi-chat-square-text"></i> Feedback:</strong>
+                                        @if (treatment.FeedbackGiven)
+                                        {
+                                            <span class="badge bg-success">Given</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-warning">Pending</span>
+                                            <button class="btn btn-sm btn-outline-primary ms-2">
+                                                <i class="bi bi-pencil"></i> Give Feedback
+                                            </button>
+                                        }
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <small>Last updated: @(treatment.ModifiedDate?.ToString("MMM dd, yyyy") ?? treatment.CreatedDate.ToString("MMM dd, yyyy"))</small>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <p class="text-muted">Showing @Model.Treatments.Count() treatment record(s)</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i> No treatment history found.
+        </div>
+    }
+</div>
