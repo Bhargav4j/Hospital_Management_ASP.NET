@@ -1,69 +1,184 @@
-# ⚕️ Hospital Management System - Made using C#, ASP.net
+# Clinic Management System - .NET 8
 
-A fully featured Clinic Management System having a well designed Database Schema made as a final project for the course "Application Development with .NET and Web Services CS624" during my Semester at [Pace University](https://www.pace.edu/). Its based on the 3 Tier Architecture.
+A modern clinic management system migrated from ASP.NET Web Forms to .NET 8 using clean architecture principles.
 
-### Signup Page 
-<img src="images/main1.png"/>
+## Migration Information
 
-### Take Appointment
-<img src="images/appointment1.png"/> 
+This application was successfully migrated from ASP.NET Web Forms 4.5.2 to .NET 8. The original application was a fully featured Clinic Management System with a well-designed database schema. The migration maintains all original functionality while modernizing the architecture and technology stack.
 
-### Current Appointments
-<img src="images/current1.png"/> 
+## Architecture
 
-### Search Staff
-<img src="images/search.png"/> 
+This application follows clean architecture with four main layers:
 
-### 1. Patient:
+- **Domain Layer**: Contains entities, interfaces, enums, and business logic
+- **Application Layer**: Contains application services, DTOs, and validation
+- **Infrastructure Layer**: Contains data access, repositories, and external service implementations
+- **Web Layer**: ASP.NET Core Razor Pages UI
 
-* **1.	Patient Home** – Patient can view his profile
-* **2.	Current Appointment** – Patient can view if he has some pending or approved appointment with a doctor 
-* **3.	Bills History** – Patient can view the bill history of appointments that have been completed
-* **4.	Treatment History** – Patient can view the treatment history of appointments which have been completed
-* **5.	Take Appointment** – Patient can view all the departments, and then can select one dept. Then the doctors of that dept are shown. Then patient selects one doctor and the doctor’s profile is then shown along with a ‘take appointment’ button. When the button is clicked, the free slots of that particular doctor are shown. Patient selects a free slot of his choice and then sends request for that free slot to the doctor. The doctor will then approve/reject it.
-* **6.	Notifications** – In this tab, a notification is shown whenever the doctor accepts/rejects the requested appointment.
-* **7.	Feedback** – After a appointment is completed, patient can give feedback about that appointment by rating it from 1 – 5
-* **8.**	A patient can request for only one appointment at a time and will not be allowed to take more than one appointments until the last appointment has been completed.
+## Technology Stack
 
-### 2. Doctor:
+- .NET 8
+- ASP.NET Core Razor Pages
+- Entity Framework Core 8.0
+- SQL Server
+- Serilog for logging
+- Bootstrap 5 for UI
 
-* **1.	DoctorProfile**: Doctor can see his own profile
-* **2.	PendingAppointments**: Doctor can see all the pending appointments against his doctor ID.
-* **3.	TodaysAppointmemts**: the appointments for current day will be shown.The doctor then can select/reject any appointment of that day
-* **4.	HistoryUpdate**: He can update prescription,disease and progress of patient 
-* **5.	GenerateBill**: He will then generate the bill
-* **6.	PatientHistory**: Doctor will be able to see the treatment history of all his treated patients. 
+## Features
 
-### 3. Administrator:
+### Patient Portal
+- Patient registration and login
+- View available doctors by specialization
+- Book appointments with doctors
+- View current and pending appointments
+- View treatment history
+- View bills history
+- Submit feedback and ratings
 
-* **1. Admin Home**: Admin can view Clinic stats which includes weekly appointments, income of the Clinic. No of registered patients and doctors along with the list of departments 
-* **2.	View Doctors**: Admin can view the list of doctors currently registered along with their departments and other information. Complete profile will be shown when clicked.
-* **3.	View Patients**: Admin can view the list of patients currently registered along with their phone numbers and ids. Complete profile will be shown when clicked.
-* **4.	View Other Staff**: Admin can view other staff members along with their designations.
-* **5.	Search Box**: Admin can search for a specific employ within the company by name
-* **6.	Add/Remove**: Admin can Add/remove doctors patients and other staff members form the clinic.
+### Doctor Portal
+- View pending appointments
+- Access patient medical records
+- Update treatment history and prescriptions
+- Generate bills for completed appointments
+- View patient history
 
+### Admin Portal
+- Register new doctors
+- Add staff members
+- Manage clinic locations
+- View system statistics
+- Manage all users
 
-## How to Run
-1- Install the following:
-* [Microsoft Visual Studio](https://visualstudio.microsoft.com/vs/community/)
-* [Microsoft SQL Server Express](https://www.microsoft.com/en-us/sql-server/sql-server-editions-express)
-* [Microsoft SQL Server Management Studio (SSMS)](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-2017)
+## Getting Started
 
-2- Open SQL Server Management Studio and in the "Connect to Database Engine" window type the following:
+### Prerequisites
+
+- .NET 8 SDK
+- SQL Server or SQL Server Express
+- Visual Studio 2022 or VS Code
+
+### Setup Instructions
+
+1. **Install .NET 8 SDK**
+   Download from [https://dotnet.microsoft.com/download/dotnet/8.0](https://dotnet.microsoft.com/download/dotnet/8.0)
+
+2. **Install SQL Server**
+   - [Microsoft SQL Server Express](https://www.microsoft.com/en-us/sql-server/sql-server-editions-express)
+   - [SQL Server Management Studio (SSMS)](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms)
+
+3. **Setup Database**
+
+   Open SQL Server Management Studio and connect:
+   ```
+   Server name: .\SQLEXPRESS
+   Authentication: Windows Authentication
+   ```
+
+   Execute the following SQL files from the `Database Files` folder in order:
+   - Schema.sql (creates database and tables)
+   - Admin.sql
+   - Doctor.sql
+   - Patient.sql
+   - Signup.sql
+   - Insertions.sql (test data with login credentials)
+
+4. **Update Connection String**
+
+   Edit `src/ClinicManagement.Web/appsettings.json`:
+   ```json
+   {
+     "ConnectionStrings": {
+       "DefaultConnection": "Data Source=.\\SQLEXPRESS;Initial Catalog=DBProject;Integrated Security=True;TrustServerCertificate=True"
+     }
+   }
+   ```
+
+5. **Build the Solution**
+   ```bash
+   dotnet build ClinicManagement.sln
+   ```
+
+6. **Run the Application**
+   ```bash
+   cd src/ClinicManagement.Web
+   dotnet run
+   ```
+
+7. **Access the Application**
+
+   Open your browser and navigate to `https://localhost:5001`
+
+## Project Structure
+
 ```
-Servername: .\SQLEXRPESS
-Authentication: Windows Authentication 
+ClinicManagement/
+├── src/
+│   ├── ClinicManagement.Domain/          # Domain entities and interfaces
+│   ├── ClinicManagement.Application/     # Application services and DTOs
+│   ├── ClinicManagement.Infrastructure/  # Data access and repositories
+│   └── ClinicManagement.Web/            # Web UI (Razor Pages)
+├── tests/
+│   ├── ClinicManagement.UnitTests/
+│   └── ClinicManagement.IntegrationTests/
+├── docs/                                 # Documentation
+└── Database Files/                       # SQL scripts
 ```
-<p align="center">
-<img src="images/connection.png" width = "500"/> 
-</p>
 
-3- Now open Schema.sql file in Database Files folder and execute it all. This will create the database and the tables. Afterwards execute the following sql files: Admin.sql, Doctor.sql, Patient.sql, Signup.sql.
+## Migration Notes
 
-4- Now execute the Insertions.sql file in Database Files folder. This will populate the database with some test entries. Moreover, some login emails and passwords of doctors, patients and admin are placed in the Insertions.sql file. You can use them to test the functionalities of the system.
+This application was migrated from ASP.NET Web Forms 4.5.2 to .NET 8. Key changes include:
 
-5- Everything is setup now! You can run the Visual Studio Project by opening Clinic Management System.sln and then select the SignUp.aspx page and click run button named IIS Express. 
-<p align="center">
-<img src="images/run1.png"/> 
-</p>
+### Configuration
+- Web.config replaced with appsettings.json
+- Connection strings moved to configuration
+- Removed legacy compilation settings
+
+### UI Framework
+- Web Forms (.aspx) replaced with Razor Pages (.cshtml)
+- Master pages replaced with _Layout.cshtml
+- ViewState replaced with modern state management
+- Server controls replaced with HTML helpers and Tag Helpers
+
+### Data Access
+- ADO.NET with manual connection management replaced with EF Core
+- Stored procedure calls replaced with LINQ queries
+- DataSet/DataTable replaced with strongly-typed entities
+- Synchronous operations replaced with async/await
+
+### Architecture
+- Monolithic DAL replaced with clean architecture
+- Introduced repository pattern
+- Added dependency injection
+- Separated concerns across layers
+
+### Security
+- Passwords are hashed using SHA256
+- Session-based authentication
+- HTTPS enforced
+- CSRF protection enabled by default
+- SQL injection prevention through EF Core
+
+## Test Credentials
+
+Use the credentials from the Insertions.sql file in the Database Files folder to test different user roles.
+
+## Contributing
+
+Contributions are welcome! Please follow these guidelines:
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+Original application developed as a final project for "Application Development with .NET and Web Services CS624" at Pace University.
+
+## Support
+
+For issues and questions, please open an issue in the GitHub repository.

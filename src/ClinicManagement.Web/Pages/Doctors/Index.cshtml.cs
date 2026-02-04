@@ -1,0 +1,25 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace ClinicManagement.Web.Pages.Doctors;
+
+public class IndexModel : PageModel
+{
+    private readonly ILogger<IndexModel> _logger;
+
+    public IndexModel(ILogger<IndexModel> logger)
+    {
+        _logger = logger;
+    }
+
+    public IActionResult OnGet()
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (!userId.HasValue)
+        {
+            return RedirectToPage("/Login");
+        }
+
+        return Page();
+    }
+}

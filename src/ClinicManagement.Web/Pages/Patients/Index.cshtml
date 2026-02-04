@@ -1,0 +1,46 @@
+@page
+@model ClinicManagement.Web.Pages.Patients.IndexModel
+@{
+    ViewData["Title"] = "Patient Dashboard";
+}
+
+<h2>Patient Dashboard</h2>
+
+<div class="row mt-4">
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">View Doctors</h5>
+                <p class="card-text">Browse available doctors</p>
+                <a href="/Patients/Doctors" class="btn btn-primary">View</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">My Appointments</h5>
+                <p class="card-text">Manage your appointments</p>
+                <a href="/Patients/Appointments" class="btn btn-primary">View</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Bills</h5>
+                <p class="card-text">View billing history</p>
+                <a href="/Patients/Bills" class="btn btn-primary">View</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Feedback</h5>
+                <p class="card-text">Submit feedback</p>
+                <a href="/Patients/Feedback" class="btn btn-primary">Submit</a>
+            </div>
+        </div>
+    </div>
+</div>

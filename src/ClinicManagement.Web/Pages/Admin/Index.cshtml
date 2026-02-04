@@ -1,0 +1,37 @@
+@page
+@model ClinicManagement.Web.Pages.Admin.IndexModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<h2>Admin Dashboard</h2>
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Register Doctor</h5>
+                <p class="card-text">Add new doctors to the system</p>
+                <a href="/Admin/RegisterDoctor" class="btn btn-danger">Register</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Add Staff</h5>
+                <p class="card-text">Register new staff members</p>
+                <a href="/Admin/AddStaff" class="btn btn-danger">Add</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Manage Clinics</h5>
+                <p class="card-text">Add and manage clinic locations</p>
+                <a href="/Admin/Clinics" class="btn btn-danger">Manage</a>
+            </div>
+        </div>
+    </div>
+</div>
