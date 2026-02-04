@@ -14,8 +14,23 @@ namespace DBProject.DAL
 	public class myDAL
     {
 		//connection string of the server database
-        private static readonly string connString =
-            System.Configuration.ConfigurationManager.ConnectionStrings["sqlCon1"].ConnectionString;
+        private static readonly string connString = GetConnectionString();
+
+        private static string GetConnectionString()
+        {
+            var dbServer = System.Environment.GetEnvironmentVariable("DB_SERVER");
+            var dbName = System.Environment.GetEnvironmentVariable("DB_NAME");
+            var dbUser = System.Environment.GetEnvironmentVariable("DB_USER");
+            var dbPassword = System.Environment.GetEnvironmentVariable("DB_PASSWORD");
+
+            if (!string.IsNullOrEmpty(dbServer) && !string.IsNullOrEmpty(dbName) &&
+                !string.IsNullOrEmpty(dbUser) && !string.IsNullOrEmpty(dbPassword))
+            {
+                return $"Server={dbServer};Database={dbName};User Id={dbUser};Password={dbPassword};";
+            }
+
+            return System.Configuration.ConfigurationManager.ConnectionStrings["sqlCon1"].ConnectionString;
+        }
 
 
 

@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  hospwithoutdbcontcmp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: hospwithoutdbcontcmp:latest
+    container_name: hospwithoutdbcontcmp-app
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
+      - TZ=UTC
+    volumes:
+      - ./logs:/app/logs
+      - ./appsettings:/app/appsettings:ro
+    networks:
+      - app-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  logs:
+  appsettings:
