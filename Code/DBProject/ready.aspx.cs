@@ -1,5 +1,5 @@
 using System;
-using System.Data.SqlClient;
+using Npgsql;
 using System.Web;
 
 namespace DBProject
@@ -24,17 +24,17 @@ namespace DBProject
                 if (!string.IsNullOrEmpty(dbServer) && !string.IsNullOrEmpty(dbName) &&
                     !string.IsNullOrEmpty(dbUser) && !string.IsNullOrEmpty(dbPassword))
                 {
-                    connectionString = $"Server={dbServer};Database={dbName};User Id={dbUser};Password={dbPassword};Connection Timeout=5;";
+                    connectionString = $"Host={dbServer};Database={dbName};Username={dbUser};Password={dbPassword};Port=5432;Timeout=5;";
                 }
                 else
                 {
                     connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["sqlCon1"].ConnectionString;
                 }
 
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (NpgsqlConnection conn = new NpgsqlConnection(connectionString))
                 {
                     conn.Open();
-                    using (SqlCommand cmd = new SqlCommand("SELECT 1", conn))
+                    using (NpgsqlCommand cmd = new NpgsqlCommand("SELECT 1", conn))
                     {
                         cmd.ExecuteScalar();
                     }

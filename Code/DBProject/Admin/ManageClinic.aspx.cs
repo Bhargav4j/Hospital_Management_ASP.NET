@@ -4,7 +4,8 @@ using System.Linq;
 using System.Web;
 using DBProject.DAL;
 using System.Data;
-using System.Web.UI;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Web.UI.WebControls;
 
 namespace DBProject

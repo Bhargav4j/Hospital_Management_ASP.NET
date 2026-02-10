@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using DBProject.DAL;
 
 namespace DBProject
@@ -17,7 +17,7 @@ namespace DBProject
 
 		protected void StaffRegister(object sender, EventArgs e)
 		{
-			if (Page.IsValid)
+			if (this.IsValid)
 			{
 				myDAL objmyDAL = new myDAL();
 
@@ -26,7 +26,7 @@ namespace DBProject
 
 				if (objmyDAL.AddStaff(Name.Text, BirthDate.Text, Phone.Text, gender[0], Address.Text, salary, Qual.Text, Designation.Text) == 1) ;
 				{
-					Response.BufferOutput = true;
+					// Response.BufferOutput = true;
 					Msg.Visible = true;
 					Msg.Text = Designation.Text + " Added Succesfully";
 					flushInformation();

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using DBProject.DAL;
 using System.Data;
 
@@ -37,21 +37,21 @@ namespace DBProject
 
                 if (type == 1)
                 {
-                    Response.BufferOutput = true;
+                    // Response.BufferOutput = true;
                     Response.Redirect("~/Patient/PatientHome.aspx");
                     return;
                 }
 
                 else if (type == 2)
                 {
-                    Response.BufferOutput = true;
+                    // Response.BufferOutput = true;
                     Response.Redirect("~/Doctor/DoctorHome.aspx");
                     return;
                 }
 
                 else if (type == 3)
                 {
-                    Response.BufferOutput = true;
+                    // Response.BufferOutput = true;
                     Response.Redirect("~/Admin/AdminHome.aspx");
                     return;
                 }
@@ -110,7 +110,7 @@ namespace DBProject
 
               //Response.Write("<script>alert('Registration Successful !');</script>");
 
-                Response.BufferOutput = true;
+                // Response.BufferOutput = true;
                 Response.Redirect("~/Patient/PatientHome.aspx");
             }
 

@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using DBProject.DAL;
+using System.Web.UI.WebControls;
 
 namespace DB_Project
 {
@@ -38,7 +39,7 @@ namespace DB_Project
 		protected void DoctorRegister(object sender, EventArgs e)
 		{
 
-			if (Page.IsValid)
+			if (this.IsValid)
 			{
 				myDAL objmyDAL = new myDAL();
 
@@ -49,7 +50,7 @@ namespace DB_Project
 				string gender = Request.Form["Gender"].ToString();
 
 				objmyDAL.AddDoctor(Name.Text, Email.Text, Password.Text, BirthDate.Text, dept, Phone.Text, gender[0], Address.Text, exp, salary, chargesPerVisit, spec.Text, Qualification.Text);
-				Response.BufferOutput = true;
+				// Response.BufferOutput = true;
 				Msg.Visible = true;
 				Msg.Text = "doctor Added Succesfully";
 				flushInformation();

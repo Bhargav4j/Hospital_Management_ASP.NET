@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using DBProject.DAL;
 using System.Data;
 
@@ -39,7 +39,7 @@ namespace doctor
             int appoint = (int)Session["appointid"];
             objmyDAL.paid_bill_DAL(did,appoint);
 
-			Response.BufferOutput = false;
+			// Response.BufferOutput = false;
             Response.Redirect("patienthistory.aspx");
         }
 
@@ -52,7 +52,7 @@ namespace doctor
             int appoint = (int)Session["appointid"];
             objmyDAL.Unpaid_bill_DAL(did, appoint);
 
-            Response.BufferOutput = false;
+            // Response.BufferOutput = false;
             Response.Redirect("patienthistory.aspx");
         }
     }
