@@ -1,0 +1,26 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to Hospital Management System</h1>
+    <p class="lead">Modern healthcare management solution built with ASP.NET Core 8</p>
+
+    @if (HttpContext.Session.GetInt32("UserId") == null)
+    {
+        <div class="mt-4">
+            <a asp-page="/Login" class="btn btn-primary btn-lg me-2">Login</a>
+            <a asp-page="/Register" class="btn btn-outline-primary btn-lg">Register</a>
+        </div>
+    }
+    else
+    {
+        var userName = HttpContext.Session.GetString("UserName") ?? "User";
+        <div class="alert alert-success mt-4">
+            <h4>Welcome back, @userName!</h4>
+            <p>Navigate to your dashboard to manage your activities.</p>
+        </div>
+    }
+</div>
