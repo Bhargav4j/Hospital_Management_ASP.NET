@@ -1,0 +1,40 @@
+@page
+@model HospitalManagement.Web.Pages.Doctor.IndexModel
+@{
+    ViewData["Title"] = "Doctor Dashboard";
+}
+
+<div class="container">
+    <h1>Doctor Dashboard</h1>
+    <p>Welcome, Doctor!</p>
+
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Pending Appointments</h5>
+                    <p class="card-text">View and manage pending appointments.</p>
+                    <a href="#" class="btn btn-primary">View Appointments</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Patient History</h5>
+                    <p class="card-text">View patient medical histories.</p>
+                    <a href="#" class="btn btn-primary">View History</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Create Bill</h5>
+                    <p class="card-text">Generate bills for patients.</p>
+                    <a href="#" class="btn btn-primary">Create Bill</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

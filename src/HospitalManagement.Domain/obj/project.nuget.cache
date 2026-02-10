@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "aljq7y7KvG4=",
+  "success": true,
+  "projectFilePath": "/modernize-data/studio-data/TNT1001/APP1005/transformed-code/3/studio-workspace/RAHospitalManagementASP/src/HospitalManagement.Domain/HospitalManagement.Domain.csproj",
+  "expectedPackageFiles": [
+    "/home/studioai/.nuget/packages/microsoft.netcore.app.ref/8.0.23/microsoft.netcore.app.ref.8.0.23.nupkg.sha512",
+    "/home/studioai/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.23/microsoft.aspnetcore.app.ref.8.0.23.nupkg.sha512"
+  ],
+  "logs": []
+}

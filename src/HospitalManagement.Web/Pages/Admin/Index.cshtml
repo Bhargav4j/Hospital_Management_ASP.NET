@@ -1,0 +1,40 @@
+@page
+@model HospitalManagement.Web.Pages.Admin.IndexModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container">
+    <h1>Admin Dashboard</h1>
+    <p>Welcome, Administrator!</p>
+
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Doctors</h5>
+                    <p class="card-text">Add, edit, or remove doctor profiles.</p>
+                    <a href="#" class="btn btn-primary">Manage Doctors</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Staff</h5>
+                    <p class="card-text">Add, edit, or remove staff members.</p>
+                    <a href="#" class="btn btn-primary">Manage Staff</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Clinic Management</h5>
+                    <p class="card-text">Manage clinic settings and configurations.</p>
+                    <a href="#" class="btn btn-primary">Manage Clinic</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

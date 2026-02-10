@@ -1,0 +1,149 @@
+using HospitalManagement.Domain.Entities;
+using HospitalManagement.Domain.Interfaces.Repositories;
+using HospitalManagement.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+
+namespace HospitalManagement.Infrastructure.Repositories;
+
+public class PatientRepository : IPatientRepository
+{
+    private readonly HospitalDbContext _context;
+    private readonly ILogger<PatientRepository> _logger;
+
+    public PatientRepository(HospitalDbContext context, ILogger<PatientRepository> logger)
+    {
+        _context = context;
+        _logger = logger;
+    }
+
+    public async Task<IEnumerable<Patient>> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            return await _context.Patients
+                .Include(p => p.User)
+                .Where(p => p.IsActive)
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving all patients");
+            throw;
+        }
+    }
+
+    public async Task<Patient?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            return await _context.Patients
+                .Include(p => p.User)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.Id == id && p.IsActive, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving patient {PatientId}", id);
+            throw;
+        }
+    }
+
+    public async Task<Patient?> GetByUserIdAsync(int userId, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            return await _context.Patients
+                .Include(p => p.User)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.UserId == userId && p.IsActive, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving patient by user id {UserId}", userId);
+            throw;
+        }
+    }
+
+    public async Task<Patient> AddAsync(Patient patient, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            _context.Patients.Add(patient);
+            await _context.SaveChangesAsync(cancellationToken);
+            _logger.LogInformation("Patient created: {PatientId}", patient.Id);
+            return patient;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error adding patient");
+            throw;
+        }
+    }
+
+    public async Task UpdateAsync(Patient patient, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            _context.Patients.Update(patient);
+            await _context.SaveChangesAsync(cancellationToken);
+            _logger.LogInformation("Patient updated: {PatientId}", patient.Id);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating patient {PatientId}", patient.Id);
+            throw;
+        }
+    }
+
+    public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var patient = await _context.Patients.FindAsync(new object[] { id }, cancellationToken);
+            if (patient != null)
+            {
+                patient.IsActive = false;
+                patient.ModifiedDate = DateTime.UtcNow;
+                await _context.SaveChangesAsync(cancellationToken);
+                _logger.LogInformation("Patient deleted: {PatientId}", id);
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error deleting patient {PatientId}", id);
+            throw;
+        }
+    }
+
+    public async Task<bool> ExistsAsync(int id, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            return await _context.Patients.AnyAsync(p => p.Id == id && p.IsActive, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error checking if patient exists {PatientId}", id);
+            throw;
+        }
+    }
+
+    public async Task<IEnumerable<Patient>> SearchAsync(string searchTerm, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            return await _context.Patients
+                .Include(p => p.User)
+                .Where(p => p.IsActive && (p.Name.Contains(searchTerm) || (p.Phone != null && p.Phone.Contains(searchTerm))))
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error searching patients with term {SearchTerm}", searchTerm);
+            throw;
+        }
+    }
+}

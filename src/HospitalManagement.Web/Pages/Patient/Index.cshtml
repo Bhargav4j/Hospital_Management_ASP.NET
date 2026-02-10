@@ -1,0 +1,40 @@
+@page
+@model HospitalManagement.Web.Pages.Patient.IndexModel
+@{
+    ViewData["Title"] = "Patient Dashboard";
+}
+
+<div class="container">
+    <h1>Patient Dashboard</h1>
+    <p>Welcome, Patient!</p>
+
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">View Doctors</h5>
+                    <p class="card-text">Browse available doctors and their specializations.</p>
+                    <a href="#" class="btn btn-primary">View Doctors</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">My Appointments</h5>
+                    <p class="card-text">View and manage your appointments.</p>
+                    <a href="#" class="btn btn-primary">My Appointments</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Treatment History</h5>
+                    <p class="card-text">View your medical treatment history.</p>
+                    <a href="#" class="btn btn-primary">View History</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
