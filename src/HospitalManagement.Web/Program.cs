@@ -33,7 +33,7 @@ if (string.IsNullOrEmpty(connectionString))
     if (!string.IsNullOrEmpty(dbServer) && !string.IsNullOrEmpty(dbName) &&
         !string.IsNullOrEmpty(dbUser) && !string.IsNullOrEmpty(dbPassword))
     {
-        connectionString = $"Server={dbServer};Database={dbName};User Id={dbUser};Password={dbPassword};TrustServerCertificate=True;";
+        connectionString = $"Host={dbServer};Database={dbName};Username={dbUser};Password={dbPassword};";
     }
     else
     {
@@ -42,7 +42,8 @@ if (string.IsNullOrEmpty(connectionString))
 }
 
 builder.Services.AddDbContext<HospitalDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseNpgsql(connectionString)
+        .UseSnakeCaseNamingConvention());
 
 // Register repositories
 builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();

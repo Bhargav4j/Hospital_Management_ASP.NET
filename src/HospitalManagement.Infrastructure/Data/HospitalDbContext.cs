@@ -23,6 +23,9 @@ public class HospitalDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        // Set default schema for PostgreSQL
+        modelBuilder.HasDefaultSchema("public");
+
         // Apply configurations
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(HospitalDbContext).Assembly);
 
@@ -35,10 +38,10 @@ public class HospitalDbContext : DbContext
             entity.Property(e => e.Email).IsRequired().HasMaxLength(200);
             entity.Property(e => e.Password).IsRequired().HasMaxLength(500);
             entity.Property(e => e.ContactNumber).HasMaxLength(20);
-            entity.Property(e => e.Salary).HasColumnType("decimal(18,2)");
-            entity.Property(e => e.ChargesPerVisit).HasColumnType("decimal(18,2)");
+            entity.Property(e => e.Salary).HasColumnType("numeric(18,2)");
+            entity.Property(e => e.ChargesPerVisit).HasColumnType("numeric(18,2)");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
-            entity.Property(e => e.CreatedDate).HasDefaultValueSql("GETUTCDATE()");
+            entity.Property(e => e.CreatedDate).HasDefaultValueSql("NOW()");
 
             entity.HasOne(d => d.Department)
                 .WithMany(p => p.Doctors)
@@ -56,7 +59,7 @@ public class HospitalDbContext : DbContext
             entity.Property(e => e.ContactNumber).HasMaxLength(20);
             entity.Property(e => e.BloodGroup).HasMaxLength(10);
             entity.Property(e => e.IsActive).HasDefaultValue(true);
-            entity.Property(e => e.CreatedDate).HasDefaultValueSql("GETUTCDATE()");
+            entity.Property(e => e.CreatedDate).HasDefaultValueSql("NOW()");
         });
 
         modelBuilder.Entity<Appointment>(entity =>
@@ -64,7 +67,7 @@ public class HospitalDbContext : DbContext
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Status).IsRequired().HasMaxLength(50);
             entity.Property(e => e.IsActive).HasDefaultValue(true);
-            entity.Property(e => e.CreatedDate).HasDefaultValueSql("GETUTCDATE()");
+            entity.Property(e => e.CreatedDate).HasDefaultValueSql("NOW()");
 
             entity.HasOne(d => d.Patient)
                 .WithMany(p => p.Appointments)
@@ -82,7 +85,7 @@ public class HospitalDbContext : DbContext
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Name).IsRequired().HasMaxLength(200);
             entity.Property(e => e.IsActive).HasDefaultValue(true);
-            entity.Property(e => e.CreatedDate).HasDefaultValueSql("GETUTCDATE()");
+            entity.Property(e => e.CreatedDate).HasDefaultValueSql("NOW()");
         });
 
         modelBuilder.Entity<Treatment>(entity =>
@@ -91,7 +94,7 @@ public class HospitalDbContext : DbContext
             entity.Property(e => e.Diagnosis).IsRequired();
             entity.Property(e => e.Prescription).IsRequired();
             entity.Property(e => e.IsActive).HasDefaultValue(true);
-            entity.Property(e => e.CreatedDate).HasDefaultValueSql("GETUTCDATE()");
+            entity.Property(e => e.CreatedDate).HasDefaultValueSql("NOW()");
 
             entity.HasOne(d => d.Patient)
                 .WithMany(p => p.Treatments)
@@ -112,12 +115,12 @@ public class HospitalDbContext : DbContext
         modelBuilder.Entity<Bill>(entity =>
         {
             entity.HasKey(e => e.Id);
-            entity.Property(e => e.TotalAmount).HasColumnType("decimal(18,2)");
-            entity.Property(e => e.PaidAmount).HasColumnType("decimal(18,2)");
-            entity.Property(e => e.Balance).HasColumnType("decimal(18,2)");
+            entity.Property(e => e.TotalAmount).HasColumnType("numeric(18,2)");
+            entity.Property(e => e.PaidAmount).HasColumnType("numeric(18,2)");
+            entity.Property(e => e.Balance).HasColumnType("numeric(18,2)");
             entity.Property(e => e.Status).IsRequired().HasMaxLength(50);
             entity.Property(e => e.IsActive).HasDefaultValue(true);
-            entity.Property(e => e.CreatedDate).HasDefaultValueSql("GETUTCDATE()");
+            entity.Property(e => e.CreatedDate).HasDefaultValueSql("NOW()");
 
             entity.HasOne(d => d.Patient)
                 .WithMany(p => p.Bills)

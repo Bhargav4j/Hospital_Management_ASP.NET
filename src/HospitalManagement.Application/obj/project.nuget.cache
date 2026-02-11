@@ -1,19 +1,31 @@
 {
   "version": 2,
-  "dgSpecHash": "GXfGiNdWeiQ=",
+  "dgSpecHash": "B8ZZ9jTf6x8=",
   "success": true,
   "projectFilePath": "/modernize-data/studio-data/TNT1001/APP1010/transformed-code/8/studio-workspace/Hospital11NewCmp/src/HospitalManagement.Application/HospitalManagement.Application.csproj",
   "expectedPackageFiles": [
     "/home/studioai/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
     "/home/studioai/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "/home/studioai/.nuget/packages/fluentvalidation/11.9.0/fluentvalidation.11.9.0.nupkg.sha512",
-    "/home/studioai/.nuget/packages/microsoft.csharp/4.7.0/microsoft.csharp.4.7.0.nupkg.sha512",
+    "/home/studioai/.nuget/packages/microsoft.codecoverage/17.8.0/microsoft.codecoverage.17.8.0.nupkg.sha512",
     "/home/studioai/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/6.0.0/microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
     "/home/studioai/.nuget/packages/microsoft.extensions.options/6.0.0/microsoft.extensions.options.6.0.0.nupkg.sha512",
     "/home/studioai/.nuget/packages/microsoft.extensions.primitives/6.0.0/microsoft.extensions.primitives.6.0.0.nupkg.sha512",
-    "/home/studioai/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
-    "/home/studioai/.nuget/packages/microsoft.netcore.app.ref/8.0.23/microsoft.netcore.app.ref.8.0.23.nupkg.sha512",
-    "/home/studioai/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.23/microsoft.aspnetcore.app.ref.8.0.23.nupkg.sha512"
+    "/home/studioai/.nuget/packages/microsoft.net.test.sdk/17.8.0/microsoft.net.test.sdk.17.8.0.nupkg.sha512",
+    "/home/studioai/.nuget/packages/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "/home/studioai/.nuget/packages/microsoft.testplatform.objectmodel/17.8.0/microsoft.testplatform.objectmodel.17.8.0.nupkg.sha512",
+    "/home/studioai/.nuget/packages/microsoft.testplatform.testhost/17.8.0/microsoft.testplatform.testhost.17.8.0.nupkg.sha512",
+    "/home/studioai/.nuget/packages/netstandard.library/1.6.1/netstandard.library.1.6.1.nupkg.sha512",
+    "/home/studioai/.nuget/packages/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg.sha512",
+    "/home/studioai/.nuget/packages/nuget.frameworks/6.5.0/nuget.frameworks.6.5.0.nupkg.sha512",
+    "/home/studioai/.nuget/packages/xunit/2.6.1/xunit.2.6.1.nupkg.sha512",
+    "/home/studioai/.nuget/packages/xunit.abstractions/2.0.3/xunit.abstractions.2.0.3.nupkg.sha512",
+    "/home/studioai/.nuget/packages/xunit.analyzers/1.4.0/xunit.analyzers.1.4.0.nupkg.sha512",
+    "/home/studioai/.nuget/packages/xunit.assert/2.6.1/xunit.assert.2.6.1.nupkg.sha512",
+    "/home/studioai/.nuget/packages/xunit.core/2.6.1/xunit.core.2.6.1.nupkg.sha512",
+    "/home/studioai/.nuget/packages/xunit.extensibility.core/2.6.1/xunit.extensibility.core.2.6.1.nupkg.sha512",
+    "/home/studioai/.nuget/packages/xunit.extensibility.execution/2.6.1/xunit.extensibility.execution.2.6.1.nupkg.sha512",
+    "/home/studioai/.nuget/packages/xunit.runner.visualstudio/2.5.3/xunit.runner.visualstudio.2.5.3.nupkg.sha512"
   ],
   "logs": []
 }
