@@ -1,0 +1,37 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalManagement.Domain", "src\HospitalManagement.Domain\HospitalManagement.Domain.csproj", "{D1234567-89AB-CDEF-0123-456789ABCDE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalManagement.Application", "src\HospitalManagement.Application\HospitalManagement.Application.csproj", "{D1234567-89AB-CDEF-0123-456789ABCDE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalManagement.Infrastructure", "src\HospitalManagement.Infrastructure\HospitalManagement.Infrastructure.csproj", "{D1234567-89AB-CDEF-0123-456789ABCDE3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalManagement.Web", "src\HospitalManagement.Web\HospitalManagement.Web.csproj", "{D1234567-89AB-CDEF-0123-456789ABCDE4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D1234567-89AB-CDEF-0123-456789ABCDE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1234567-89AB-CDEF-0123-456789ABCDE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1234567-89AB-CDEF-0123-456789ABCDE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1234567-89AB-CDEF-0123-456789ABCDE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1234567-89AB-CDEF-0123-456789ABCDE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1234567-89AB-CDEF-0123-456789ABCDE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1234567-89AB-CDEF-0123-456789ABCDE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1234567-89AB-CDEF-0123-456789ABCDE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1234567-89AB-CDEF-0123-456789ABCDE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1234567-89AB-CDEF-0123-456789ABCDE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1234567-89AB-CDEF-0123-456789ABCDE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1234567-89AB-CDEF-0123-456789ABCDE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1234567-89AB-CDEF-0123-456789ABCDE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1234567-89AB-CDEF-0123-456789ABCDE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1234567-89AB-CDEF-0123-456789ABCDE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1234567-89AB-CDEF-0123-456789ABCDE4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,78 @@
+@page
+@model SignUpModel
+@{
+    ViewData["Title"] = "Sign Up";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2 class="text-center">Sign Up</h2>
+
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div class="alert alert-danger" role="alert">
+                @Model.ErrorMessage
+            </div>
+        }
+
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="SignUpViewModel.Name" class="form-label">Name</label>
+                <input asp-for="SignUpViewModel.Name" class="form-control" />
+                <span asp-validation-for="SignUpViewModel.Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="SignUpViewModel.BirthDate" class="form-label">Birth Date</label>
+                <input asp-for="SignUpViewModel.BirthDate" type="date" class="form-control" />
+                <span asp-validation-for="SignUpViewModel.BirthDate" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="SignUpViewModel.Email" class="form-label">Email</label>
+                <input asp-for="SignUpViewModel.Email" class="form-control" />
+                <span asp-validation-for="SignUpViewModel.Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="SignUpViewModel.Password" class="form-label">Password</label>
+                <input asp-for="SignUpViewModel.Password" type="password" class="form-control" />
+                <span asp-validation-for="SignUpViewModel.Password" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="SignUpViewModel.PhoneNo" class="form-label">Phone Number</label>
+                <input asp-for="SignUpViewModel.PhoneNo" class="form-control" />
+                <span asp-validation-for="SignUpViewModel.PhoneNo" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Gender</label>
+                <div>
+                    <div class="form-check form-check-inline">
+                        <input asp-for="SignUpViewModel.Gender" type="radio" value="1" class="form-check-input" id="genderMale" />
+                        <label class="form-check-label" for="genderMale">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input asp-for="SignUpViewModel.Gender" type="radio" value="2" class="form-check-input" id="genderFemale" />
+                        <label class="form-check-label" for="genderFemale">Female</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input asp-for="SignUpViewModel.Gender" type="radio" value="3" class="form-check-input" id="genderOther" />
+                        <label class="form-check-label" for="genderOther">Other</label>
+                    </div>
+                </div>
+                <span asp-validation-for="SignUpViewModel.Gender" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="SignUpViewModel.Address" class="form-label">Address</label>
+                <textarea asp-for="SignUpViewModel.Address" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="SignUpViewModel.Address" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+        </form>
+
+        <div class="text-center mt-3">
+            <p>Already have an account? <a asp-page="/Account/Login">Login</a></p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

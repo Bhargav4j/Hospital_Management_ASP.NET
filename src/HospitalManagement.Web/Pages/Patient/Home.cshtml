@@ -1,0 +1,38 @@
+@page
+@model HomeModel
+@{
+    ViewData["Title"] = "Patient Home";
+}
+
+<div class="container">
+    <h2>Welcome, @Model.PatientName</h2>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">View Doctors</h5>
+                    <p class="card-text">Browse available doctors</p>
+                    <a asp-page="/Patient/Doctors" class="btn btn-primary">View Doctors</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">My Appointments</h5>
+                    <p class="card-text">View your appointments</p>
+                    <a asp-page="/Patient/Appointments" class="btn btn-primary">View Appointments</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">My Bills</h5>
+                    <p class="card-text">View billing history</p>
+                    <a asp-page="/Patient/Bills" class="btn btn-primary">View Bills</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

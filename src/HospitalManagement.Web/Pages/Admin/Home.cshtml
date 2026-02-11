@@ -1,0 +1,38 @@
+@page
+@model AdminHomeModel
+@{
+    ViewData["Title"] = "Admin Home";
+}
+
+<div class="container">
+    <h2>Welcome, Admin @Model.AdminName</h2>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Staff</h5>
+                    <p class="card-text">Add or manage staff members</p>
+                    <a href="#" class="btn btn-primary">Manage Staff</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Doctor Registration</h5>
+                    <p class="card-text">Register new doctors</p>
+                    <a href="#" class="btn btn-primary">Register Doctor</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Clinic</h5>
+                    <p class="card-text">Manage clinic information</p>
+                    <a href="#" class="btn btn-primary">Manage Clinic</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
