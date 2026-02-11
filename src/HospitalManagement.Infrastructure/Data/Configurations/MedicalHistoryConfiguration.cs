@@ -31,7 +31,7 @@ public class MedicalHistoryConfiguration : IEntityTypeConfiguration<MedicalHisto
 
         builder.Property(m => m.CreatedDate)
             .IsRequired()
-            .HasDefaultValueSql("GETUTCDATE()");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
         builder.Property(m => m.CreatedBy)
             .HasMaxLength(100)

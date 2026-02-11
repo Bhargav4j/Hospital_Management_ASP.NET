@@ -14,13 +14,15 @@ public static class ServiceCollectionExtensions
         var connectionString = configuration.GetConnectionString("DefaultConnection");
 
         services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(connectionString, sqlOptions =>
+            options.UseNpgsql(connectionString, npgsqlOptions =>
             {
-                sqlOptions.EnableRetryOnFailure(
+                npgsqlOptions.EnableRetryOnFailure(
                     maxRetryCount: 5,
                     maxRetryDelay: TimeSpan.FromSeconds(30),
-                    errorNumbersToAdd: null);
-            }));
+                    errorCodesToAdd: null);
+                npgsqlOptions.MigrationsHistoryTable("__efmigrations_history", "public");
+            })
+            .UseSnakeCaseNamingConvention());
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IAppointmentRepository, AppointmentRepository>();

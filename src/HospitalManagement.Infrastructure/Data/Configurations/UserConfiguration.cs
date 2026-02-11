@@ -47,7 +47,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(u => u.CreatedDate)
             .IsRequired()
-            .HasDefaultValueSql("GETUTCDATE()");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
         builder.Property(u => u.CreatedBy)
             .HasMaxLength(100)

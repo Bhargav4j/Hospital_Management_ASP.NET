@@ -31,7 +31,7 @@ public class BillConfiguration : IEntityTypeConfiguration<Bill>
 
         builder.Property(b => b.CreatedDate)
             .IsRequired()
-            .HasDefaultValueSql("GETUTCDATE()");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
         builder.Property(b => b.CreatedBy)
             .HasMaxLength(100)

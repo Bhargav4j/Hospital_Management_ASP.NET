@@ -24,7 +24,7 @@ public class FeedbackConfiguration : IEntityTypeConfiguration<Feedback>
 
         builder.Property(f => f.CreatedDate)
             .IsRequired()
-            .HasDefaultValueSql("GETUTCDATE()");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
         builder.Property(f => f.CreatedBy)
             .HasMaxLength(100)

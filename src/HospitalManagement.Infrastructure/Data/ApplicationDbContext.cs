@@ -20,6 +20,9 @@ public class ApplicationDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.HasDefaultSchema("public");
+        modelBuilder.HasPostgresExtension("uuid-ossp");
+
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
 }

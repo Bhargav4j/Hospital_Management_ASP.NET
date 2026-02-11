@@ -32,7 +32,7 @@ public class ClinicConfiguration : IEntityTypeConfiguration<Clinic>
 
         builder.Property(c => c.CreatedDate)
             .IsRequired()
-            .HasDefaultValueSql("GETUTCDATE()");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
         builder.Property(c => c.CreatedBy)
             .HasMaxLength(100)
