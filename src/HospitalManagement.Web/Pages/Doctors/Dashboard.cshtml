@@ -1,0 +1,44 @@
+@page
+@model HospitalManagement.Web.Pages.Doctors.DashboardModel
+@{
+    ViewData["Title"] = "Doctor Dashboard";
+}
+
+<h1>Doctor Dashboard</h1>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <h3>Welcome, Doctor!</h3>
+        <p>Manage your appointments and patients from here.</p>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Pending Appointments</h5>
+                <p class="card-text">View and manage pending appointment requests.</p>
+                <a href="/Doctors/Appointments" class="btn btn-primary">View Appointments</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Patient History</h5>
+                <p class="card-text">View patient treatment history and records.</p>
+                <a href="/Doctors/Patients" class="btn btn-primary">View Patients</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Profile</h5>
+                <p class="card-text">Update your profile information.</p>
+                <a href="/Doctors/Profile" class="btn btn-primary">View Profile</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+@page
+@model HospitalManagement.Web.Pages.IndexModel
+@{
+    ViewData["Title"] = "Home - Hospital Management System";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to Hospital Management System</h1>
+    <p class="lead">Manage your hospital operations efficiently</p>
+
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Patient Portal</h5>
+                    <p class="card-text">Book appointments, view medical history, and manage your health records.</p>
+                    <a href="/Login" class="btn btn-primary">Patient Login</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Doctor Portal</h5>
+                    <p class="card-text">Manage appointments, patient records, and treatments.</p>
+                    <a href="/Login" class="btn btn-success">Doctor Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
