@@ -1,0 +1,8 @@
+@page
+@model CreateDepartmentModel
+<h2>Create Department</h2>
+<form method="post">
+    <input asp-for="DeptName" class="form-control mb-2" placeholder="Department Name" />
+    <textarea asp-for="Description" class="form-control mb-2" placeholder="Description"></textarea>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

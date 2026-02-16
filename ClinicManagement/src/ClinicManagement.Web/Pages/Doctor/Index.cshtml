@@ -1,0 +1,50 @@
+@page
+@model DoctorIndexModel
+@{
+    ViewData["Title"] = "Doctor Dashboard";
+}
+
+<h2>Doctor Dashboard</h2>
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Pending Appointments</h5>
+                <p class="card-text display-4">@Model.PendingCount</p>
+                <a asp-page="/Doctor/Appointments" class="btn btn-light">View All</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-info mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Today's Appointments</h5>
+                <p class="card-text display-4">@Model.TodayCount</p>
+                <a asp-page="/Doctor/Appointments" class="btn btn-light">View Schedule</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Completed Today</h5>
+                <p class="card-text display-4">@Model.CompletedTodayCount</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>Quick Actions</h4>
+            </div>
+            <div class="card-body">
+                <a asp-page="/Doctor/Appointments" class="btn btn-primary">View Appointments</a>
+                <a asp-page="/Doctor/Profile" class="btn btn-info">Update Profile</a>
+            </div>
+        </div>
+    </div>
+</div>

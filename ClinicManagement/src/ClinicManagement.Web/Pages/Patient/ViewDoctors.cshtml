@@ -1,0 +1,47 @@
+@page
+@model ViewDoctorsModel
+@{
+    ViewData["Title"] = "View Doctors";
+}
+
+<h2>Available Doctors</h2>
+
+<div class="row mb-3">
+    <div class="col-md-12">
+        <form method="get" class="row g-3">
+            <div class="col-md-4">
+                <input type="text" name="searchTerm" class="form-control" placeholder="Search by name or specialization" value="@Model.SearchTerm" />
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary">Search</button>
+                <a asp-page="/Patient/ViewDoctors" class="btn btn-secondary">Clear</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    @foreach (var doctor in Model.Doctors)
+    {
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@doctor.Name</h5>
+                    <p class="card-text">
+                        <strong>Specialization:</strong> @doctor.Specialization<br />
+                        <strong>Department:</strong> @doctor.DepartmentName<br />
+                        <strong>Qualification:</strong> @doctor.Qualification<br />
+                        <strong>Experience:</strong> @doctor.Experience years<br />
+                        <strong>Charges per Visit:</strong> $@doctor.ChargesPerVisit
+                    </p>
+                    <a asp-page="/Patient/BookAppointment" asp-route-doctorId="@doctor.DoctorID" class="btn btn-primary">Book Appointment</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@if (!Model.Doctors.Any())
+{
+    <div class="alert alert-info">No doctors found.</div>
+}

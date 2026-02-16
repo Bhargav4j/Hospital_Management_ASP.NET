@@ -1,0 +1,23 @@
+@page
+@model CreateDoctorModel
+@{
+    ViewData["Title"] = "Create Doctor";
+}
+<h2>Create Doctor</h2>
+<form method="post">
+    <input asp-for="Name" class="form-control mb-2" placeholder="Name" />
+    <input asp-for="Email" class="form-control mb-2" placeholder="Email" />
+    <input asp-for="Password" type="password" class="form-control mb-2" placeholder="Password" />
+    <input asp-for="Phone" class="form-control mb-2" placeholder="Phone" />
+    <input asp-for="Specialization" class="form-control mb-2" placeholder="Specialization" />
+    <select asp-for="DeptNo" class="form-select mb-2">
+        <option value="">Select Department</option>
+        @foreach (var dept in Model.Departments)
+        {
+            <option value="@dept.DeptNo">@dept.DeptName</option>
+        }
+    </select>
+    <input asp-for="Experience" type="number" class="form-control mb-2" placeholder="Experience" />
+    <input asp-for="ChargesPerVisit" type="number" step="0.01" class="form-control mb-2" placeholder="Charges" />
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

@@ -1,0 +1,16 @@
+@page
+@model AdminDoctorsIndexModel
+@{
+    ViewData["Title"] = "Manage Doctors";
+}
+<h2>Manage Doctors</h2>
+<a asp-page="/Admin/Doctors/Create" class="btn btn-primary mb-3">Add Doctor</a>
+<table class="table">
+    <thead><tr><th>Name</th><th>Email</th><th>Specialization</th><th>Department</th><th>Actions</th></tr></thead>
+    <tbody>
+        @foreach (var doctor in Model.Doctors)
+        {
+            <tr><td>@doctor.Name</td><td>@doctor.Email</td><td>@doctor.Specialization</td><td>@doctor.DepartmentName</td><td><a asp-page="Edit" asp-route-id="@doctor.DoctorID" class="btn btn-sm btn-warning">Edit</a></td></tr>
+        }
+    </tbody>
+</table>

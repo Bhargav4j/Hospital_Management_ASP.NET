@@ -1,0 +1,68 @@
+@page
+@model DoctorAppointmentsModel
+@{
+    ViewData["Title"] = "Appointments";
+}
+
+<h2>My Appointments</h2>
+
+<div class="row mt-3">
+    <div class="col-md-12">
+        @if (Model.Appointments.Any())
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Patient</th>
+                        <th>Disease/Symptoms</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var appointment in Model.Appointments)
+                    {
+                        <tr>
+                            <td>@appointment.AppointmentDate.ToString("MM/dd/yyyy")</td>
+                            <td>@appointment.Timings</td>
+                            <td>@appointment.PatientName</td>
+                            <td>@appointment.Disease</td>
+                            <td>
+                                <span class="badge bg-@GetStatusBadgeClass(appointment.Status)">
+                                    @appointment.Status
+                                </span>
+                            </td>
+                            <td>
+                                <a asp-page="/Doctor/AppointmentDetails" asp-route-id="@appointment.AppointmentID" class="btn btn-sm btn-info">Details</a>
+                                @if (appointment.Status == "Pending")
+                                {
+                                    <a asp-page="/Doctor/UpdateAppointment" asp-route-id="@appointment.AppointmentID" class="btn btn-sm btn-primary">Update</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-info">No appointments found.</div>
+        }
+    </div>
+</div>
+
+@functions {
+    string GetStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Pending" => "warning",
+            "Confirmed" => "info",
+            "Completed" => "success",
+            "Cancelled" => "danger",
+            _ => "secondary"
+        };
+    }
+}

@@ -1,0 +1,85 @@
+@page
+@model BookAppointmentModel
+@{
+    ViewData["Title"] = "Book Appointment";
+}
+
+<h2>Book Appointment with Dr. @Model.Doctor?.Name</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5>Doctor Details</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Name:</strong> @Model.Doctor?.Name</p>
+                <p><strong>Specialization:</strong> @Model.Doctor?.Specialization</p>
+                <p><strong>Department:</strong> @Model.Doctor?.DepartmentName</p>
+                <p><strong>Qualification:</strong> @Model.Doctor?.Qualification</p>
+                <p><strong>Experience:</strong> @Model.Doctor?.Experience years</p>
+                <p><strong>Charges per Visit:</strong> $@Model.Doctor?.ChargesPerVisit</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Appointment Details</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <input type="hidden" asp-for="DoctorId" />
+                    
+                    @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+                    {
+                        <div class="alert alert-success">@Model.SuccessMessage</div>
+                    }
+                    
+                    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                    {
+                        <div class="alert alert-danger">@Model.ErrorMessage</div>
+                    }
+                    
+                    <div class="mb-3">
+                        <label asp-for="AppointmentDate" class="form-label"></label>
+                        <input asp-for="AppointmentDate" class="form-control" type="date" />
+                        <span asp-validation-for="AppointmentDate" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Timings" class="form-label"></label>
+                        <select asp-for="Timings" class="form-select">
+                            <option value="">-- Select Time --</option>
+                            <option value="09:00 AM">09:00 AM</option>
+                            <option value="10:00 AM">10:00 AM</option>
+                            <option value="11:00 AM">11:00 AM</option>
+                            <option value="12:00 PM">12:00 PM</option>
+                            <option value="02:00 PM">02:00 PM</option>
+                            <option value="03:00 PM">03:00 PM</option>
+                            <option value="04:00 PM">04:00 PM</option>
+                            <option value="05:00 PM">05:00 PM</option>
+                        </select>
+                        <span asp-validation-for="Timings" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Disease" class="form-label"></label>
+                        <textarea asp-for="Disease" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Disease" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Book Appointment</button>
+                        <a asp-page="/Patient/ViewDoctors" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

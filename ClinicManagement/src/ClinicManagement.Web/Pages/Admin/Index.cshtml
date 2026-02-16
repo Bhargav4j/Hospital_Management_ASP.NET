@@ -1,0 +1,62 @@
+@page
+@model AdminIndexModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<h2>Admin Dashboard</h2>
+
+<div class="row mt-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Patients</h5>
+                <p class="card-text display-4">@Model.PatientCount</p>
+                <a asp-page="/Admin/Patients/Index" class="btn btn-light btn-sm">Manage</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Doctors</h5>
+                <p class="card-text display-4">@Model.DoctorCount</p>
+                <a asp-page="/Admin/Doctors/Index" class="btn btn-light btn-sm">Manage</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-info mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Departments</h5>
+                <p class="card-text display-4">@Model.DepartmentCount</p>
+                <a asp-page="/Admin/Departments/Index" class="btn btn-light btn-sm">Manage</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Appointments</h5>
+                <p class="card-text display-4">@Model.AppointmentCount</p>
+                <a asp-page="/Admin/Appointments/Index" class="btn btn-light btn-sm">View</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>Quick Actions</h4>
+            </div>
+            <div class="card-body">
+                <a asp-page="/Admin/Patients/Create" class="btn btn-primary">Add Patient</a>
+                <a asp-page="/Admin/Doctors/Create" class="btn btn-success">Add Doctor</a>
+                <a asp-page="/Admin/Departments/Create" class="btn btn-info">Add Department</a>
+                <a asp-page="/Admin/Staff/Create" class="btn btn-secondary">Add Staff</a>
+            </div>
+        </div>
+    </div>
+</div>

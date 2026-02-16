@@ -1,0 +1,53 @@
+@page
+@model AdminPatientsIndexModel
+@{
+    ViewData["Title"] = "Manage Patients";
+}
+
+<h2>Manage Patients</h2>
+
+<div class="row mb-3">
+    <div class="col-md-12">
+        <a asp-page="/Admin/Patients/Create" class="btn btn-primary">Add New Patient</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @if (Model.Patients.Any())
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Gender</th>
+                        <th>Birth Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var patient in Model.Patients)
+                    {
+                        <tr>
+                            <td>@patient.Name</td>
+                            <td>@patient.Email</td>
+                            <td>@patient.Phone</td>
+                            <td>@patient.Gender</td>
+                            <td>@patient.BirthDate.ToString("MM/dd/yyyy")</td>
+                            <td>
+                                <a asp-page="/Admin/Patients/Edit" asp-route-id="@patient.PatientID" class="btn btn-sm btn-warning">Edit</a>
+                                <a asp-page="/Admin/Patients/Delete" asp-route-id="@patient.PatientID" class="btn btn-sm btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-info">No patients found.</div>
+        }
+    </div>
+</div>
