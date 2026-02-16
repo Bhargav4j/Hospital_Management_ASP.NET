@@ -20,6 +20,6 @@ public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
             .HasMaxLength(500);
         
         builder.Property(d => d.CreatedDate)
-            .HasDefaultValueSql("GETUTCDATE()");
+            .HasDefaultValueSql("NOW() AT TIME ZONE 'UTC'");
     }
 }

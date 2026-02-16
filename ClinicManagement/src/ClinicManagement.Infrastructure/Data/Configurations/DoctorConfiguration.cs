@@ -49,7 +49,7 @@ public class DoctorConfiguration : IEntityTypeConfiguration<Doctor>
             .HasColumnType("decimal(18,2)");
         
         builder.Property(d => d.CreatedDate)
-            .HasDefaultValueSql("GETUTCDATE()");
+            .HasDefaultValueSql("NOW() AT TIME ZONE 'UTC'");
         
         builder.HasOne(d => d.Department)
             .WithMany(dept => dept.Doctors)

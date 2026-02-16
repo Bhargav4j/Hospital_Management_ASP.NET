@@ -42,7 +42,7 @@ public class AppointmentConfiguration : IEntityTypeConfiguration<Appointment>
             .HasDefaultValue(false);
         
         builder.Property(a => a.CreatedDate)
-            .HasDefaultValueSql("GETUTCDATE()");
+            .HasDefaultValueSql("NOW() AT TIME ZONE 'UTC'");
         
         builder.HasOne(a => a.Patient)
             .WithMany(p => p.Appointments)

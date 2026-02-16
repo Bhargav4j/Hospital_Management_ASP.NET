@@ -37,6 +37,6 @@ public class PatientConfiguration : IEntityTypeConfiguration<Patient>
             .HasMaxLength(10);
         
         builder.Property(p => p.CreatedDate)
-            .HasDefaultValueSql("GETUTCDATE()");
+            .HasDefaultValueSql("NOW() AT TIME ZONE 'UTC'");
     }
 }

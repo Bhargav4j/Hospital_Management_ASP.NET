@@ -10,13 +10,24 @@ namespace ClinicManagement.Infrastructure.Extensions;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddInfrastructureServices(
-        this IServiceCollection services, 
+        this IServiceCollection services,
         IConfiguration configuration)
     {
-        // Register DbContext
+        // Register DbContext with PostgreSQL
         var connectionString = configuration.GetConnectionString("DefaultConnection");
         services.AddDbContext<ClinicManagementDbContext>(options =>
-            options.UseSqlServer(connectionString));
+        {
+            options.UseNpgsql(connectionString, npgsqlOptions =>
+            {
+                npgsqlOptions.EnableRetryOnFailure(
+                    maxRetryCount: 5,
+                    maxRetryDelay: TimeSpan.FromSeconds(30),
+                    errorCodesToAdd: null);
+                npgsqlOptions.MigrationsHistoryTable("__efmigrations_history", "public");
+            })
+            .UseSnakeCaseNamingConvention()
+            .EnableSensitiveDataLogging(configuration.GetValue<bool>("Logging:EnableSensitiveDataLogging", false));
+        });
 
         // Register repositories
         services.AddScoped<IPatientRepository, PatientRepository>();

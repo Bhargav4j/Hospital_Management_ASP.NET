@@ -5,7 +5,8 @@ using System.Web;
 using System.Web.UI.WebControls;
 using System.Web.UI;
 using System.Data;
-using System.Data.SqlClient;
+using Npgsql;
+using NpgsqlTypes;
 
  
 namespace DBProject.DAL
@@ -26,7 +27,7 @@ namespace DBProject.DAL
             if (!string.IsNullOrEmpty(dbServer) && !string.IsNullOrEmpty(dbName) &&
                 !string.IsNullOrEmpty(dbUser) && !string.IsNullOrEmpty(dbPassword))
             {
-                return $"Server={dbServer};Database={dbName};User Id={dbUser};Password={dbPassword};";
+                return $"Host={dbServer};Port=5432;Database={dbName};Username={dbUser};Password={dbPassword};Pooling=true;MinPoolSize=1;MaxPoolSize=20;";
             }
 
             return System.Configuration.ConfigurationManager.ConnectionStrings["sqlCon1"].ConnectionString;
@@ -48,13 +49,13 @@ namespace DBProject.DAL
 		/*CHECKS WHETHER IT IS A VALID USER AND RETURN ITS TYPE*/
 		public int validateLogin (string Email, string Password, ref int type , ref int id)
         {
-            SqlConnection con = new SqlConnection(connString);
+            NpgsqlConnection con = new NpgsqlConnection(connString);
             con.Open();
 
             try
             {
 
-                SqlCommand cmd1 = new SqlCommand("Login", con);     
+                NpgsqlCommand cmd1 = new NpgsqlCommand("Login", con);     
                 cmd1.CommandType = CommandType.StoredProcedure;
 
 				/*
@@ -67,12 +68,12 @@ namespace DBProject.DAL
                  */
 
 
-				cmd1.Parameters.Add("@email", SqlDbType.VarChar, 30).Value = Email;
-                cmd1.Parameters.Add("@password", SqlDbType.VarChar, 20).Value = Password; 
+				cmd1.Parameters.Add("@email", NpgsqlDbType.VarChar, 30).Value = Email;
+                cmd1.Parameters.Add("@password", NpgsqlDbType.VarChar, 20).Value = Password; 
 
-                cmd1.Parameters.Add("@status", SqlDbType.Int).Direction = ParameterDirection.Output;
-                cmd1.Parameters.Add("@ID", SqlDbType.Int).Direction = ParameterDirection.Output;
-                cmd1.Parameters.Add("@type", SqlDbType.Int).Direction = ParameterDirection.Output;
+                cmd1.Parameters.Add("@status", NpgsqlDbType.Int).Direction = ParameterDirection.Output;
+                cmd1.Parameters.Add("@ID", NpgsqlDbType.Int).Direction = ParameterDirection.Output;
+                cmd1.Parameters.Add("@type", NpgsqlDbType.Int).Direction = ParameterDirection.Output;
 
                 cmd1.ExecuteNonQuery();
 				
@@ -83,7 +84,7 @@ namespace DBProject.DAL
                 return status;
             }
 
-            catch(SqlException ex)
+            catch(NpgsqlException ex)
             {
                 return -1;
             }
@@ -103,7 +104,7 @@ namespace DBProject.DAL
         public int validateUser (string Name, string BirthDate, string Email , string Password , string PhoneNo , string gender , string Address, ref int id)
         {
 
-            SqlConnection con = new SqlConnection(connString);
+            NpgsqlConnection con = new NpgsqlConnection(connString);
             con.Open();
 
             try
@@ -123,19 +124,19 @@ namespace DBProject.DAL
                   */
 
 
-                SqlCommand cmd1 = new SqlCommand("PatientSignup", con);              
+                NpgsqlCommand cmd1 = new NpgsqlCommand("PatientSignup", con);              
                 cmd1.CommandType = CommandType.StoredProcedure;
 
-				cmd1.Parameters.Add("@name", SqlDbType.VarChar, 20).Value = Name;
-				cmd1.Parameters.Add("@address", SqlDbType.VarChar, 40).Value = Address;
-				cmd1.Parameters.Add("@gender", SqlDbType.VarChar, 1).Value = gender;
-				cmd1.Parameters.Add("@date", SqlDbType.Date).Value = BirthDate;
-				cmd1.Parameters.Add("@email", SqlDbType.VarChar, 30).Value = Email;
-				cmd1.Parameters.Add("@password", SqlDbType.VarChar, 20).Value = Password;
-				cmd1.Parameters.Add("@phone", SqlDbType.Char, 15).Value = PhoneNo;
+				cmd1.Parameters.Add("@name", NpgsqlDbType.VarChar, 20).Value = Name;
+				cmd1.Parameters.Add("@address", NpgsqlDbType.VarChar, 40).Value = Address;
+				cmd1.Parameters.Add("@gender", NpgsqlDbType.VarChar, 1).Value = gender;
+				cmd1.Parameters.Add("@date", NpgsqlDbType.Date).Value = BirthDate;
+				cmd1.Parameters.Add("@email", NpgsqlDbType.VarChar, 30).Value = Email;
+				cmd1.Parameters.Add("@password", NpgsqlDbType.VarChar, 20).Value = Password;
+				cmd1.Parameters.Add("@phone", NpgsqlDbType.Char, 15).Value = PhoneNo;
 				
-                cmd1.Parameters.Add("@status", SqlDbType.Int).Direction = ParameterDirection.Output;
-                cmd1.Parameters.Add("@ID", SqlDbType.Int).Direction = ParameterDirection.Output;
+                cmd1.Parameters.Add("@status", NpgsqlDbType.Int).Direction = ParameterDirection.Output;
+                cmd1.Parameters.Add("@ID", NpgsqlDbType.Int).Direction = ParameterDirection.Output;
 				
                 cmd1.ExecuteNonQuery();           
 
@@ -150,7 +151,7 @@ namespace DBProject.DAL
                 return status; 
             }
 
-            catch(SqlException ex)
+            catch(NpgsqlException ex)
             {
                 return -1;
             }
@@ -180,7 +181,7 @@ namespace DBProject.DAL
         public int DoctorEmailAlreadyExist(string Email)
         {
             int status = 0;
-            SqlConnection con = new SqlConnection(connString);
+            NpgsqlConnection con = new NpgsqlConnection(connString);
             con.Open();
 
 
@@ -190,10 +191,10 @@ namespace DBProject.DAL
              */
 
 
-            SqlCommand cmd = new SqlCommand("CheckDoctorEmail", con);
+            NpgsqlCommand cmd = new NpgsqlCommand("CheckDoctorEmail", con);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@Email", SqlDbType.VarChar, 30).Value = Email;
-            cmd.Parameters.Add("@status", SqlDbType.Int).Direction = ParameterDirection.Output;
+            cmd.Parameters.Add("@Email", NpgsqlDbType.VarChar, 30).Value = Email;
+            cmd.Parameters.Add("@status", NpgsqlDbType.Int).Direction = ParameterDirection.Output;
 
             cmd.ExecuteNonQuery();
 
@@ -213,11 +214,11 @@ namespace DBProject.DAL
         public void AddDoctor(string Name, string Email, string Password, string BirthDate, int dept, string Phone, char gender, string Address, int exp, int salary, int Charges_per_visit, string spec, string qual)
         {
 
-            SqlConnection con = new SqlConnection(connString);
+            NpgsqlConnection con = new NpgsqlConnection(connString);
             con.Open();
 
 
-            SqlCommand cmd = new SqlCommand("AddDoctor", con);
+            NpgsqlCommand cmd = new NpgsqlCommand("AddDoctor", con);
             cmd.CommandType = CommandType.StoredProcedure;
 
             /*
@@ -236,19 +237,19 @@ namespace DBProject.DAL
              */
 
 
-            cmd.Parameters.Add("@Name", SqlDbType.VarChar, 30).Value = Name;
-            cmd.Parameters.Add("@Email", SqlDbType.VarChar, 30).Value = Email;
-            cmd.Parameters.Add("@Password", SqlDbType.VarChar, 30).Value = Password;
-            cmd.Parameters.Add("@BirthDate", SqlDbType.Date).Value = BirthDate;
-            cmd.Parameters.Add("@dept", SqlDbType.VarChar, 30).Value = dept;
-            cmd.Parameters.Add("@gender", SqlDbType.VarChar, 1).Value = gender;
-            cmd.Parameters.Add("@Address", SqlDbType.VarChar, 30).Value = Address;
-            cmd.Parameters.Add("@Exp", SqlDbType.VarChar, 30).Value = exp;
-            cmd.Parameters.Add("@Salary", SqlDbType.VarChar, 30).Value = salary;
-            cmd.Parameters.Add("@charges", SqlDbType.VarChar, 30).Value = Charges_per_visit;
-            cmd.Parameters.Add("@phone", SqlDbType.VarChar, 30).Value = Phone;
-            cmd.Parameters.Add("@spec", SqlDbType.VarChar, 30).Value = spec;
-            cmd.Parameters.Add("@qual", SqlDbType.VarChar, 30).Value = qual;
+            cmd.Parameters.Add("@Name", NpgsqlDbType.VarChar, 30).Value = Name;
+            cmd.Parameters.Add("@Email", NpgsqlDbType.VarChar, 30).Value = Email;
+            cmd.Parameters.Add("@Password", NpgsqlDbType.VarChar, 30).Value = Password;
+            cmd.Parameters.Add("@BirthDate", NpgsqlDbType.Date).Value = BirthDate;
+            cmd.Parameters.Add("@dept", NpgsqlDbType.VarChar, 30).Value = dept;
+            cmd.Parameters.Add("@gender", NpgsqlDbType.VarChar, 1).Value = gender;
+            cmd.Parameters.Add("@Address", NpgsqlDbType.VarChar, 30).Value = Address;
+            cmd.Parameters.Add("@Exp", NpgsqlDbType.VarChar, 30).Value = exp;
+            cmd.Parameters.Add("@Salary", NpgsqlDbType.VarChar, 30).Value = salary;
+            cmd.Parameters.Add("@charges", NpgsqlDbType.VarChar, 30).Value = Charges_per_visit;
+            cmd.Parameters.Add("@phone", NpgsqlDbType.VarChar, 30).Value = Phone;
+            cmd.Parameters.Add("@spec", NpgsqlDbType.VarChar, 30).Value = spec;
+            cmd.Parameters.Add("@qual", NpgsqlDbType.VarChar, 30).Value = qual;
 
             cmd.ExecuteNonQuery();
             con.Close();
@@ -264,10 +265,10 @@ namespace DBProject.DAL
         public int AddStaff(string Name, string BirthDate, string Phone, char gender, string Address, int salary, string Qual, string Designation)
         {
 
-            SqlConnection con = new SqlConnection(connString);
+            NpgsqlConnection con = new NpgsqlConnection(connString);
             con.Open();
 
-            SqlCommand cmd = new SqlCommand("AddStaff", con);
+            NpgsqlCommand cmd = new NpgsqlCommand("AddStaff", con);
             cmd.CommandType = CommandType.StoredProcedure;
 
             try
@@ -288,14 +289,14 @@ namespace DBProject.DAL
 
 
                 /*INPUTS*/
-                cmd.Parameters.Add("@Name", SqlDbType.VarChar, 30).Value = Name;
-                cmd.Parameters.Add("@BirthDate", SqlDbType.Date).Value = BirthDate;
-                cmd.Parameters.Add("@Phone", SqlDbType.VarChar, 30).Value = Phone;
-                cmd.Parameters.Add("@gender", SqlDbType.VarChar, 1).Value = gender;
-                cmd.Parameters.Add("@salary", SqlDbType.Int, 30).Value = salary;
-                cmd.Parameters.Add("@Designation", SqlDbType.VarChar, 30).Value = Designation;
-                cmd.Parameters.Add("@Qualification", SqlDbType.VarChar, 1).Value = Qual;
-                cmd.Parameters.Add("@Address", SqlDbType.VarChar, 50).Value = Address;
+                cmd.Parameters.Add("@Name", NpgsqlDbType.VarChar, 30).Value = Name;
+                cmd.Parameters.Add("@BirthDate", NpgsqlDbType.Date).Value = BirthDate;
+                cmd.Parameters.Add("@Phone", NpgsqlDbType.VarChar, 30).Value = Phone;
+                cmd.Parameters.Add("@gender", NpgsqlDbType.VarChar, 1).Value = gender;
+                cmd.Parameters.Add("@salary", NpgsqlDbType.Int, 30).Value = salary;
+                cmd.Parameters.Add("@Designation", NpgsqlDbType.VarChar, 30).Value = Designation;
+                cmd.Parameters.Add("@Qualification", NpgsqlDbType.VarChar, 1).Value = Qual;
+                cmd.Parameters.Add("@Address", NpgsqlDbType.VarChar, 50).Value = Address;
 
                 cmd.ExecuteNonQuery();
             }
@@ -319,12 +320,12 @@ namespace DBProject.DAL
         public void GetAdminHomeInformation(ref DataTable[] arrTable)
         {
 
-            SqlConnection con = new SqlConnection(connString);
+            NpgsqlConnection con = new NpgsqlConnection(connString);
             con.Open();
 
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM Total_Patient", con);
-            SqlDataAdapter Adapter = new SqlDataAdapter(cmd);
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM Total_Patient", con);
+            NpgsqlDataAdapter Adapter = new NpgsqlDataAdapter(cmd);
             Adapter.Fill(arrTable[0]);
 
             cmd.CommandText = "SELECT * FROM Total_Doctors";
@@ -352,15 +353,15 @@ namespace DBProject.DAL
         /*THIS FUNCTION IS INTENDED TO DELETE DOCTOR BUT SECRETLY IT ONLY UPDATE THE STATUS*/
         public int DeleteDoctor(int id)
         {
-            SqlConnection con = new SqlConnection(connString);
+            NpgsqlConnection con = new NpgsqlConnection(connString);
             con.Open();
 
             try
             {
-                SqlCommand cmd = new SqlCommand("DeleteDoctor", con);
+                NpgsqlCommand cmd = new NpgsqlCommand("DeleteDoctor", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                cmd.Parameters.Add("@id", NpgsqlDbType.Int).Value = id;
                 cmd.ExecuteNonQuery();
             }
             catch
@@ -378,15 +379,15 @@ namespace DBProject.DAL
         /*THIS FUNCTION WILL DELLETE STAFF FROM THE DOCTOR */
         public int DeleteStaff(int id)
         {
-            SqlConnection con = new SqlConnection(connString);
+            NpgsqlConnection con = new NpgsqlConnection(connString);
             con.Open();
 
             try
             {
-                SqlCommand cmd = new SqlCommand("DELETESTAFF", con);
+                NpgsqlCommand cmd = new NpgsqlCommand("DELETESTAFF", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                cmd.Parameters.Add("@id", NpgsqlDbType.Int).Value = id;
                 cmd.ExecuteNonQuery();
             }
             catch
@@ -402,14 +403,14 @@ namespace DBProject.DAL
         public void LoadDoctor(ref DataTable table, String SearchQuery)
         {
 
-            SqlConnection con = new SqlConnection(connString);
-            SqlCommand cmd;
+            NpgsqlConnection con = new NpgsqlConnection(connString);
+            NpgsqlCommand cmd;
             con.Open();
 
 
             if (SearchQuery == "")
             {
-                cmd = new SqlCommand(
+                cmd = new NpgsqlCommand(
                 "SELECT Doctor.DoctorID as ID , Doctor.Name , D.DeptName as Department FROM Doctor JOIN Department D ON D.DeptNo = Doctor.DeptNo" +
                 " WHERE Doctor.Status = 1",
                 con);
@@ -417,14 +418,14 @@ namespace DBProject.DAL
             }
             else
             {
-                cmd = new SqlCommand(
+                cmd = new NpgsqlCommand(
                 "SELECT a.DoctorID as ID,  a.Name, D.DeptName as Department FROM department D join (SELECT * FROM Doctor WHERE Doctor.Status = 1 AND Doctor.Name like  '%' + @DName + '%')  a ON a.DeptNo = D.DeptNo",
                 con);
                 cmd.Parameters.AddWithValue("@DName", SearchQuery);
             }
 
 
-            SqlDataAdapter Adapter = new SqlDataAdapter(cmd);
+            NpgsqlDataAdapter Adapter = new NpgsqlDataAdapter(cmd);
             Adapter.Fill(table);
             con.Close();
         }
@@ -439,26 +440,26 @@ namespace DBProject.DAL
         public void LoadPatient(ref DataTable table, String SearchQuery)
         {
 
-            SqlConnection con = new SqlConnection(connString);
-            SqlCommand cmd;
+            NpgsqlConnection con = new NpgsqlConnection(connString);
+            NpgsqlCommand cmd;
             con.Open();
 
 
             if (SearchQuery == "")
             {
-                cmd = new SqlCommand("SELECT * FROM PATIENT_VIEW", con);
+                cmd = new NpgsqlCommand("SELECT * FROM PATIENT_VIEW", con);
 
             }
             else
             {
-                cmd = new SqlCommand("SELECT Patient.PatientID, Patient.Name, Patient.Phone from Patient" +
+                cmd = new NpgsqlCommand("SELECT Patient.PatientID, Patient.Name, Patient.Phone from Patient" +
                 " WHERE patient.name like '%' + @SName + '%' ", con);
                 cmd.Parameters.AddWithValue("@SName", SearchQuery.Trim());
 
             }
 
 
-            SqlDataAdapter Adapter = new SqlDataAdapter(cmd);
+            NpgsqlDataAdapter Adapter = new NpgsqlDataAdapter(cmd);
             Adapter.Fill(table);
             con.Close();
         }
@@ -472,24 +473,24 @@ namespace DBProject.DAL
         public void LoadOtherStaff(ref DataTable table, String SearchQuery)
         {
 
-            SqlConnection con = new SqlConnection(connString);
-            SqlCommand cmd;
+            NpgsqlConnection con = new NpgsqlConnection(connString);
+            NpgsqlCommand cmd;
             con.Open();
 
 
             if (SearchQuery == "")
             {
-                cmd = new SqlCommand("SELECT * FROM STAFF_VIEW", con);
+                cmd = new NpgsqlCommand("SELECT * FROM STAFF_VIEW", con);
 
             }
             else
             {
-                cmd = new SqlCommand("SELECT StaffID as ID , Name , Designation from OtherStaff WHERE Name like '%' + @pName + '%'", con);
+                cmd = new NpgsqlCommand("SELECT StaffID as ID , Name , Designation from OtherStaff WHERE Name like '%' + @pName + '%'", con);
                 cmd.Parameters.AddWithValue("@PName", SearchQuery.Trim());
             }
 
 
-            SqlDataAdapter Adapter = new SqlDataAdapter(cmd);
+            NpgsqlDataAdapter Adapter = new NpgsqlDataAdapter(cmd);
             Adapter.Fill(table);
             con.Close();
         }
@@ -500,7 +501,7 @@ namespace DBProject.DAL
 
         public int GETPATIENT(int pid, ref string name, ref string phone, ref string address, ref string birthDate, ref int age, ref string gender)
         {
-            SqlConnection con = new SqlConnection(connString);
+            NpgsqlConnection con = new NpgsqlConnection(connString);
             con.Open();
 
 
@@ -520,18 +521,18 @@ namespace DBProject.DAL
                  */
 
 
-                SqlCommand cmd1 = new SqlCommand("RetrievePatientData", con);
+                NpgsqlCommand cmd1 = new NpgsqlCommand("RetrievePatientData", con);
                 cmd1.CommandType = CommandType.StoredProcedure;
 
-                cmd1.Parameters.Add("@id", SqlDbType.Int).Value = pid;
+                cmd1.Parameters.Add("@id", NpgsqlDbType.Int).Value = pid;
 
                 /*PUTTING OUTPUTS*/
-                cmd1.Parameters.Add("@name", SqlDbType.VarChar, 20).Direction = ParameterDirection.Output;
-                cmd1.Parameters.Add("@phone", SqlDbType.Char, 15).Direction = ParameterDirection.Output;
-                cmd1.Parameters.Add("@birthDate", SqlDbType.VarChar, 10).Direction = ParameterDirection.Output;
-                cmd1.Parameters.Add("@address", SqlDbType.VarChar, 40).Direction = ParameterDirection.Output;
-                cmd1.Parameters.Add("@age", SqlDbType.Int).Direction = ParameterDirection.Output;
-                cmd1.Parameters.Add("@gender", SqlDbType.Char, 1).Direction = ParameterDirection.Output;
+                cmd1.Parameters.Add("@name", NpgsqlDbType.VarChar, 20).Direction = ParameterDirection.Output;
+                cmd1.Parameters.Add("@phone", NpgsqlDbType.Char, 15).Direction = ParameterDirection.Output;
+                cmd1.Parameters.Add("@birthDate", NpgsqlDbType.VarChar, 10).Direction = ParameterDirection.Output;
+                cmd1.Parameters.Add("@address", NpgsqlDbType.VarChar, 40).Direction = ParameterDirection.Output;
+                cmd1.Parameters.Add("@age", NpgsqlDbType.Int).Direction = ParameterDirection.Output;
+                cmd1.Parameters.Add("@gender", NpgsqlDbType.Char, 1).Direction = ParameterDirection.Output;
 
                 cmd1.ExecuteNonQuery();
 
@@ -547,7 +548,7 @@ namespace DBProject.DAL
                 return 0;
             }
 
-            catch (SqlException ex)
+            catch (NpgsqlException ex)
             {
                 return -1;
             }
@@ -569,7 +570,7 @@ namespace DBProject.DAL
 
         public int GET_DOCTOR_PROFILE(int dID, ref string name, ref string phone, ref string gender, ref float charges_Per_Visit, ref float ReputeIndex, ref int PatientsTreated, ref string qualification, ref string specialization, ref int workE, ref int age)
         {
-            SqlConnection con = new SqlConnection(connString);
+            NpgsqlConnection con = new NpgsqlConnection(connString);
             con.Open();
 
 
@@ -592,25 +593,25 @@ namespace DBProject.DAL
                 @age int output
                  */
 
-                SqlCommand cmd1 = new SqlCommand("GET_DOCTOR_PROFILE", con);
+                NpgsqlCommand cmd1 = new NpgsqlCommand("GET_DOCTOR_PROFILE", con);
 
                 cmd1.CommandType = CommandType.StoredProcedure;
 
 
                 //Inputs
-                cmd1.Parameters.Add("@dID", SqlDbType.Int).Value = dID;
+                cmd1.Parameters.Add("@dID", NpgsqlDbType.Int).Value = dID;
 
                 //Outputs
-                cmd1.Parameters.Add("@name", SqlDbType.VarChar, 20).Direction = ParameterDirection.Output;
-                cmd1.Parameters.Add("@phone", SqlDbType.VarChar, 15).Direction = ParameterDirection.Output;
-                cmd1.Parameters.Add("@gender", SqlDbType.VarChar, 2).Direction = ParameterDirection.Output;
-                cmd1.Parameters.Add("@charges", SqlDbType.Float).Direction = ParameterDirection.Output;
-                cmd1.Parameters.Add("@RI", SqlDbType.Float).Direction = ParameterDirection.Output;
-                cmd1.Parameters.Add("@PTreated", SqlDbType.Int).Direction = ParameterDirection.Output;
-                cmd1.Parameters.Add("@qualification", SqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
-                cmd1.Parameters.Add("@specialization", SqlDbType.VarChar, 50).Direction = ParameterDirection.Output;
-                cmd1.Parameters.Add("@workE", SqlDbType.Int).Direction = ParameterDirection.Output;
-                cmd1.Parameters.Add("@age", SqlDbType.Int).Direction = ParameterDirection.Output;
+                cmd1.Parameters.Add("@name", NpgsqlDbType.VarChar, 20).Direction = ParameterDirection.Output;
+                cmd1.Parameters.Add("@phone", NpgsqlDbType.VarChar, 15).Direction = ParameterDirection.Output;
+                cmd1.Parameters.Add("@gender", NpgsqlDbType.VarChar, 2).Direction = ParameterDirection.Output;
+                cmd1.Parameters.Add("@charges", NpgsqlDbType.Float).Direction = ParameterDirection.Output;
+                cmd1.Parameters.Add("@RI", NpgsqlDbType.Float).Direction = ParameterDirection.Output;
+                cmd1.Parameters.Add("@PTreated", NpgsqlDbType.Int).Direction = ParameterDirection.Output;
+                cmd1.Parameters.Add("@qualification", NpgsqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
+                cmd1.Parameters.Add("@specialization", NpgsqlDbType.VarChar, 50).Direction = ParameterDirection.Output;
+                cmd1.Parameters.Add("@workE", NpgsqlDbType.Int).Direction = ParameterDirection.Output;
+                cmd1.Parameters.Add("@age", NpgsqlDbType.Int).Direction = ParameterDirection.Output;
 
 
                 cmd1.ExecuteNonQuery();
@@ -631,7 +632,7 @@ namespace DBProject.DAL
 
             }
 
-            catch (SqlException ex)
+            catch (NpgsqlException ex)
             {
                 return -1;
             }
@@ -644,23 +645,23 @@ namespace DBProject.DAL
 
         public int GETSATFF(int id, ref string name, ref string phone, ref string address, ref string gender, ref string desig, ref int sal)
         {
-            SqlConnection con = new SqlConnection(connString);
+            NpgsqlConnection con = new NpgsqlConnection(connString);
             con.Open();
 
-            SqlCommand cmd1 = new SqlCommand("GET_STAFF", con);
+            NpgsqlCommand cmd1 = new NpgsqlCommand("GET_STAFF", con);
             cmd1.CommandType = CommandType.StoredProcedure;
 
 
             //Inputs
-            cmd1.Parameters.Add("@id", SqlDbType.Int).Value = id;
+            cmd1.Parameters.Add("@id", NpgsqlDbType.Int).Value = id;
 
             //Outputs
-            cmd1.Parameters.Add("@name", SqlDbType.VarChar, 20).Direction = ParameterDirection.Output;
-            cmd1.Parameters.Add("@phone", SqlDbType.VarChar, 15).Direction = ParameterDirection.Output;
-            cmd1.Parameters.Add("@gender", SqlDbType.VarChar, 2).Direction = ParameterDirection.Output;
-            cmd1.Parameters.Add("@address", SqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
-            cmd1.Parameters.Add("@desig", SqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
-            cmd1.Parameters.Add("@sal", SqlDbType.Int).Direction = ParameterDirection.Output;
+            cmd1.Parameters.Add("@name", NpgsqlDbType.VarChar, 20).Direction = ParameterDirection.Output;
+            cmd1.Parameters.Add("@phone", NpgsqlDbType.VarChar, 15).Direction = ParameterDirection.Output;
+            cmd1.Parameters.Add("@gender", NpgsqlDbType.VarChar, 2).Direction = ParameterDirection.Output;
+            cmd1.Parameters.Add("@address", NpgsqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
+            cmd1.Parameters.Add("@desig", NpgsqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
+            cmd1.Parameters.Add("@sal", NpgsqlDbType.Int).Direction = ParameterDirection.Output;
 
             //try
             {
@@ -710,7 +711,7 @@ namespace DBProject.DAL
 
         public int patientInfoDisplayer(int pid, ref string name, ref string phone, ref string address, ref string birthDate, ref int age, ref string gender)
 		{
-			SqlConnection con = new SqlConnection(connString);
+			NpgsqlConnection con = new NpgsqlConnection(connString);
 			con.Open();
 
 
@@ -730,18 +731,18 @@ namespace DBProject.DAL
                  */
 
 
-				SqlCommand cmd1 = new SqlCommand("RetrievePatientData", con);
+				NpgsqlCommand cmd1 = new NpgsqlCommand("RetrievePatientData", con);
 				cmd1.CommandType = CommandType.StoredProcedure;
 
-				cmd1.Parameters.Add("@id", SqlDbType.Int).Value = pid;
+				cmd1.Parameters.Add("@id", NpgsqlDbType.Int).Value = pid;
 
 				/*PUTTING OUTPUTS*/
-				cmd1.Parameters.Add("@name", SqlDbType.VarChar, 20).Direction = ParameterDirection.Output;
-				cmd1.Parameters.Add("@phone", SqlDbType.Char, 15).Direction = ParameterDirection.Output;
-				cmd1.Parameters.Add("@birthDate", SqlDbType.VarChar, 10).Direction = ParameterDirection.Output;
-				cmd1.Parameters.Add("@address", SqlDbType.VarChar, 40).Direction = ParameterDirection.Output;
-				cmd1.Parameters.Add("@age", SqlDbType.Int).Direction = ParameterDirection.Output;
-				cmd1.Parameters.Add("@gender", SqlDbType.Char, 1).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@name", NpgsqlDbType.VarChar, 20).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@phone", NpgsqlDbType.Char, 15).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@birthDate", NpgsqlDbType.VarChar, 10).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@address", NpgsqlDbType.VarChar, 40).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@age", NpgsqlDbType.Int).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@gender", NpgsqlDbType.Char, 1).Direction = ParameterDirection.Output;
 
 				cmd1.ExecuteNonQuery();            
 
@@ -757,7 +758,7 @@ namespace DBProject.DAL
 				return 0;
 			}
 
-			catch (SqlException ex)
+			catch (NpgsqlException ex)
 			{
 				return -1;
 			}
@@ -777,9 +778,9 @@ namespace DBProject.DAL
 		public int getBillHistory(int id, ref DataTable result)
 		{
 			DataSet ds = new DataSet();
-			SqlConnection con = new SqlConnection(connString);
+			NpgsqlConnection con = new NpgsqlConnection(connString);
 			con.Open();
-			SqlCommand cmd1;
+			NpgsqlCommand cmd1;
 
 			try
 			{
@@ -793,18 +794,18 @@ namespace DBProject.DAL
                  */
 
 
-				cmd1 = new SqlCommand("RetrieveBillHistory", con); 
+				cmd1 = new NpgsqlCommand("RetrieveBillHistory", con); 
 				cmd1.CommandType = CommandType.StoredProcedure;
 
 				/*INPUT*/
-				cmd1.Parameters.Add("@pId", SqlDbType.Int).Value = id;
+				cmd1.Parameters.Add("@pId", NpgsqlDbType.Int).Value = id;
 
 				/*OUTPUT*/
-				cmd1.Parameters.Add("@count", SqlDbType.Int).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@count", NpgsqlDbType.Int).Direction = ParameterDirection.Output;
 
 				cmd1.ExecuteNonQuery();   
 
-				using (SqlDataAdapter da = new SqlDataAdapter(cmd1))
+				using (NpgsqlDataAdapter da = new NpgsqlDataAdapter(cmd1))
 				{
 					da.Fill(ds);  
 				}
@@ -816,7 +817,7 @@ namespace DBProject.DAL
 
 			}
 			/*ON ERROR RETURN -1*/
-			catch (SqlException ex)
+			catch (NpgsqlException ex)
 			{
 				return -1;  
 			}
@@ -835,9 +836,9 @@ namespace DBProject.DAL
 
 		public int appointmentTodayDisplayer(int pid, ref string dName, ref string timings)
 		{
-			SqlConnection con = new SqlConnection(connString);
+			NpgsqlConnection con = new NpgsqlConnection(connString);
 			con.Open();
-			SqlCommand cmd1;
+			NpgsqlCommand cmd1;
 
 			try
 			{
@@ -852,15 +853,15 @@ namespace DBProject.DAL
 
                  */
 
-				cmd1 = new SqlCommand("RetrieveCurrentAppointment", con);
+				cmd1 = new NpgsqlCommand("RetrieveCurrentAppointment", con);
 				cmd1.CommandType = CommandType.StoredProcedure;
 
-                cmd1.Parameters.Add("@pid", SqlDbType.Int).Value = pid;
+                cmd1.Parameters.Add("@pid", NpgsqlDbType.Int).Value = pid;
 
                 //Outputs
-                cmd1.Parameters.Add("@count", SqlDbType.Int).Direction = ParameterDirection.Output;
-				cmd1.Parameters.Add("@timings", SqlDbType.VarChar, 30).Direction = ParameterDirection.Output;
-				cmd1.Parameters.Add("@dName", SqlDbType.VarChar, 30).Direction = ParameterDirection.Output;
+                cmd1.Parameters.Add("@count", NpgsqlDbType.Int).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@timings", NpgsqlDbType.VarChar, 30).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@dName", NpgsqlDbType.VarChar, 30).Direction = ParameterDirection.Output;
 
 				cmd1.ExecuteNonQuery();   //Execute the cmd query
 
@@ -879,7 +880,7 @@ namespace DBProject.DAL
 				}
 			}
 
-			catch (SqlException ex)
+			catch (NpgsqlException ex)
 			{
 				return -1;  //if any error, return -1
 			}
@@ -897,9 +898,9 @@ namespace DBProject.DAL
 		public int getTreatmentHistory(int id, ref DataTable result)
 		{
 			DataSet ds = new DataSet();
-			SqlConnection con = new SqlConnection(connString);
+			NpgsqlConnection con = new NpgsqlConnection(connString);
 			con.Open();
-			SqlCommand cmd1;
+			NpgsqlCommand cmd1;
 
 			try
 			{
@@ -909,18 +910,18 @@ namespace DBProject.DAL
                   @count int OUTPUT
                  */
 
-				cmd1 = new SqlCommand("RetrieveTreatmentHistory", con);   //Name of your SQL Procedure
+				cmd1 = new NpgsqlCommand("RetrieveTreatmentHistory", con);   //Name of your SQL Procedure
 				cmd1.CommandType = CommandType.StoredProcedure;
 
 				//INPUTS
-				cmd1.Parameters.Add("@pId", SqlDbType.Int).Value = id;
+				cmd1.Parameters.Add("@pId", NpgsqlDbType.Int).Value = id;
 				
 				//OUTPUTS
-				cmd1.Parameters.Add("@count", SqlDbType.Int).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@count", NpgsqlDbType.Int).Direction = ParameterDirection.Output;
 				
 				cmd1.ExecuteNonQuery();   
 
-				using (SqlDataAdapter da = new SqlDataAdapter(cmd1))
+				using (NpgsqlDataAdapter da = new NpgsqlDataAdapter(cmd1))
 				{
 					da.Fill(ds);  
 				}
@@ -929,7 +930,7 @@ namespace DBProject.DAL
 				return (int)cmd1.Parameters["@count"].Value;
 			}
 
-			catch (SqlException ex)
+			catch (NpgsqlException ex)
 			{
 				return -1;  
 			}
@@ -947,19 +948,19 @@ namespace DBProject.DAL
 		public int getdeptInfo(ref DataTable result)
 		{
 			DataSet ds = new DataSet();
-			SqlConnection con = new SqlConnection(connString);
+			NpgsqlConnection con = new NpgsqlConnection(connString);
 			con.Open();
-			SqlCommand cmd1;
+			NpgsqlCommand cmd1;
 
 			try
 			{
 				/*EXECUTING QUERY*/
-				cmd1 = new SqlCommand("select* from deptInfo", con);
+				cmd1 = new NpgsqlCommand("select* from deptInfo", con);
 				cmd1.CommandType = CommandType.Text;
 				
 				cmd1.ExecuteNonQuery();   
 
-				using (SqlDataAdapter da = new SqlDataAdapter(cmd1))
+				using (NpgsqlDataAdapter da = new NpgsqlDataAdapter(cmd1))
 				{
 					da.Fill(ds);  
 				}
@@ -968,7 +969,7 @@ namespace DBProject.DAL
 				return 1;
 			}
 
-			catch (SqlException ex)
+			catch (NpgsqlException ex)
 			{
 				return -1;
 			}
@@ -987,9 +988,9 @@ namespace DBProject.DAL
 		public int getDeptDoctorInfo(string deptName, ref DataTable result)
 		{
 			DataSet ds = new DataSet();
-			SqlConnection con = new SqlConnection(connString);
+			NpgsqlConnection con = new NpgsqlConnection(connString);
 			con.Open();
-			SqlCommand cmd1;
+			NpgsqlCommand cmd1;
 
 			try
 			{
@@ -1001,15 +1002,15 @@ namespace DBProject.DAL
                  */
 
 
-				cmd1 = new SqlCommand("RetrieveDeptDoctorInfo", con);
+				cmd1 = new NpgsqlCommand("RetrieveDeptDoctorInfo", con);
 				cmd1.CommandType = CommandType.StoredProcedure;
 
 				//Input
-				cmd1.Parameters.Add("@deptName", SqlDbType.VarChar, 30).Value = deptName;
+				cmd1.Parameters.Add("@deptName", NpgsqlDbType.VarChar, 30).Value = deptName;
 				
 				cmd1.ExecuteNonQuery();  
 
-				using (SqlDataAdapter da = new SqlDataAdapter(cmd1))
+				using (NpgsqlDataAdapter da = new NpgsqlDataAdapter(cmd1))
 				{
 					da.Fill(ds);   
 				}
@@ -1020,7 +1021,7 @@ namespace DBProject.DAL
 				return 1;
 			}
 
-			catch (SqlException ex)
+			catch (NpgsqlException ex)
 			{
 				return -1;  
 			}
@@ -1042,7 +1043,7 @@ namespace DBProject.DAL
 
 		public int doctorInfoDisplayer(int dID, ref string name, ref string phone, ref string gender, ref float charges_Per_Visit, ref float ReputeIndex, ref int PatientsTreated, ref string qualification, ref string specialization, ref int workE, ref int age)
 		{
-			SqlConnection con = new SqlConnection(connString);
+			NpgsqlConnection con = new NpgsqlConnection(connString);
 			con.Open();
 
 
@@ -1065,25 +1066,25 @@ namespace DBProject.DAL
                 @age int output
                  */
 
-				SqlCommand cmd1 = new SqlCommand("RetrieveDoctorData", con);             
+				NpgsqlCommand cmd1 = new NpgsqlCommand("RetrieveDoctorData", con);             
 
 				cmd1.CommandType = CommandType.StoredProcedure;
 
 
 				//Inputs
-				cmd1.Parameters.Add("@dID", SqlDbType.Int).Value = dID;
+				cmd1.Parameters.Add("@dID", NpgsqlDbType.Int).Value = dID;
 				
 				//Outputs
-				cmd1.Parameters.Add("@name", SqlDbType.VarChar, 20).Direction = ParameterDirection.Output;
-				cmd1.Parameters.Add("@phone", SqlDbType.VarChar, 15).Direction = ParameterDirection.Output;
-				cmd1.Parameters.Add("@gender", SqlDbType.VarChar, 2).Direction = ParameterDirection.Output;
-				cmd1.Parameters.Add("@charges", SqlDbType.Float).Direction = ParameterDirection.Output;
-				cmd1.Parameters.Add("@RI", SqlDbType.Float).Direction = ParameterDirection.Output;
-				cmd1.Parameters.Add("@PTreated", SqlDbType.Int).Direction = ParameterDirection.Output;
-				cmd1.Parameters.Add("@qualification", SqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
-				cmd1.Parameters.Add("@specialization", SqlDbType.VarChar, 50).Direction = ParameterDirection.Output;
-				cmd1.Parameters.Add("@workE", SqlDbType.Int).Direction = ParameterDirection.Output;
-				cmd1.Parameters.Add("@age", SqlDbType.Int).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@name", NpgsqlDbType.VarChar, 20).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@phone", NpgsqlDbType.VarChar, 15).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@gender", NpgsqlDbType.VarChar, 2).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@charges", NpgsqlDbType.Float).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@RI", NpgsqlDbType.Float).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@PTreated", NpgsqlDbType.Int).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@qualification", NpgsqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@specialization", NpgsqlDbType.VarChar, 50).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@workE", NpgsqlDbType.Int).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@age", NpgsqlDbType.Int).Direction = ParameterDirection.Output;
 
 
 				cmd1.ExecuteNonQuery();    
@@ -1104,7 +1105,7 @@ namespace DBProject.DAL
 				return 0;
 			}
 
-			catch (SqlException ex)
+			catch (NpgsqlException ex)
 			{
 				return -1;
 			}
@@ -1121,9 +1122,9 @@ namespace DBProject.DAL
 		public int getFreeSlots(int dID, int pID, ref DataTable result)
 		{
 			DataSet ds = new DataSet();
-			SqlConnection con = new SqlConnection(connString);
+			NpgsqlConnection con = new NpgsqlConnection(connString);
 			con.Open();
-			SqlCommand cmd1;
+			NpgsqlCommand cmd1;
 
 			try
 			{
@@ -1137,19 +1138,19 @@ namespace DBProject.DAL
                  */
 
 
-				cmd1 = new SqlCommand("RetrieveFreeSlots", con);
+				cmd1 = new NpgsqlCommand("RetrieveFreeSlots", con);
 				cmd1.CommandType = CommandType.StoredProcedure;
 
 				//Input
-				cmd1.Parameters.Add("@dID", SqlDbType.Int).Value = dID;
-				cmd1.Parameters.Add("@pID", SqlDbType.Int).Value = pID;
+				cmd1.Parameters.Add("@dID", NpgsqlDbType.Int).Value = dID;
+				cmd1.Parameters.Add("@pID", NpgsqlDbType.Int).Value = pID;
 
 				//Output
-				cmd1.Parameters.Add("@count", SqlDbType.Int).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@count", NpgsqlDbType.Int).Direction = ParameterDirection.Output;
 				
 				cmd1.ExecuteNonQuery();   
 
-				using (SqlDataAdapter da = new SqlDataAdapter(cmd1))
+				using (NpgsqlDataAdapter da = new NpgsqlDataAdapter(cmd1))
 				{
 					da.Fill(ds);   
 				}
@@ -1158,7 +1159,7 @@ namespace DBProject.DAL
 				return (int)cmd1.Parameters["@count"].Value;
 			}
 
-			catch (SqlException ex)
+			catch (NpgsqlException ex)
 			{
 				return -1;  
 			}
@@ -1176,13 +1177,13 @@ namespace DBProject.DAL
 
 		public int insertAppointment(int dID, int pID, int freeSlot, ref string mes)
 		{
-			SqlConnection con = new SqlConnection(connString);
+			NpgsqlConnection con = new NpgsqlConnection(connString);
 			con.Open();
-			SqlCommand cmd1;
+			NpgsqlCommand cmd1;
 
 			string m = "";
 
-			con.InfoMessage += delegate (object sender, SqlInfoMessageEventArgs e)
+			con.InfoMessage += delegate (object sender, NpgsqlNoticeEventArgs e)
 			{
 				m += "\n" + e.Message;
 			};
@@ -1200,13 +1201,13 @@ namespace DBProject.DAL
                  */
 
 
-				cmd1 = new SqlCommand("insertInAppointmentTable", con);
+				cmd1 = new NpgsqlCommand("insertInAppointmentTable", con);
 				cmd1.CommandType = CommandType.StoredProcedure;
 
 				//Input
-				cmd1.Parameters.Add("@dID", SqlDbType.Int).Value = dID;
-				cmd1.Parameters.Add("@pID", SqlDbType.Int).Value = pID;
-				cmd1.Parameters.Add("@freeSlot", SqlDbType.Int).Value = freeSlot;
+				cmd1.Parameters.Add("@dID", NpgsqlDbType.Int).Value = dID;
+				cmd1.Parameters.Add("@pID", NpgsqlDbType.Int).Value = pID;
+				cmd1.Parameters.Add("@freeSlot", NpgsqlDbType.Int).Value = freeSlot;
 				
 				cmd1.ExecuteNonQuery();   
 				mes = m;
@@ -1214,7 +1215,7 @@ namespace DBProject.DAL
 				return 0;
 			}
 
-			catch (SqlException ex)
+			catch (NpgsqlException ex)
 			{
 				return -1;  
 			}
@@ -1233,9 +1234,9 @@ namespace DBProject.DAL
 
 		public int getNotifications(int pid, ref string dName, ref string timings)
 		{
-			SqlConnection con = new SqlConnection(connString);
+			NpgsqlConnection con = new NpgsqlConnection(connString);
 			con.Open();
-			SqlCommand cmd1;
+			NpgsqlCommand cmd1;
 
 			try
 			{
@@ -1250,16 +1251,16 @@ namespace DBProject.DAL
 
                  */
 
-				cmd1 = new SqlCommand("RetrievePatientNotifications", con);   //Name of your SQL Procedure
+				cmd1 = new NpgsqlCommand("RetrievePatientNotifications", con);   //Name of your SQL Procedure
 				cmd1.CommandType = CommandType.StoredProcedure;
 
 				//Inputs
-				cmd1.Parameters.Add("@pId", SqlDbType.Int).Value = pid;
+				cmd1.Parameters.Add("@pId", NpgsqlDbType.Int).Value = pid;
 			
 				//Outputs
-				cmd1.Parameters.Add("@count", SqlDbType.Int).Direction = ParameterDirection.Output;
-				cmd1.Parameters.Add("@timings", SqlDbType.VarChar, 30).Direction = ParameterDirection.Output;
-				cmd1.Parameters.Add("@dName", SqlDbType.VarChar, 30).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@count", NpgsqlDbType.Int).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@timings", NpgsqlDbType.VarChar, 30).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@dName", NpgsqlDbType.VarChar, 30).Direction = ParameterDirection.Output;
 				
 				cmd1.ExecuteNonQuery();   
 
@@ -1279,7 +1280,7 @@ namespace DBProject.DAL
 				}
 			}
 
-			catch (SqlException ex)
+			catch (NpgsqlException ex)
 			{
 				return -1;  
 			}
@@ -1300,9 +1301,9 @@ namespace DBProject.DAL
 
 		public int isFeedbackPending(int pid, ref string dName, ref string timings, ref int aID)
 		{
-			SqlConnection con = new SqlConnection(connString);
+			NpgsqlConnection con = new NpgsqlConnection(connString);
 			con.Open();
-			SqlCommand cmd1;
+			NpgsqlCommand cmd1;
 
 			try
 			{
@@ -1317,17 +1318,17 @@ namespace DBProject.DAL
 
                  */
 
-				cmd1 = new SqlCommand("RetrievePendingFeedback", con);   
+				cmd1 = new NpgsqlCommand("RetrievePendingFeedback", con);   
 				cmd1.CommandType = CommandType.StoredProcedure;
 
 				//Inputs
-				cmd1.Parameters.Add("@pId", SqlDbType.Int).Value = pid;
+				cmd1.Parameters.Add("@pId", NpgsqlDbType.Int).Value = pid;
 				
 				//Outputs
-				cmd1.Parameters.Add("@count", SqlDbType.Int).Direction = ParameterDirection.Output;
-				cmd1.Parameters.Add("@timings", SqlDbType.VarChar, 30).Direction = ParameterDirection.Output;
-				cmd1.Parameters.Add("@dName", SqlDbType.VarChar, 30).Direction = ParameterDirection.Output;
-				cmd1.Parameters.Add("@aID", SqlDbType.Int).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@count", NpgsqlDbType.Int).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@timings", NpgsqlDbType.VarChar, 30).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@dName", NpgsqlDbType.VarChar, 30).Direction = ParameterDirection.Output;
+				cmd1.Parameters.Add("@aID", NpgsqlDbType.Int).Direction = ParameterDirection.Output;
 
 				cmd1.ExecuteNonQuery();   
 				
@@ -1348,7 +1349,7 @@ namespace DBProject.DAL
 				}
 			}
 
-			catch (SqlException ex)
+			catch (NpgsqlException ex)
 			{
 				return -1; 
 			}
@@ -1366,9 +1367,9 @@ namespace DBProject.DAL
 
 		public int givePendingFeedback(int aID)
 		{
-			SqlConnection con = new SqlConnection(connString);
+			NpgsqlConnection con = new NpgsqlConnection(connString);
 			con.Open();
-			SqlCommand cmd1;
+			NpgsqlCommand cmd1;
 
 			try
 			{
@@ -1379,11 +1380,11 @@ namespace DBProject.DAL
                     @aID int
                  */
 
-				cmd1 = new SqlCommand("storeFeedback", con);   
+				cmd1 = new NpgsqlCommand("storeFeedback", con);   
 				cmd1.CommandType = CommandType.StoredProcedure;
 
 				//Inputs
-				cmd1.Parameters.Add("@aId", SqlDbType.Int).Value = aID;
+				cmd1.Parameters.Add("@aId", NpgsqlDbType.Int).Value = aID;
 
 				cmd1.ExecuteNonQuery();
 
@@ -1391,7 +1392,7 @@ namespace DBProject.DAL
 				return 0;
 			}
 
-			catch (SqlException ex)
+			catch (NpgsqlException ex)
 			{
 				return -1;  
 			}
@@ -1434,27 +1435,27 @@ namespace DBProject.DAL
 		{
 
 			DataSet ds = new DataSet();
-			SqlConnection con = new SqlConnection(connString);
+			NpgsqlConnection con = new NpgsqlConnection(connString);
 			con.Open();
-			SqlCommand cmd;
+			NpgsqlCommand cmd;
 
 			try
 			{
 
-				cmd = new SqlCommand("Doctor_Information_By_ID1", con);
+				cmd = new NpgsqlCommand("Doctor_Information_By_ID1", con);
 				cmd.CommandType = CommandType.StoredProcedure;
-				cmd.Parameters.Add("@ID", SqlDbType.Int);
+				cmd.Parameters.Add("@ID", NpgsqlDbType.Int);
 				cmd.Parameters["@id"].Value = doctorid;
 				cmd.ExecuteNonQuery();
 
-				using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+				using (NpgsqlDataAdapter da = new NpgsqlDataAdapter(cmd))
 				    da.Fill(ds);
 
 				result = ds.Tables[0];
 
 			}
 
-			catch (SqlException ex)
+			catch (NpgsqlException ex)
 			{
 				return 0;
 			}
@@ -1477,21 +1478,21 @@ namespace DBProject.DAL
 		{
 
 			DataSet ds = new DataSet();
-			SqlConnection con = new SqlConnection(connString);
+			NpgsqlConnection con = new NpgsqlConnection(connString);
 			con.Open();
 			
 			try
 			{
-                SqlCommand cmd = new SqlCommand();
+                NpgsqlCommand cmd = new NpgsqlCommand();
 
-                cmd = new SqlCommand("PENDING_APPOINTMENTS2", con);
+                cmd = new NpgsqlCommand("PENDING_APPOINTMENTS2", con);
 				cmd.CommandType = CommandType.StoredProcedure;
-				cmd.Parameters.Add("@DOCTOR_ID", SqlDbType.Int);
+				cmd.Parameters.Add("@DOCTOR_ID", NpgsqlDbType.Int);
 				cmd.Parameters["@DOCTOR_ID"].Value = doctorid;
 				cmd.ExecuteNonQuery();
 
                 
-                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                using (NpgsqlDataAdapter da = new NpgsqlDataAdapter(cmd))
                 {
                     da.Fill(ds);
                 }
@@ -1500,7 +1501,7 @@ namespace DBProject.DAL
 
             }
 
-            catch (SqlException ex)
+            catch (NpgsqlException ex)
 			{
 				Console.WriteLine("SQL Error" + ex.Message.ToString());
 			}
@@ -1517,21 +1518,21 @@ namespace DBProject.DAL
 		/*THIS FUNCTION WILL BE CALLED WHEN DOCTOR APPROVE THE REQUEST OF PATIENT*/
 		public int UpdateAppointment_DAL(int Appointmentid)
 		{
-			SqlConnection con = new SqlConnection(connString);
+			NpgsqlConnection con = new NpgsqlConnection(connString);
 			con.Open();
-			SqlCommand cmd;
+			NpgsqlCommand cmd;
 			int result = 0;
 
 
             try
             {
-                cmd = new SqlCommand("APPROVE_APPOINTMENT", con);
+                cmd = new NpgsqlCommand("APPROVE_APPOINTMENT", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("@APPOINT_ID", SqlDbType.Int).Value = Appointmentid;
+                cmd.Parameters.Add("@APPOINT_ID", NpgsqlDbType.Int).Value = Appointmentid;
 
                 result = cmd.ExecuteNonQuery();
             }
-            catch (SqlException ex)
+            catch (NpgsqlException ex)
             {
                 Console.WriteLine("SQL Error" + ex.Message.ToString());
             }
@@ -1548,21 +1549,21 @@ namespace DBProject.DAL
 		/*DELETES THE APPOINTMENT*/
 		public int Deleteappointment_DAL(int appointmentid)
 		{
-			SqlConnection con = new SqlConnection(connString);
+			NpgsqlConnection con = new NpgsqlConnection(connString);
 			con.Open();
-			SqlCommand cmd;
+			NpgsqlCommand cmd;
 			
 
 
 			try
 			{
-				cmd = new SqlCommand("delete_APPOINTMENT", con);
+				cmd = new NpgsqlCommand("delete_APPOINTMENT", con);
 				cmd.CommandType = CommandType.StoredProcedure;
-				cmd.Parameters.Add("@APPOINT_ID", SqlDbType.Int).Value = appointmentid;
+				cmd.Parameters.Add("@APPOINT_ID", NpgsqlDbType.Int).Value = appointmentid;
 				cmd.ExecuteNonQuery();
 			}
 
-			catch (SqlException ex)
+			catch (NpgsqlException ex)
 			{
 				Console.WriteLine("SQL Error" + ex.Message.ToString());
 				return -1;
@@ -1585,23 +1586,23 @@ namespace DBProject.DAL
 		{
 
 			DataSet ds = new DataSet();
-			SqlConnection con = new SqlConnection(connString);
+			NpgsqlConnection con = new NpgsqlConnection(connString);
 			con.Open();
 
-			SqlCommand cmd;
+			NpgsqlCommand cmd;
 
             try
             {
 
 
-                cmd = new SqlCommand("TODAYS_APPOINTMENTS", con);
+                cmd = new NpgsqlCommand("TODAYS_APPOINTMENTS", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add("@DOC_ID", SqlDbType.Int).Value = did;
+                cmd.Parameters.Add("@DOC_ID", NpgsqlDbType.Int).Value = did;
 
                 cmd.ExecuteNonQuery();
 
-                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                using (NpgsqlDataAdapter da = new NpgsqlDataAdapter(cmd))
                 {
                     da.Fill(ds);
                 }
@@ -1611,7 +1612,7 @@ namespace DBProject.DAL
                 result = ds.Tables[0];
             }
 
-            catch (SqlException ex)
+            catch (NpgsqlException ex)
             {
 
             }
@@ -1632,23 +1633,23 @@ namespace DBProject.DAL
 		/*UPDATE THE PRESCRIPTION WHEN APPOINTMENT IS GOING ON BY DOCTOR*/
 		public int update_prescription_DAL(int did, int appointid, string disease, string progres, string prescrip)
 		{
-			SqlConnection con = new SqlConnection(connString);
+			NpgsqlConnection con = new NpgsqlConnection(connString);
 			con.Open();
-			SqlCommand cmd;
+			NpgsqlCommand cmd;
 			try
 			{
-				cmd = new SqlCommand("UpdatePrescription", con);
+				cmd = new NpgsqlCommand("UpdatePrescription", con);
 				cmd.CommandType = CommandType.StoredProcedure;
-				cmd.Parameters.Add("@docId", SqlDbType.Int).Value = did;
-				cmd.Parameters.Add("@appointid", SqlDbType.Int).Value = appointid;
-				cmd.Parameters.Add("@Disease", SqlDbType.VarChar, 30).Value = disease;
-				cmd.Parameters.Add("@progress", SqlDbType.VarChar, 50).Value = progres;
-				cmd.Parameters.Add("@prescription", SqlDbType.VarChar, 60).Value = prescrip;
+				cmd.Parameters.Add("@docId", NpgsqlDbType.Int).Value = did;
+				cmd.Parameters.Add("@appointid", NpgsqlDbType.Int).Value = appointid;
+				cmd.Parameters.Add("@Disease", NpgsqlDbType.VarChar, 30).Value = disease;
+				cmd.Parameters.Add("@progress", NpgsqlDbType.VarChar, 50).Value = progres;
+				cmd.Parameters.Add("@prescription", NpgsqlDbType.VarChar, 60).Value = prescrip;
 
 				cmd.ExecuteNonQuery();
 			}
 			
-			catch (SqlException ex)
+			catch (NpgsqlException ex)
 			{
 				return 0;
 			}
@@ -1668,20 +1669,20 @@ namespace DBProject.DAL
 		public int generate_bill_DAL(int docid, ref DataTable result)
 		{
 			DataSet ds = new DataSet();
-			SqlConnection con = new SqlConnection(connString);
+			NpgsqlConnection con = new NpgsqlConnection(connString);
 			con.Open();
-			SqlCommand cmd;
+			NpgsqlCommand cmd;
 
             try
             {
-                cmd = new SqlCommand("generate_bill", con);
+                cmd = new NpgsqlCommand("generate_bill", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("@dId", SqlDbType.Int);
+                cmd.Parameters.Add("@dId", NpgsqlDbType.Int);
                 cmd.Parameters["@did"].Value = docid;
 
 
                 cmd.ExecuteNonQuery();
-                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                using (NpgsqlDataAdapter da = new NpgsqlDataAdapter(cmd))
                 {
                     da.Fill(ds);
 
@@ -1691,7 +1692,7 @@ namespace DBProject.DAL
               
             }
 
-            catch (SqlException ex)
+            catch (NpgsqlException ex)
             {
                 return -1;
             }
@@ -1710,15 +1711,15 @@ namespace DBProject.DAL
 		public void paid_bill_DAL(int did, int appoint)
 		{
 
-			SqlConnection con = new SqlConnection(connString);
+			NpgsqlConnection con = new NpgsqlConnection(connString);
 			con.Open();
-			SqlCommand cmd;
+			NpgsqlCommand cmd;
 			
-			cmd = new SqlCommand("finishedPaid", con);
+			cmd = new NpgsqlCommand("finishedPaid", con);
 			cmd.CommandType = CommandType.StoredProcedure;
 
-			cmd.Parameters.Add("@docId", SqlDbType.Int).Value = did;
-			cmd.Parameters.Add("@appointid", SqlDbType.Int).Value = appoint;
+			cmd.Parameters.Add("@docId", NpgsqlDbType.Int).Value = did;
+			cmd.Parameters.Add("@appointid", NpgsqlDbType.Int).Value = appoint;
 			
 			cmd.ExecuteNonQuery();
 
@@ -1729,15 +1730,15 @@ namespace DBProject.DAL
         public void Unpaid_bill_DAL(int did, int appoint)
         {
 
-            SqlConnection con = new SqlConnection(connString);
+            NpgsqlConnection con = new NpgsqlConnection(connString);
             con.Open();
-            SqlCommand cmd;
+            NpgsqlCommand cmd;
 
-            cmd = new SqlCommand("finishedUnPaid", con);
+            cmd = new NpgsqlCommand("finishedUnPaid", con);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.Add("@docId", SqlDbType.Int).Value = did;
-            cmd.Parameters.Add("@appointid", SqlDbType.Int).Value = appoint;
+            cmd.Parameters.Add("@docId", NpgsqlDbType.Int).Value = did;
+            cmd.Parameters.Add("@appointid", NpgsqlDbType.Int).Value = appoint;
 
             cmd.ExecuteNonQuery();
 
@@ -1748,9 +1749,9 @@ namespace DBProject.DAL
         public int getPHistory(int id, ref DataTable result)
         {
             DataSet ds = new DataSet();
-            SqlConnection con = new SqlConnection(connString);
+            NpgsqlConnection con = new NpgsqlConnection(connString);
             con.Open();
-            SqlCommand cmd1;
+            NpgsqlCommand cmd1;
 
             try
             {
@@ -1764,15 +1765,15 @@ namespace DBProject.DAL
                  */
 
 
-                cmd1 = new SqlCommand("RetrievePHistory", con);
+                cmd1 = new NpgsqlCommand("RetrievePHistory", con);
                 cmd1.CommandType = CommandType.StoredProcedure;
 
                 /*INPUT*/
-                cmd1.Parameters.Add("@dId", SqlDbType.Int).Value = id;
+                cmd1.Parameters.Add("@dId", NpgsqlDbType.Int).Value = id;
 
                 cmd1.ExecuteNonQuery();
 
-                using (SqlDataAdapter da = new SqlDataAdapter(cmd1))
+                using (NpgsqlDataAdapter da = new NpgsqlDataAdapter(cmd1))
                 {
                     da.Fill(ds);
                 }
@@ -1782,7 +1783,7 @@ namespace DBProject.DAL
             }
 
             /*ON ERROR RETURN -1*/
-            catch (SqlException ex)
+            catch (NpgsqlException ex)
             {
                 return -1;
             }

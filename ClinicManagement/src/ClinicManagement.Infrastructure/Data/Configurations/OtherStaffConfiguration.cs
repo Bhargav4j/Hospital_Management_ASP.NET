@@ -35,6 +35,6 @@ public class OtherStaffConfiguration : IEntityTypeConfiguration<OtherStaff>
             .HasColumnType("decimal(18,2)");
         
         builder.Property(s => s.CreatedDate)
-            .HasDefaultValueSql("GETUTCDATE()");
+            .HasDefaultValueSql("NOW() AT TIME ZONE 'UTC'");
     }
 }
