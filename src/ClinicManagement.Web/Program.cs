@@ -5,16 +5,18 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddEnvironmentVariables();
+
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .Enrich.FromLogContext()
     .WriteTo.Console()
-    .WriteTo.File("logs/clinic-management-.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
 builder.Host.UseSerilog();
 
 builder.Services.AddRazorPages();
+builder.Services.AddHealthChecks().AddDbContextCheck<ClinicDbContext>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession(options =>
 {
@@ -41,6 +43,8 @@ app.UseRouting();
 app.UseSession();
 app.UseAuthorization();
 
+app.MapHealthChecks("/health");
+app.MapHealthChecks("/ready");
 app.MapRazorPages();
 
 try

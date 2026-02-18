@@ -1,0 +1,50 @@
+# Build artifacts
+bin/
+obj/
+
+# IDE folders
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation
+*.md
+README*
+LICENSE
+
+# Test files
+**/*Tests/
+**/*.Tests/
+*.Test/
+
+# NuGet
+packages/
+*.nupkg
+*.snupkg
+
+# User-specific files
+launchSettings.json
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Environment files
+.env
+.env.*
