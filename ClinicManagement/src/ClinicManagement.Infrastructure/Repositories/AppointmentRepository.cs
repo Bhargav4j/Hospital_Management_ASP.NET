@@ -1,96 +1,103 @@
+using AutoMapper;
 using ClinicManagement.Domain.Entities;
 using ClinicManagement.Domain.Interfaces.Repositories;
 using ClinicManagement.Infrastructure.Data;
+using DbModels = ClinicManagement.Infrastructure.Data.Scaffolded.DbModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClinicManagement.Infrastructure.Repositories;
 
-public class AppointmentRepository : Repository<Appointment>, IAppointmentRepository
+public class AppointmentRepository : Repository<Appointment, DbModels.appointment>, IAppointmentRepository
 {
-    public AppointmentRepository(ClinicManagementDbContext context) : base(context)
+    public AppointmentRepository(ClinicManagementDbContext context, IMapper mapper)
+        : base(context, mapper)
     {
+    }
+
+    private IQueryable<DbModels.appointment> QueryWithIncludes()
+    {
+        return _dbSet.AsNoTracking()
+            .Include(a => a.patient)
+            .Include(a => a.doctor)
+                .ThenInclude(d => d!.deptnoNavigation);
     }
 
     public override async Task<Appointment?> GetByIdAsync(int id)
     {
-        return await _dbSet
-            .Include(a => a.Patient)
-            .Include(a => a.Doctor)
-            .ThenInclude(d => d.Department)
-            .FirstOrDefaultAsync(a => a.AppointmentID == id);
+        var dbModel = await QueryWithIncludes()
+            .FirstOrDefaultAsync(a => a.appointid == id);
+        return dbModel != null ? _mapper.Map<Appointment>(dbModel) : null;
     }
 
     public override async Task<IEnumerable<Appointment>> GetAllAsync()
     {
-        return await _dbSet
-            .Include(a => a.Patient)
-            .Include(a => a.Doctor)
-            .ThenInclude(d => d.Department)
-            .ToListAsync();
+        var dbModels = await QueryWithIncludes().ToListAsync();
+        return _mapper.Map<IEnumerable<Appointment>>(dbModels);
     }
 
     public async Task<IEnumerable<Appointment>> GetByPatientIdAsync(int patientId)
     {
-        return await _dbSet
-            .Include(a => a.Patient)
-            .Include(a => a.Doctor)
-            .ThenInclude(d => d.Department)
-            .Where(a => a.PatientID == patientId)
-            .OrderByDescending(a => a.AppointmentDate)
+        var dbModels = await QueryWithIncludes()
+            .Where(a => a.patientid == patientId)
+            .OrderByDescending(a => a.date)
             .ToListAsync();
+        return _mapper.Map<IEnumerable<Appointment>>(dbModels);
     }
 
     public async Task<IEnumerable<Appointment>> GetByDoctorIdAsync(int doctorId)
     {
-        return await _dbSet
-            .Include(a => a.Patient)
-            .Include(a => a.Doctor)
-            .ThenInclude(d => d.Department)
-            .Where(a => a.DoctorID == doctorId)
-            .OrderByDescending(a => a.AppointmentDate)
+        var dbModels = await QueryWithIncludes()
+            .Where(a => a.doctorid == doctorId)
+            .OrderByDescending(a => a.date)
             .ToListAsync();
+        return _mapper.Map<IEnumerable<Appointment>>(dbModels);
     }
 
     public async Task<IEnumerable<Appointment>> GetByStatusAsync(string status)
     {
-        return await _dbSet
-            .Include(a => a.Patient)
-            .Include(a => a.Doctor)
-            .ThenInclude(d => d.Department)
-            .Where(a => a.Status == status)
+        var statusInt = MapStatusToInt(status);
+        var dbModels = await QueryWithIncludes()
+            .Where(a => a.appointment_status == statusInt)
             .ToListAsync();
+        return _mapper.Map<IEnumerable<Appointment>>(dbModels);
     }
 
     public async Task<IEnumerable<Appointment>> GetUpcomingAppointmentsAsync(int patientId)
     {
-        return await _dbSet
-            .Include(a => a.Patient)
-            .Include(a => a.Doctor)
-            .ThenInclude(d => d.Department)
-            .Where(a => a.PatientID == patientId && a.AppointmentDate >= DateTime.Today)
-            .OrderBy(a => a.AppointmentDate)
+        var dbModels = await QueryWithIncludes()
+            .Where(a => a.patientid == patientId && a.date >= DateTime.Today)
+            .OrderBy(a => a.date)
             .ToListAsync();
+        return _mapper.Map<IEnumerable<Appointment>>(dbModels);
     }
 
     public async Task<IEnumerable<Appointment>> GetPendingAppointmentsAsync(int doctorId)
     {
-        return await _dbSet
-            .Include(a => a.Patient)
-            .Include(a => a.Doctor)
-            .ThenInclude(d => d.Department)
-            .Where(a => a.DoctorID == doctorId && a.Status == "Pending")
-            .OrderBy(a => a.AppointmentDate)
+        var dbModels = await QueryWithIncludes()
+            .Where(a => a.doctorid == doctorId && a.appointment_status == 0)
+            .OrderBy(a => a.date)
             .ToListAsync();
+        return _mapper.Map<IEnumerable<Appointment>>(dbModels);
     }
 
     public async Task<IEnumerable<Appointment>> GetAppointmentHistoryAsync(int patientId)
     {
-        return await _dbSet
-            .Include(a => a.Patient)
-            .Include(a => a.Doctor)
-            .ThenInclude(d => d.Department)
-            .Where(a => a.PatientID == patientId && a.Status == "Completed")
-            .OrderByDescending(a => a.AppointmentDate)
+        var dbModels = await QueryWithIncludes()
+            .Where(a => a.patientid == patientId && a.appointment_status == 2)
+            .OrderByDescending(a => a.date)
             .ToListAsync();
+        return _mapper.Map<IEnumerable<Appointment>>(dbModels);
+    }
+
+    private static int MapStatusToInt(string status)
+    {
+        return status?.ToLower() switch
+        {
+            "pending" => 0,
+            "approved" => 1,
+            "completed" => 2,
+            "canceled" or "cancelled" => 3,
+            _ => 0
+        };
     }
 }

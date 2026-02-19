@@ -1,5 +1,6 @@
 using ClinicManagement.Domain.Interfaces.Repositories;
 using ClinicManagement.Infrastructure.Data;
+using ClinicManagement.Infrastructure.Mappings;
 using ClinicManagement.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +14,9 @@ public static class ServiceCollectionExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        // Register AutoMapper profiles from this assembly (DbModelMappingProfile)
+        services.AddAutoMapper(typeof(DbModelMappingProfile).Assembly);
+
         // Register DbContext with PostgreSQL
         var connectionString = configuration.GetConnectionString("DefaultConnection");
         services.AddDbContext<ClinicManagementDbContext>(options =>

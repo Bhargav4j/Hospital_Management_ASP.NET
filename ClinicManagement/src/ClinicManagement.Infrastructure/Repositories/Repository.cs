@@ -1,56 +1,76 @@
+using AutoMapper;
 using ClinicManagement.Domain.Interfaces.Repositories;
 using ClinicManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClinicManagement.Infrastructure.Repositories;
 
-public class Repository<T> : IRepository<T> where T : class
+/// <summary>
+/// Generic base repository that bridges Domain entities and scaffolded DbModels.
+/// Queries the database using TDbModel (which EF tracks), then maps to/from
+/// TDomain (which the Application/Domain layers consume).
+/// </summary>
+public class Repository<TDomain, TDbModel> : IRepository<TDomain>
+    where TDomain : class
+    where TDbModel : class
 {
     protected readonly ClinicManagementDbContext _context;
-    protected readonly DbSet<T> _dbSet;
+    protected readonly DbSet<TDbModel> _dbSet;
+    protected readonly IMapper _mapper;
 
-    public Repository(ClinicManagementDbContext context)
+    public Repository(ClinicManagementDbContext context, IMapper mapper)
     {
         _context = context;
-        _dbSet = context.Set<T>();
+        _dbSet = context.Set<TDbModel>();
+        _mapper = mapper;
     }
 
-    public virtual async Task<T?> GetByIdAsync(int id)
+    public virtual async Task<TDomain?> GetByIdAsync(int id)
     {
-        return await _dbSet.FindAsync(id);
+        var dbModel = await _dbSet.FindAsync(id);
+        return dbModel != null ? _mapper.Map<TDomain>(dbModel) : null;
     }
 
-    public virtual async Task<IEnumerable<T>> GetAllAsync()
+    public virtual async Task<IEnumerable<TDomain>> GetAllAsync()
     {
-        return await _dbSet.ToListAsync();
+        var dbModels = await _dbSet.AsNoTracking().ToListAsync();
+        return _mapper.Map<IEnumerable<TDomain>>(dbModels);
     }
 
-    public virtual async Task<T> AddAsync(T entity)
+    public virtual async Task<TDomain> AddAsync(TDomain entity)
     {
-        await _dbSet.AddAsync(entity);
+        var dbModel = _mapper.Map<TDbModel>(entity);
+        await _dbSet.AddAsync(dbModel);
         await _context.SaveChangesAsync();
-        return entity;
+        return _mapper.Map<TDomain>(dbModel);
     }
 
-    public virtual async Task UpdateAsync(T entity)
+    public virtual async Task UpdateAsync(TDomain entity)
     {
-        _dbSet.Update(entity);
+        var dbModel = _mapper.Map<TDbModel>(entity);
+
+        foreach (var entry in _context.ChangeTracker.Entries<TDbModel>().ToList())
+        {
+            entry.State = EntityState.Detached;
+        }
+
+        _dbSet.Update(dbModel);
         await _context.SaveChangesAsync();
     }
 
     public virtual async Task DeleteAsync(int id)
     {
-        var entity = await GetByIdAsync(id);
-        if (entity != null)
+        var dbModel = await _dbSet.FindAsync(id);
+        if (dbModel != null)
         {
-            _dbSet.Remove(entity);
+            _dbSet.Remove(dbModel);
             await _context.SaveChangesAsync();
         }
     }
 
     public virtual async Task<bool> ExistsAsync(int id)
     {
-        var entity = await GetByIdAsync(id);
-        return entity != null;
+        var dbModel = await _dbSet.FindAsync(id);
+        return dbModel != null;
     }
 }

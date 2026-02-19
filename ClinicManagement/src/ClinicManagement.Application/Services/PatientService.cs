@@ -43,8 +43,8 @@ public class PatientService : IPatientService
 
     public async Task<Patient?> ValidateLoginAsync(string email, string password)
     {
-        var hashedPassword = HashPassword(password);
-        return await _patientRepository.ValidateCredentialsAsync(email, hashedPassword);
+        //var hashedPassword = HashPassword(password);
+        return await _patientRepository.ValidateCredentialsAsync(email, password);
     }
 
     public async Task<IEnumerable<Patient>> SearchPatientsAsync(string searchTerm)
