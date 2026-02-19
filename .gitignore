@@ -1,2 +1,24 @@
 
-Code/.vs/Clinic Management System/v15/.suo
+# ── Force-ignore build artifacts & generated directories ──
+bin/
+obj/
+Debug/
+Release/
+.vs/
+packages
+TestResults
+node_modules
+.Debug/
+.Release/
+.obj/
+.bin/
+.packages/
+.testresults/
+.node_modules/
+.vs/
+.vscode/
+.idea/
+.git/
+.gitignore
+.gitattributes
+.gitignore
