@@ -4,52 +4,62 @@
     ViewData["Title"] = "Book Appointment";
 }
 
-<h2>Book Appointment with Dr. @Model.Doctor?.Name</h2>
+<div class="page-header">
+    <h2><i class="bi bi-calendar-plus me-2"></i>Book Appointment with Dr. @Model.Doctor?.Name</h2>
+</div>
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="card mb-3">
+<div class="row g-4">
+    <div class="col-lg-5">
+        <div class="card h-100">
             <div class="card-header">
-                <h5>Doctor Details</h5>
+                <h5 class="mb-0"><i class="bi bi-person-badge me-2"></i>Doctor Details</h5>
             </div>
             <div class="card-body">
-                <p><strong>Name:</strong> @Model.Doctor?.Name</p>
-                <p><strong>Specialization:</strong> @Model.Doctor?.Specialization</p>
-                <p><strong>Department:</strong> @Model.Doctor?.DepartmentName</p>
-                <p><strong>Qualification:</strong> @Model.Doctor?.Qualification</p>
-                <p><strong>Experience:</strong> @Model.Doctor?.Experience years</p>
-                <p><strong>Charges per Visit:</strong> $@Model.Doctor?.ChargesPerVisit</p>
+                <table class="table table-borderless mb-0">
+                    <tbody>
+                        <tr><td class="fw-semibold" style="width:40%">Name</td><td>@Model.Doctor?.Name</td></tr>
+                        <tr><td class="fw-semibold">Specialization</td><td>@Model.Doctor?.Specialization</td></tr>
+                        <tr><td class="fw-semibold">Department</td><td>@Model.Doctor?.DepartmentName</td></tr>
+                        <tr><td class="fw-semibold">Qualification</td><td>@Model.Doctor?.Qualification</td></tr>
+                        <tr><td class="fw-semibold">Experience</td><td>@Model.Doctor?.Experience years</td></tr>
+                        <tr><td class="fw-semibold">Charges</td><td>$@Model.Doctor?.ChargesPerVisit</td></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-    
-    <div class="col-md-6">
+
+    <div class="col-lg-7">
         <div class="card">
             <div class="card-header">
-                <h5>Appointment Details</h5>
+                <h5 class="mb-0"><i class="bi bi-calendar-event me-2"></i>Appointment Details</h5>
             </div>
             <div class="card-body">
                 <form method="post">
                     <input type="hidden" asp-for="DoctorId" />
-                    
+
                     @if (!string.IsNullOrEmpty(Model.SuccessMessage))
                     {
-                        <div class="alert alert-success">@Model.SuccessMessage</div>
+                        <div class="alert alert-success py-2">
+                            <i class="bi bi-check-circle me-1"></i>@Model.SuccessMessage
+                        </div>
                     }
-                    
+
                     @if (!string.IsNullOrEmpty(Model.ErrorMessage))
                     {
-                        <div class="alert alert-danger">@Model.ErrorMessage</div>
+                        <div class="alert alert-danger py-2">
+                            <i class="bi bi-exclamation-circle me-1"></i>@Model.ErrorMessage
+                        </div>
                     }
-                    
+
                     <div class="mb-3">
-                        <label asp-for="AppointmentDate" class="form-label"></label>
+                        <label asp-for="AppointmentDate" class="form-label">Appointment Date</label>
                         <input asp-for="AppointmentDate" class="form-control" type="date" />
                         <span asp-validation-for="AppointmentDate" class="text-danger"></span>
                     </div>
-                    
+
                     <div class="mb-3">
-                        <label asp-for="Timings" class="form-label"></label>
+                        <label asp-for="Timings" class="form-label">Time Slot</label>
                         <select asp-for="Timings" class="form-select">
                             <option value="">-- Select Time --</option>
                             <option value="09:00 AM">09:00 AM</option>
@@ -63,16 +73,18 @@
                         </select>
                         <span asp-validation-for="Timings" class="text-danger"></span>
                     </div>
-                    
-                    <div class="mb-3">
-                        <label asp-for="Disease" class="form-label"></label>
-                        <textarea asp-for="Disease" class="form-control" rows="3"></textarea>
+
+                    <div class="mb-4">
+                        <label asp-for="Disease" class="form-label">Disease / Symptoms</label>
+                        <textarea asp-for="Disease" class="form-control" rows="3" placeholder="Describe your symptoms"></textarea>
                         <span asp-validation-for="Disease" class="text-danger"></span>
                     </div>
-                    
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary">Book Appointment</button>
-                        <a asp-page="/Patient/ViewDoctors" class="btn btn-secondary">Cancel</a>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary flex-grow-1">
+                            <i class="bi bi-check-lg me-1"></i>Book Appointment
+                        </button>
+                        <a asp-page="/Patient/ViewDoctors" class="btn btn-outline-secondary">Cancel</a>
                     </div>
                 </form>
             </div>

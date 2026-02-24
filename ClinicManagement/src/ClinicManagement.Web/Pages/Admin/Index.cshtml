@@ -4,58 +4,69 @@
     ViewData["Title"] = "Admin Dashboard";
 }
 
-<h2>Admin Dashboard</h2>
+<div class="page-header">
+    <h2><i class="bi bi-speedometer2 me-2"></i>Admin Dashboard</h2>
+</div>
 
-<div class="row mt-4">
-    <div class="col-md-3">
-        <div class="card text-white bg-primary mb-3">
+<div class="row g-4">
+    <div class="col-sm-6 col-lg-3 d-flex">
+        <div class="card dashboard-stat text-white bg-primary w-100">
             <div class="card-body">
-                <h5 class="card-title">Total Patients</h5>
-                <p class="card-text display-4">@Model.PatientCount</p>
-                <a asp-page="/Admin/Patients/Index" class="btn btn-light btn-sm">Manage</a>
+                <i class="bi bi-person display-6"></i>
+                <p class="display-4">@Model.PatientCount</p>
+                <h6 class="card-title">Total Patients</h6>
+                <a asp-page="/Admin/Patients/Index" class="btn btn-light btn-sm mt-2">Manage</a>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card text-white bg-success mb-3">
+    <div class="col-sm-6 col-lg-3 d-flex">
+        <div class="card dashboard-stat text-white bg-success w-100">
             <div class="card-body">
-                <h5 class="card-title">Total Doctors</h5>
-                <p class="card-text display-4">@Model.DoctorCount</p>
-                <a asp-page="/Admin/Doctors/Index" class="btn btn-light btn-sm">Manage</a>
+                <i class="bi bi-person-badge display-6"></i>
+                <p class="display-4">@Model.DoctorCount</p>
+                <h6 class="card-title">Total Doctors</h6>
+                <a asp-page="/Admin/Doctors/Index" class="btn btn-light btn-sm mt-2">Manage</a>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card text-white bg-info mb-3">
+    <div class="col-sm-6 col-lg-3 d-flex">
+        <div class="card dashboard-stat text-white bg-info w-100">
             <div class="card-body">
-                <h5 class="card-title">Departments</h5>
-                <p class="card-text display-4">@Model.DepartmentCount</p>
-                <a asp-page="/Admin/Departments/Index" class="btn btn-light btn-sm">Manage</a>
+                <i class="bi bi-building display-6"></i>
+                <p class="display-4">@Model.DepartmentCount</p>
+                <h6 class="card-title">Departments</h6>
+                <a asp-page="/Admin/Departments/Index" class="btn btn-light btn-sm mt-2">Manage</a>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card text-white bg-warning mb-3">
+    <div class="col-sm-6 col-lg-3 d-flex">
+        <div class="card dashboard-stat text-white bg-warning w-100">
             <div class="card-body">
-                <h5 class="card-title">Total Appointments</h5>
-                <p class="card-text display-4">@Model.AppointmentCount</p>
-                <a asp-page="/Admin/Appointments/Index" class="btn btn-light btn-sm">View</a>
+                <i class="bi bi-calendar-event display-6"></i>
+                <p class="display-4">@Model.AppointmentCount</p>
+                <h6 class="card-title">Appointments</h6>
+                <a asp-page="/Admin/Appointments/Index" class="btn btn-light btn-sm mt-2">View</a>
             </div>
         </div>
     </div>
 </div>
 
 <div class="row mt-4">
-    <div class="col-md-12">
+    <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h4>Quick Actions</h4>
+                <h5 class="mb-0"><i class="bi bi-lightning me-2"></i>Quick Actions</h5>
             </div>
-            <div class="card-body">
-                <a asp-page="/Admin/Patients/Create" class="btn btn-primary">Add Patient</a>
-                <a asp-page="/Admin/Doctors/Create" class="btn btn-success">Add Doctor</a>
-                <a asp-page="/Admin/Departments/Create" class="btn btn-info">Add Department</a>
-                <a asp-page="/Admin/Staff/Create" class="btn btn-secondary">Add Staff</a>
+            <div class="card-body quick-actions">
+                <a asp-page="/Admin/Patients/Create" class="btn btn-primary">
+                    <i class="bi bi-person-plus me-1"></i>Add Patient
+                </a>
+                <a asp-page="/Admin/Doctors/Create" class="btn btn-success">
+                    <i class="bi bi-person-plus-fill me-1"></i>Add Doctor
+                </a>
+                <a asp-page="/Admin/Departments/Create" class="btn btn-info">
+                    <i class="bi bi-building-add me-1"></i>Add Department
+                </a>
             </div>
         </div>
     </div>

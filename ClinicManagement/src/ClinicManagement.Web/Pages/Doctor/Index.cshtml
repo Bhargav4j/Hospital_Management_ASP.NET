@@ -4,46 +4,52 @@
     ViewData["Title"] = "Doctor Dashboard";
 }
 
-<h2>Doctor Dashboard</h2>
+<div class="page-header">
+    <h2><i class="bi bi-speedometer2 me-2"></i>Doctor Dashboard</h2>
+</div>
 
-<div class="row mt-4">
-    <div class="col-md-4">
-        <div class="card text-white bg-warning mb-3">
+<div class="row g-4">
+    <div class="col-md-4 d-flex">
+        <div class="card dashboard-stat text-white bg-warning w-100">
             <div class="card-body">
-                <h5 class="card-title">Pending Appointments</h5>
-                <p class="card-text display-4">@Model.PendingCount</p>
-                <a asp-page="/Doctor/Appointments" class="btn btn-light">View All</a>
+                <i class="bi bi-hourglass-split display-6"></i>
+                <p class="display-4">@Model.PendingCount</p>
+                <h6 class="card-title">Pending Appointments</h6>
+                <a asp-page="/Doctor/Appointments" class="btn btn-light btn-sm mt-2">View All</a>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card text-white bg-info mb-3">
+    <div class="col-md-4 d-flex">
+        <div class="card dashboard-stat text-white bg-info w-100">
             <div class="card-body">
-                <h5 class="card-title">Today's Appointments</h5>
-                <p class="card-text display-4">@Model.TodayCount</p>
-                <a asp-page="/Doctor/Appointments" class="btn btn-light">View Schedule</a>
+                <i class="bi bi-calendar-day display-6"></i>
+                <p class="display-4">@Model.TodayCount</p>
+                <h6 class="card-title">Today's Appointments</h6>
+                <a asp-page="/Doctor/Appointments" class="btn btn-light btn-sm mt-2">View Schedule</a>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card text-white bg-success mb-3">
+    <div class="col-md-4 d-flex">
+        <div class="card dashboard-stat text-white bg-success w-100">
             <div class="card-body">
-                <h5 class="card-title">Completed Today</h5>
-                <p class="card-text display-4">@Model.CompletedTodayCount</p>
+                <i class="bi bi-check-circle display-6"></i>
+                <p class="display-4">@Model.CompletedTodayCount</p>
+                <h6 class="card-title">Completed Today</h6>
             </div>
         </div>
     </div>
 </div>
 
 <div class="row mt-4">
-    <div class="col-md-12">
+    <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h4>Quick Actions</h4>
+                <h5 class="mb-0"><i class="bi bi-lightning me-2"></i>Quick Actions</h5>
             </div>
-            <div class="card-body">
-                <a asp-page="/Doctor/Appointments" class="btn btn-primary">View Appointments</a>
-                <a asp-page="/Doctor/Profile" class="btn btn-info">Update Profile</a>
+            <div class="card-body quick-actions">
+                <a asp-page="/Doctor/Appointments" class="btn btn-primary">
+                    <i class="bi bi-list-ul me-1"></i>View Appointments
+                </a>
             </div>
         </div>
     </div>

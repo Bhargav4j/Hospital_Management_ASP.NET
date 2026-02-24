@@ -4,36 +4,45 @@
     ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
+<div class="hero-section text-center">
     <h1 class="display-4">Welcome to Clinic Management System</h1>
-    <p class="lead">Manage your healthcare appointments efficiently</p>
-    
-    <div class="row mt-5">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">For Patients</h5>
-                    <p class="card-text">Book appointments, view medical history, and manage your healthcare.</p>
-                    <a asp-page="/Login" class="btn btn-primary">Patient Login</a>
+    <p class="lead mt-3">Manage your healthcare appointments efficiently</p>
+</div>
+
+<div class="row g-4 mt-2">
+    <div class="col-md-4 d-flex">
+        <div class="card role-card w-100">
+            <div class="card-body d-flex flex-column">
+                <div class="mb-3">
+                    <i class="bi bi-person-heart display-4 text-primary"></i>
                 </div>
+                <h5 class="card-title">For Patients</h5>
+                <p class="card-text flex-grow-1">Book appointments, view medical history, and manage your healthcare journey.</p>
+                <a asp-page="/Login" class="btn btn-primary mt-auto">Patient Login</a>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">For Doctors</h5>
-                    <p class="card-text">Manage appointments, update patient records, and view schedules.</p>
-                    <a asp-page="/Login" class="btn btn-success">Doctor Login</a>
+    </div>
+    <div class="col-md-4 d-flex">
+        <div class="card role-card w-100">
+            <div class="card-body d-flex flex-column">
+                <div class="mb-3">
+                    <i class="bi bi-clipboard2-pulse display-4 text-success"></i>
                 </div>
+                <h5 class="card-title">For Doctors</h5>
+                <p class="card-text flex-grow-1">Manage appointments, update patient records, and view your schedules.</p>
+                <a asp-page="/Login" class="btn btn-success mt-auto">Doctor Login</a>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Administration</h5>
-                    <p class="card-text">Manage clinic operations, staff, and system settings.</p>
-                    <a asp-page="/Login" class="btn btn-danger">Admin Login</a>
+    </div>
+    <div class="col-md-4 d-flex">
+        <div class="card role-card w-100">
+            <div class="card-body d-flex flex-column">
+                <div class="mb-3">
+                    <i class="bi bi-shield-lock display-4 text-danger"></i>
                 </div>
+                <h5 class="card-title">Administration</h5>
+                <p class="card-text flex-grow-1">Manage clinic operations, staff, departments, and system settings.</p>
+                <a asp-page="/Login" class="btn btn-danger mt-auto">Admin Login</a>
             </div>
         </div>
     </div>

@@ -4,35 +4,41 @@
     ViewData["Title"] = "Login";
 }
 
-<div class="row justify-content-center">
-    <div class="col-md-6">
+<div class="row justify-content-center mt-4">
+    <div class="col-md-5 col-lg-4">
         <div class="card">
-            <div class="card-header">
-                <h3 class="text-center">Login</h3>
+            <div class="card-header text-center py-3">
+                <h4 class="mb-0"><i class="bi bi-box-arrow-in-right me-2"></i>Login</h4>
             </div>
-            <div class="card-body">
+            <div class="card-body p-4">
                 <form method="post">
                     <div asp-validation-summary="All" class="text-danger"></div>
-                    
+
                     @if (!string.IsNullOrEmpty(Model.ErrorMessage))
                     {
-                        <div class="alert alert-danger">@Model.ErrorMessage</div>
+                        <div class="alert alert-danger py-2">@Model.ErrorMessage</div>
                     }
-                    
+
                     <div class="mb-3">
-                        <label asp-for="Email" class="form-label"></label>
-                        <input asp-for="Email" class="form-control" />
+                        <label asp-for="Email" class="form-label">Email Address</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                            <input asp-for="Email" class="form-control" placeholder="Enter your email" />
+                        </div>
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
-                    
+
                     <div class="mb-3">
-                        <label asp-for="Password" class="form-label"></label>
-                        <input asp-for="Password" class="form-control" type="password" />
+                        <label asp-for="Password" class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                            <input asp-for="Password" class="form-control" type="password" placeholder="Enter your password" />
+                        </div>
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
-                    
-                    <div class="mb-3">
-                        <label asp-for="UserType" class="form-label"></label>
+
+                    <div class="mb-4">
+                        <label asp-for="UserType" class="form-label">User Type</label>
                         <select asp-for="UserType" class="form-select">
                             <option value="">-- Select User Type --</option>
                             <option value="Patient">Patient</option>
@@ -41,14 +47,14 @@
                         </select>
                         <span asp-validation-for="UserType" class="text-danger"></span>
                     </div>
-                    
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary">Login</button>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">Login</button>
                     </div>
                 </form>
-                
+
                 <div class="text-center mt-3">
-                    <p>Don't have an account? <a asp-page="/Register">Register here</a></p>
+                    <p class="mb-0">Don't have an account? <a asp-page="/Register">Register here</a></p>
                 </div>
             </div>
         </div>
