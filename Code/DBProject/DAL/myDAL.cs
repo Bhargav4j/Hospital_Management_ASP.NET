@@ -30,7 +30,7 @@ namespace DBProject.DAL
                 return $"Host={dbServer};Port=5432;Database={dbName};Username={dbUser};Password={dbPassword};Pooling=true;MinPoolSize=1;MaxPoolSize=20;";
             }
 
-            return System.Configuration.ConfigurationManager.ConnectionStrings["sqlCon1"].ConnectionString;
+            throw new InvalidOperationException("Database connection environment variables (DB_SERVER, DB_NAME, DB_USER, DB_PASSWORD) are required for containerized deployment but were not found.");
         }
 
 

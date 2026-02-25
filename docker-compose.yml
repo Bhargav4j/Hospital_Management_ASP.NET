@@ -1,30 +1,40 @@
 version: '3.8'
 
 services:
-  hospwithoutdbcontcmp:
+  clinic-management-app:
+    image: clinic-management:latest
+    container_name: clinic-management-app
     build:
       context: .
       dockerfile: Dockerfile
-    image: hospwithoutdbcontcmp:latest
-    container_name: hospwithoutdbcontcmp-app
     ports:
       - "8080:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:8080
-      - TZ=UTC
+      - AWS__Region=${AWS_REGION:-us-east-1}
+      - AWS__SystemsManager__Path=${AWS_SSM_PATH:-/clinic-management/}
+      - AWS__SystemsManager__Enabled=${AWS_SSM_ENABLED:-true}
+      - AWS__S3__Enabled=${AWS_S3_ENABLED:-true}
+      - AWS__S3__BucketName=${AWS_S3_BUCKET:-hospwithoutdbcontcmp-files}
+      - AWS__Redis__Enabled=${AWS_REDIS_ENABLED:-false}
+      - AWS__Redis__ConnectionString=${REDIS_CONNECTION_STRING:-}
+      - AWS__Redis__InstanceName=${REDIS_INSTANCE_NAME:-hospwithoutdbcontcmp:}
+      - AWS__CloudWatch__Enabled=${AWS_CLOUDWATCH_ENABLED:-true}
+      - AWS__CloudWatch__LogGroup=${AWS_CLOUDWATCH_LOGGROUP:-/ecs/hospwithoutdbcontcmp}
+      - AWS__FeatureToggle__RequireAwsEnvironment=${REQUIRE_AWS_ENV:-false}
     volumes:
       - ./logs:/app/logs
-      - ./appsettings:/app/appsettings:ro
-    networks:
-      - app-network
+      - ./appsettings:/app/appsettings
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8080/health || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 60s
+    networks:
+      - app-network
 
 networks:
   app-network:

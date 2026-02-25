@@ -1,17 +1,10 @@
 {
-  "serviceName": "hospwithoutdbcontcmp-service",
+  "serviceName": "clinic-management-service",
   "cluster": "{{CLUSTER_NAME}}",
-  "taskDefinition": "hospwithoutdbcontcmp-task",
+  "taskDefinition": "clinic-management-task",
   "desiredCount": 2,
   "launchType": "FARGATE",
   "platformVersion": "LATEST",
-  "networkConfiguration": {
-    "awsvpcConfiguration": {
-      "subnets": ["{{SUBNET_1}}", "{{SUBNET_2}}"],
-      "securityGroups": ["{{SECURITY_GROUP}}"],
-      "assignPublicIp": "ENABLED"
-    }
-  },
   "deploymentConfiguration": {
     "maximumPercent": 200,
     "minimumHealthyPercent": 50,
@@ -20,10 +13,17 @@
       "rollback": true
     }
   },
+  "networkConfiguration": {
+    "awsvpcConfiguration": {
+      "subnets": ["{{SUBNET_1}}", "{{SUBNET_2}}"],
+      "securityGroups": ["{{SECURITY_GROUP}}"],
+      "assignPublicIp": "ENABLED"
+    }
+  },
   "loadBalancers": [
     {
       "targetGroupArn": "{{TARGET_GROUP_ARN}}",
-      "containerName": "hospwithoutdbcontcmp",
+      "containerName": "clinic-management",
       "containerPort": 8080
     }
   ],
@@ -37,7 +37,7 @@
     },
     {
       "key": "Application",
-      "value": "hospwithoutdbcontcmp"
+      "value": "ClinicManagement"
     },
     {
       "key": "ManagedBy",

@@ -1,46 +1,56 @@
-# Stage 1: Build
+# Build stage
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS builder
 
 WORKDIR /src
 
-# Copy project files for dependency caching
-COPY *.csproj ./
-RUN dotnet restore
+# Copy solution and project files for dependency resolution
+COPY ["ClinicManagement/ClinicManagement.sln", "ClinicManagement/"]
+COPY ["ClinicManagement/src/ClinicManagement.Web/ClinicManagement.Web.csproj", "ClinicManagement/src/ClinicManagement.Web/"]
+COPY ["ClinicManagement/src/ClinicManagement.Application/ClinicManagement.Application.csproj", "ClinicManagement/src/ClinicManagement.Application/"]
+COPY ["ClinicManagement/src/ClinicManagement.Infrastructure/ClinicManagement.Infrastructure.csproj", "ClinicManagement/src/ClinicManagement.Infrastructure/"]
+COPY ["ClinicManagement/src/ClinicManagement.Domain/ClinicManagement.Domain.csproj", "ClinicManagement/src/ClinicManagement.Domain/"]
 
-# Copy source code
-COPY . .
+# Restore dependencies
+RUN dotnet restore "ClinicManagement/src/ClinicManagement.Web/ClinicManagement.Web.csproj"
+
+# Copy entire source code
+COPY ClinicManagement/ ClinicManagement/
 
 # Build the application
-RUN dotnet build -c Release --no-restore
+WORKDIR /src/ClinicManagement/src/ClinicManagement.Web
+RUN dotnet build "ClinicManagement.Web.csproj" -c Release -o /app/build
 
 # Publish the application
-RUN dotnet publish -c Release -o /app/publish --no-build
+RUN dotnet publish "ClinicManagement.Web.csproj" -c Release -o /app/publish --no-restore
 
-# Stage 2: Runtime
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+# Runtime stage
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 
 WORKDIR /app
 
 # Create non-root user for security
 RUN groupadd -r appuser && useradd -r -g appuser appuser
 
-# Copy published application from builder stage
+# Copy published application from builder
 COPY --from=builder /app/publish .
 
-# Set ownership to non-root user
+# Set ownership
 RUN chown -R appuser:appuser /app
 
 # Switch to non-root user
 USER appuser
 
-# Set environment variables
+# Set environment variables for ASP.NET Core
 ENV ASPNETCORE_ENVIRONMENT=Production \
     ASPNETCORE_URLS=http://+:8080 \
+    DOTNET_RUNNING_IN_CONTAINER=true \
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
-    TZ=UTC
+    TZ=America/New_York
 
 # Expose application port
 EXPOSE 8080
 
-# Set entrypoint
-ENTRYPOINT ["dotnet", "HospWithoutDBContCmp.dll"]
+# Health check is handled by ECS service - no curl/wget installation needed
+
+# Entry point
+ENTRYPOINT ["dotnet", "ClinicManagement.Web.dll"]

@@ -1,5 +1,5 @@
 {
-  "family": "hospwithoutdbcontcmp-task",
+  "family": "clinic-management-task",
   "requiresCompatibilities": ["FARGATE"],
   "networkMode": "awsvpc",
   "cpu": "512",
@@ -8,7 +8,7 @@
   "taskRoleArn": "arn:aws:iam::{{ACCOUNT_ID}}:role/ecsTaskRole",
   "containerDefinitions": [
     {
-      "name": "hospwithoutdbcontcmp",
+      "name": "clinic-management",
       "image": "{{IMAGE_URI}}",
       "essential": true,
       "portMappings": [
@@ -27,24 +27,61 @@
           "value": "http://+:8080"
         },
         {
-          "name": "DOTNET_SYSTEM_GLOBALIZATION_INVARIANT",
+          "name": "AWS__Region",
+          "value": "{{AWS_REGION}}"
+        },
+        {
+          "name": "AWS__SystemsManager__Path",
+          "value": "/clinic-management/"
+        },
+        {
+          "name": "AWS__SystemsManager__Enabled",
+          "value": "true"
+        },
+        {
+          "name": "AWS__S3__Enabled",
+          "value": "true"
+        },
+        {
+          "name": "AWS__S3__BucketName",
+          "value": "hospwithoutdbcontcmp-files"
+        },
+        {
+          "name": "AWS__Redis__Enabled",
           "value": "false"
         },
         {
+          "name": "AWS__CloudWatch__Enabled",
+          "value": "true"
+        },
+        {
+          "name": "AWS__CloudWatch__LogGroup",
+          "value": "/ecs/clinic-management"
+        },
+        {
+          "name": "AWS__FeatureToggle__RequireAwsEnvironment",
+          "value": "true"
+        },
+        {
+          "name": "DOTNET_RUNNING_IN_CONTAINER",
+          "value": "true"
+        },
+        {
           "name": "TZ",
-          "value": "UTC"
+          "value": "America/New_York"
         }
       ],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/hospwithoutdbcontcmp",
+          "awslogs-group": "/ecs/clinic-management",
           "awslogs-region": "{{AWS_REGION}}",
-          "awslogs-stream-prefix": "ecs"
+          "awslogs-stream-prefix": "ecs",
+          "awslogs-create-group": "true"
         }
       },
       "healthCheck": {
-        "command": ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"],
+        "command": ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8080/health || exit 1"],
         "interval": 30,
         "timeout": 5,
         "retries": 3,

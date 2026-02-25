@@ -28,12 +28,11 @@ if (!string.IsNullOrEmpty(awsRegionStr))
     builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
 }
 
-// Serilog with CloudWatch sink
+// Serilog with CloudWatch sink - Console only for containerized environments
 var loggerConfig = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .Enrich.FromLogContext()
-    .WriteTo.Console()
-    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day);
+    .WriteTo.Console();
 
 var cloudWatchEnabled = builder.Configuration.GetValue<bool>("AWS:CloudWatch:Enabled");
 if (cloudWatchEnabled && !string.IsNullOrEmpty(awsRegionStr))
@@ -70,6 +69,9 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+// Add health checks for container orchestration
+builder.Services.AddHealthChecks();
+
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 
@@ -98,6 +100,9 @@ app.UseSession();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+// Map health check endpoints for container orchestration
+app.MapHealthChecks("/health");
 
 try
 {

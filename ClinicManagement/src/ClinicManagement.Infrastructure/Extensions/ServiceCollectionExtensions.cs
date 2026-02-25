@@ -70,7 +70,7 @@ public static class ServiceCollectionExtensions
     {
         var redisEnabled = configuration.GetValue<bool>("AWS:Redis:Enabled");
         var redisConnectionString = configuration.GetValue<string>("AWS:Redis:ConnectionString");
-        var requireAwsEnv = configuration.GetValue<bool>("AWS:FeatureToggle:RequireAwsEnvironment", true);
+        var requireAwsEnv = configuration.GetValue<bool>("AWS:FeatureToggle:RequireAwsEnvironment", false);
         var instanceName = configuration.GetValue<string>("AWS:Redis:InstanceName") ?? "hospwithoutdbcontcmp:";
 
         var shouldUseRedis = redisEnabled && !string.IsNullOrEmpty(redisConnectionString);
