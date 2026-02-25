@@ -12,8 +12,23 @@ public class CreateDoctorModel : PageModel
     private readonly IDoctorService _doctorService;
     private readonly IDepartmentService _departmentService;
     private readonly IMapper _mapper;
-    public CreateDoctorModel(IDoctorService ds, IDepartmentService depts, IMapper m) { _doctorService = ds; _departmentService = depts; _mapper = m; }
-    
+    private readonly IS3StorageService? _s3Service;
+    private readonly ILogger<CreateDoctorModel> _logger;
+
+    public CreateDoctorModel(
+        IDoctorService ds,
+        IDepartmentService depts,
+        IMapper m,
+        ILogger<CreateDoctorModel> logger,
+        IS3StorageService? s3Service = null)
+    {
+        _doctorService = ds;
+        _departmentService = depts;
+        _mapper = m;
+        _logger = logger;
+        _s3Service = s3Service;
+    }
+
     [BindProperty, Required] public string Name { get; set; } = string.Empty;
     [BindProperty, Required] public string Email { get; set; } = string.Empty;
     [BindProperty, Required] public string Password { get; set; } = string.Empty;
@@ -22,7 +37,8 @@ public class CreateDoctorModel : PageModel
     [BindProperty] public int DeptNo { get; set; }
     [BindProperty] public int Experience { get; set; }
     [BindProperty] public decimal ChargesPerVisit { get; set; }
-    
+    [BindProperty] public IFormFile? ProfileImage { get; set; }
+
     public IEnumerable<DepartmentDto> Departments { get; set; } = new List<DepartmentDto>();
 
     public async Task<IActionResult> OnGetAsync()
@@ -35,7 +51,23 @@ public class CreateDoctorModel : PageModel
     public async Task<IActionResult> OnPostAsync()
     {
         if (HttpContext.Session.GetString("UserRole") != "Admin") return RedirectToPage("/Login");
-        await _doctorService.CreateDoctorAsync(new Domain.Entities.Doctor { Name = Name, Email = Email, Password = Password, Phone = Phone, Specialization = Specialization, DeptNo = DeptNo, Experience = Experience, ChargesPerVisit = ChargesPerVisit, Address = "", BirthDate = DateTime.Today, Gender = "Male", Qualification = "", Salary = 0 });
+
+        var doctor = await _doctorService.CreateDoctorAsync(new Domain.Entities.Doctor
+        {
+            Name = Name, Email = Email, Password = Password, Phone = Phone,
+            Specialization = Specialization, DeptNo = DeptNo, Experience = Experience,
+            ChargesPerVisit = ChargesPerVisit, Address = "", BirthDate = DateTime.Today,
+            Gender = "Male", Qualification = "", Salary = 0
+        });
+
+        if (ProfileImage != null && ProfileImage.Length > 0 && _s3Service != null)
+        {
+            var ext = Path.GetExtension(ProfileImage.FileName);
+            using var stream = ProfileImage.OpenReadStream();
+            var key = await _s3Service.UploadFileAsync(stream, $"profile{ext}", ProfileImage.ContentType, $"doctors/{doctor.DoctorID}");
+            _logger.LogInformation("Doctor {Id} profile image uploaded to S3: {Key}", doctor.DoctorID, key);
+        }
+
         return RedirectToPage("/Admin/Doctors/Index");
     }
 }

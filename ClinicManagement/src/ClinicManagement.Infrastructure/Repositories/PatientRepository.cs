@@ -14,6 +14,27 @@ public class PatientRepository : Repository<Patient, DbModels.patient>, IPatient
     {
     }
 
+    public override async Task<Patient> AddAsync(Patient entity)
+    {
+        var loginEntry = new DbModels.logintable
+        {
+            email = entity.Email,
+            password = entity.Password,
+            type = 1
+        };
+        await _context.Set<DbModels.logintable>().AddAsync(loginEntry);
+        await _context.SaveChangesAsync();
+
+        entity.PatientID = loginEntry.loginid;
+
+        var dbModel = _mapper.Map<DbModels.patient>(entity);
+        dbModel.patientid = loginEntry.loginid;
+        await _dbSet.AddAsync(dbModel);
+        await _context.SaveChangesAsync();
+
+        return _mapper.Map<Patient>(dbModel);
+    }
+
     public override async Task<Patient?> GetByIdAsync(int id)
     {
         var dbModel = await _dbSet.AsNoTracking()

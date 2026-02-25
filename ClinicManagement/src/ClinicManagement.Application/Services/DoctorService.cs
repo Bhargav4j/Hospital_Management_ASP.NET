@@ -7,48 +7,79 @@ namespace ClinicManagement.Application.Services;
 public class DoctorService : IDoctorService
 {
     private readonly IDoctorRepository _doctorRepository;
+    private readonly ICacheService _cacheService;
 
-    public DoctorService(IDoctorRepository doctorRepository)
+    private const string AllDoctorsCacheKey = "doctors:all";
+    private const string DoctorByIdCacheKeyPrefix = "doctors:id:";
+    private const string DoctorsByDeptCacheKeyPrefix = "doctors:dept:";
+    private static readonly TimeSpan CacheDuration = TimeSpan.FromMinutes(15);
+
+    public DoctorService(IDoctorRepository doctorRepository, ICacheService cacheService)
     {
         _doctorRepository = doctorRepository;
+        _cacheService = cacheService;
     }
 
     public async Task<Doctor?> GetDoctorByIdAsync(int id)
     {
-        return await _doctorRepository.GetByIdAsync(id);
+        var cacheKey = $"{DoctorByIdCacheKeyPrefix}{id}";
+        var cached = await _cacheService.GetAsync<Doctor>(cacheKey);
+        if (cached != null)
+            return cached;
+
+        var doctor = await _doctorRepository.GetByIdAsync(id);
+        if (doctor != null)
+            await _cacheService.SetAsync(cacheKey, doctor, CacheDuration);
+
+        return doctor;
     }
 
     public async Task<IEnumerable<Doctor>> GetAllDoctorsAsync()
     {
-        return await _doctorRepository.GetAllAsync();
+        var cached = await _cacheService.GetAsync<List<Doctor>>(AllDoctorsCacheKey);
+        if (cached != null)
+            return cached;
+
+        var doctors = (await _doctorRepository.GetAllAsync()).ToList();
+        await _cacheService.SetAsync(AllDoctorsCacheKey, doctors, CacheDuration);
+        return doctors;
     }
 
     public async Task<Doctor> CreateDoctorAsync(Doctor doctor)
     {
-        doctor.Password = HashPassword(doctor.Password);
-        return await _doctorRepository.AddAsync(doctor);
+        var result = await _doctorRepository.AddAsync(doctor);
+        await InvalidateDoctorCacheAsync();
+        return result;
     }
 
     public async Task UpdateDoctorAsync(Doctor doctor)
     {
         doctor.ModifiedDate = DateTime.UtcNow;
         await _doctorRepository.UpdateAsync(doctor);
+        await InvalidateDoctorCacheAsync(doctor.DoctorID);
     }
 
     public async Task DeleteDoctorAsync(int id)
     {
         await _doctorRepository.DeleteAsync(id);
+        await InvalidateDoctorCacheAsync(id);
     }
 
     public async Task<Doctor?> ValidateLoginAsync(string email, string password)
     {
-        var hashedPassword = HashPassword(password);
-        return await _doctorRepository.ValidateCredentialsAsync(email, hashedPassword);
+        return await _doctorRepository.ValidateCredentialsAsync(email, password);
     }
 
     public async Task<IEnumerable<Doctor>> GetDoctorsByDepartmentAsync(int deptNo)
     {
-        return await _doctorRepository.GetByDepartmentAsync(deptNo);
+        var cacheKey = $"{DoctorsByDeptCacheKeyPrefix}{deptNo}";
+        var cached = await _cacheService.GetAsync<List<Doctor>>(cacheKey);
+        if (cached != null)
+            return cached;
+
+        var doctors = (await _doctorRepository.GetByDepartmentAsync(deptNo)).ToList();
+        await _cacheService.SetAsync(cacheKey, doctors, CacheDuration);
+        return doctors;
     }
 
     public async Task<IEnumerable<Doctor>> GetDoctorsBySpecializationAsync(string specialization)
@@ -61,11 +92,12 @@ public class DoctorService : IDoctorService
         return await _doctorRepository.SearchDoctorsAsync(searchTerm);
     }
 
-    private string HashPassword(string password)
+    private async Task InvalidateDoctorCacheAsync(int? doctorId = null)
     {
-        using var sha256 = System.Security.Cryptography.SHA256.Create();
-        var bytes = System.Text.Encoding.UTF8.GetBytes(password);
-        var hash = sha256.ComputeHash(bytes);
-        return Convert.ToBase64String(hash);
+        await _cacheService.RemoveAsync(AllDoctorsCacheKey);
+        await _cacheService.RemoveByPrefixAsync(DoctorsByDeptCacheKeyPrefix);
+
+        if (doctorId.HasValue)
+            await _cacheService.RemoveAsync($"{DoctorByIdCacheKeyPrefix}{doctorId.Value}");
     }
 }

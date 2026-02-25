@@ -1,6 +1,7 @@
 using Amazon;
 using Amazon.CloudWatchLogs;
 using ClinicManagement.Application.Extensions;
+using ClinicManagement.Domain.Interfaces.Services;
 using ClinicManagement.Infrastructure.Extensions;
 using Serilog;
 using Serilog.Sinks.AwsCloudWatch;
@@ -9,9 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // AWS Systems Manager Parameter Store for configuration
 var awsRegionStr = builder.Configuration["AWS:Region"];
-if (!string.IsNullOrEmpty(awsRegionStr))
+var ssmEnabled = builder.Configuration.GetValue<bool>("AWS:SystemsManager:Enabled");
+if (!string.IsNullOrEmpty(awsRegionStr) && ssmEnabled)
 {
-    var awsRegion = RegionEndpoint.GetBySystemName(awsRegionStr);
     var ssmPath = builder.Configuration["AWS:SystemsManager:Path"] ?? "/clinic-management/";
 
     builder.Configuration.AddSystemsManager(config =>
@@ -20,7 +21,10 @@ if (!string.IsNullOrEmpty(awsRegionStr))
         config.ReloadAfter = TimeSpan.FromMinutes(5);
         config.Optional = true;
     });
+}
 
+if (!string.IsNullOrEmpty(awsRegionStr))
+{
     builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
 }
 
@@ -59,21 +63,6 @@ builder.Host.UseSerilog();
 
 builder.Services.AddRazorPages();
 
-// Session: use Redis-backed distributed cache when available, else in-memory
-var redisConnectionString = builder.Configuration.GetValue<string>("AWS:Redis:ConnectionString");
-if (!string.IsNullOrEmpty(redisConnectionString))
-{
-    builder.Services.AddStackExchangeRedisCache(options =>
-    {
-        options.Configuration = redisConnectionString;
-        options.InstanceName = builder.Configuration.GetValue<string>("AWS:Redis:InstanceName") ?? "ClinicMgmt:";
-    });
-}
-else
-{
-    builder.Services.AddDistributedMemoryCache();
-}
-
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -85,6 +74,14 @@ builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 
 var app = builder.Build();
+
+// Log environment detection at startup
+var envDetector = app.Services.GetRequiredService<IAwsEnvironmentDetector>();
+Log.Information("Application starting in {Environment} environment. AWS detected: {IsAws}, ECS: {IsEcs}, EC2: {IsEc2}",
+    envDetector.EnvironmentName, envDetector.IsRunningInAws(), envDetector.IsRunningInEcs(), envDetector.IsRunningInEc2());
+
+var cacheService = app.Services.GetRequiredService<ICacheService>();
+Log.Information("Cache service implementation: {CacheType}", cacheService.GetType().Name);
 
 if (!app.Environment.IsDevelopment())
 {

@@ -1,0 +1,138 @@
+@page "{id:int}"
+@model ClinicManagement.Web.Pages.Admin.Doctors.EditModel
+@{
+    ViewData["Title"] = "Edit Doctor";
+}
+
+<div class="page-header">
+    <h2><i class="bi bi-pencil-square me-2"></i>Edit Doctor</h2>
+    <a asp-page="/Admin/Doctors/Index" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left me-1"></i>Back to Doctors
+    </a>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-4">
+        <div class="card text-center">
+            <div class="card-body py-4">
+                @if (!string.IsNullOrEmpty(Model.ProfileImageUrl))
+                {
+                    <img src="@Model.ProfileImageUrl" alt="Profile Photo"
+                         class="rounded-circle mb-3" style="width:150px;height:150px;object-fit:cover;" />
+                }
+                else
+                {
+                    <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                         style="width:150px;height:150px;">
+                        <i class="bi bi-person-badge display-1 text-muted"></i>
+                    </div>
+                }
+                <h5>@Model.Name</h5>
+                <p class="text-muted">@Model.Email</p>
+
+                <form method="post" enctype="multipart/form-data" class="mt-3">
+                    <input type="hidden" asp-for="DoctorID" />
+                    <input type="hidden" asp-for="Name" />
+                    <input type="hidden" asp-for="Phone" />
+                    <input type="hidden" asp-for="Specialization" />
+                    <input type="hidden" asp-for="Qualification" />
+                    <input type="hidden" asp-for="DeptNo" />
+                    <input type="hidden" asp-for="Experience" />
+                    <input type="hidden" asp-for="ChargesPerVisit" />
+                    <div class="mb-2">
+                        <input asp-for="ProfileImage" class="form-control form-control-sm" type="file" accept="image/*" />
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-outline-primary w-100">
+                        <i class="bi bi-upload me-1"></i>Upload Photo
+                    </button>
+                </form>
+
+                @if (!string.IsNullOrEmpty(Model.ProfileImageUrl))
+                {
+                    <form method="post" asp-page-handler="DeletePhoto" class="mt-2">
+                        <input type="hidden" asp-for="DoctorID" />
+                        <input type="hidden" asp-for="Name" />
+                        <input type="hidden" asp-for="Phone" />
+                        <input type="hidden" asp-for="Specialization" />
+                        <input type="hidden" asp-for="Qualification" />
+                        <input type="hidden" asp-for="DeptNo" />
+                        <input type="hidden" asp-for="Experience" />
+                        <input type="hidden" asp-for="ChargesPerVisit" />
+                        <button type="submit" class="btn btn-sm btn-outline-danger w-100"
+                                onclick="return confirm('Remove this doctor\'s photo?')">
+                            <i class="bi bi-trash me-1"></i>Remove Photo
+                        </button>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-person-badge me-2"></i>Doctor Details</h5>
+            </div>
+            <div class="card-body">
+                @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+                {
+                    <div class="alert alert-success py-2"><i class="bi bi-check-circle me-1"></i>@Model.SuccessMessage</div>
+                }
+
+                <form method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="DoctorID" />
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label asp-for="Name" class="form-label">Full Name</label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Email</label>
+                            <input class="form-control" value="@Model.Email" disabled />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Phone" class="form-label">Phone</label>
+                            <input asp-for="Phone" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Specialization" class="form-label">Specialization</label>
+                            <input asp-for="Specialization" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Qualification" class="form-label">Qualification</label>
+                            <input asp-for="Qualification" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="DeptNo" class="form-label">Department</label>
+                            <select asp-for="DeptNo" class="form-select">
+                                @foreach (var dept in Model.Departments)
+                                {
+                                    <option value="@dept.DeptNo">@dept.DeptName</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Experience" class="form-label">Experience (years)</label>
+                            <input asp-for="Experience" type="number" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="ChargesPerVisit" class="form-label">Charges per Visit ($)</label>
+                            <input asp-for="ChargesPerVisit" type="number" step="0.01" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary flex-grow-1">
+                            <i class="bi bi-check-lg me-1"></i>Save Changes
+                        </button>
+                        <a asp-page="/Admin/Doctors/Index" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

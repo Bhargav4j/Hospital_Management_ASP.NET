@@ -15,7 +15,7 @@
     <div class="col-lg-8">
         <div class="card form-card">
             <div class="card-body p-4">
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label asp-for="Name" class="form-label">Full Name</label>
@@ -61,6 +61,12 @@
                         <div class="col-md-6">
                             <label asp-for="ChargesPerVisit" class="form-label">Charges per Visit ($)</label>
                             <input asp-for="ChargesPerVisit" type="number" step="0.01" class="form-control" placeholder="Charges per visit" />
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="ProfileImage" class="form-label">Profile Image</label>
+                            <input asp-for="ProfileImage" class="form-control" type="file" accept="image/*" />
+                            <div class="form-text">Upload a profile photo (JPG, PNG). Stored in S3.</div>
                         </div>
                     </div>
 

@@ -14,6 +14,27 @@ public class DoctorRepository : Repository<Doctor, DbModels.doctor>, IDoctorRepo
     {
     }
 
+    public override async Task<Doctor> AddAsync(Doctor entity)
+    {
+        var loginEntry = new DbModels.logintable
+        {
+            email = entity.Email,
+            password = entity.Password,
+            type = 2
+        };
+        await _context.Set<DbModels.logintable>().AddAsync(loginEntry);
+        await _context.SaveChangesAsync();
+
+        entity.DoctorID = loginEntry.loginid;
+
+        var dbModel = _mapper.Map<DbModels.doctor>(entity);
+        dbModel.doctorid = loginEntry.loginid;
+        await _dbSet.AddAsync(dbModel);
+        await _context.SaveChangesAsync();
+
+        return _mapper.Map<Doctor>(dbModel);
+    }
+
     public override async Task<Doctor?> GetByIdAsync(int id)
     {
         var dbModel = await _dbSet.AsNoTracking()
@@ -32,9 +53,8 @@ public class DoctorRepository : Repository<Doctor, DbModels.doctor>, IDoctorRepo
 
     public async Task<Doctor?> GetByEmailAsync(string email)
     {
-        // Doctor email lives in logintable; join through logintable to find the doctor
         var loginEntry = await _context.Set<DbModels.logintable>().AsNoTracking()
-            .FirstOrDefaultAsync(l => l.email == email && l.type == 1);
+            .FirstOrDefaultAsync(l => l.email == email && l.type == 2);
         if (loginEntry == null) return null;
 
         return await GetByIdAsync(loginEntry.loginid);
@@ -43,7 +63,7 @@ public class DoctorRepository : Repository<Doctor, DbModels.doctor>, IDoctorRepo
     public async Task<Doctor?> ValidateCredentialsAsync(string email, string password)
     {
         var loginEntry = await _context.Set<DbModels.logintable>().AsNoTracking()
-            .FirstOrDefaultAsync(l => l.email == email && l.password == password && l.type == 1);
+            .FirstOrDefaultAsync(l => l.email == email && l.password == password && l.type == 2);
         if (loginEntry == null) return null;
 
         return await GetByIdAsync(loginEntry.loginid);
